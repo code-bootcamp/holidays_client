@@ -1,6 +1,6 @@
 import * as S from "./paymentPage.styles";
 
-export default function PaymentPageUI() {
+export default function PaymentPage(): JSX.Element {
   return (
     <>
       <S.Wrapper>

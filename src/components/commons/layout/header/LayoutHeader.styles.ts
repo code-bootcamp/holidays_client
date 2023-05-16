@@ -15,6 +15,10 @@ export const Wrapper = styled.div`
   background-color: #faf8f2;
   position: fixed;
   z-index: 9999;
+
+  @media screen and (max-width: 768px) {
+    width: 100%;
+  }
 `;
 
 export const InnerWrapper = styled.div`

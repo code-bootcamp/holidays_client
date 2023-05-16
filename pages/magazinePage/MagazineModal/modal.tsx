@@ -1,5 +1,5 @@
 import React from "react";
-import * as S from "./modal.styles";
+import * as S from "../../../styles/modal.styles";
 
 interface ModalProps {
   onClose: () => void;

@@ -26,10 +26,7 @@ export const Wrapper = styled.div`
   width: 1920px;
 
   @media screen and (max-width: 768px) {
-    width: 768px;
-
-    position: relative;
-    right: -90px;
+    width: 100vw;
   }
 `;
 
@@ -40,7 +37,7 @@ export const Header = styled.div`
   margin-top: 100px;
 
   @media screen and (max-width: 768px) {
-    width: 100%;
+    width: 100vw;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -56,7 +53,7 @@ export const MainBanner = styled.img`
   animation: ${bannerAnimation} 3s ease-in-out;
 
   @media screen and (max-width: 768px) {
-    width: 768px;
+    width: 100vw;
     border-radius: 5px;
     box-shadow: 0px 0px 10px gray;
   }
@@ -78,18 +75,18 @@ export const MainButtonWrapper = styled.div`
   box-shadow: 0px 0px 10px gray;
 
   @media screen and (max-width: 768px) {
-    width: 768px;
-    height: 180px;
+    width: 80%;
+    height: 25vh;
     background: white;
     position: relative;
-    top: -30px;
+    top: 0px;
     border-radius: 15px;
     display: flex;
-    padding-left: 20px;
-    padding-right: 20px;
+    padding-left: 0px;
+    padding-right: 0px;
     padding-top: 40px;
     padding-bottom: 40px;
-    justify-content: space-between;
+    justify-content: space-evenly;
     align-items: center;
     box-shadow: 0px 0px 10px gray;
   }
@@ -138,6 +135,10 @@ export const Body = styled.div`
   flex-direction: column;
   /* align-items: center; */
   padding-bottom: 100px;
+
+  @media screen and (max-width: 768px) {
+    width: 80%;
+  }
 `;
 
 export const MainContentsLeft = styled.div`
@@ -151,13 +152,12 @@ export const MainContentsLeft = styled.div`
   }
 
   @media screen and (max-width: 768px) {
+    width: 100%;
     display: flex;
     flex-direction: column;
     padding-left: 0px;
     justify-content: center;
     align-items: center;
-
-    margin-left: 100px;
   }
 `;
 
@@ -173,6 +173,7 @@ export const MainContentsRight = styled.div`
   }
 
   @media screen and (max-width: 768px) {
+    width: 100%;
     display: flex;
     flex-direction: column;
     padding-left: 0px;
@@ -199,8 +200,8 @@ export const MainContentsImageLeft = styled.img`
   }
 
   @media screen and (max-width: 768px) {
-    width: 768px;
-    height: 470px;
+    width: 80%;
+    height: 670px;
 
     border-radius: 15px;
     box-shadow: 0px 0px 10px gray;
@@ -225,8 +226,8 @@ export const MainContentsImageRight = styled.img`
   }
 
   @media screen and (max-width: 768px) {
-    width: 768px;
-    height: 470px;
+    width: 80%;
+    height: 670px;
 
     border-radius: 15px;
     box-shadow: 0px 0px 10px gray;
@@ -234,9 +235,7 @@ export const MainContentsImageRight = styled.img`
 
     transition: all 0.5s ease-in-out;
 
-    position: relative;
-    top: -200px;
-    right: 100px;
+    margin-bottom: 150px;
   }
 `;
 
@@ -248,16 +247,7 @@ export const MainContentsTextWrapperLeft = styled.div`
   padding-bottom: 50px;
 
   @media screen and (max-width: 768px) {
-    width: 768px;
-    display: flex;
-    flex-direction: column;
-    height: 150px;
-    justify-content: flex-start;
-    padding-bottom: 10px;
-    margin-top: 10px;
-
-    position: relative;
-    left: -40px;
+    display: none;
   }
 `;
 
@@ -270,14 +260,7 @@ export const MainContentsTextWrapperRight = styled.div`
   padding-bottom: 50px;
 
   @media screen and (max-width: 768px) {
-    display: flex;
-    flex-direction: column;
-    height: 150px;
-    justify-content: flex-end;
-    padding-bottom: 10px;
-
-    position: relative;
-    top: 380px;
+    display: none;
   }
 `;
 

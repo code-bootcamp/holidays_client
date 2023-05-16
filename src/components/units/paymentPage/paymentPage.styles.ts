@@ -39,8 +39,7 @@ export const Wrapper = styled.div`
   background: rgba(255, 255, 204, 0.3);
 
   @media screen and (max-width: 768px) {
-    width: 768px;
-    /* height: 800px; */
+    width: 100%;
     display: flex;
     justify-content: center;
     background: rgba(255, 255, 204, 0.3);
@@ -49,11 +48,24 @@ export const Wrapper = styled.div`
 
 export const ContentWrapper = styled.div`
   /* background: rgba(255, 255, 204, 0.3); */
+
+  @media screen and (max-width: 768px) {
+    /* height: 2000px; */
+    width: 100%;
+    background: rgba(255, 255, 204, 0.3);
+    display: flex;
+    flex-direction: column;
+  }
 `;
 
 export const TitleIconWrapper = styled.div`
   width: 500px;
   display: flex;
+
+  @media screen and (max-width: 768px) {
+    width: 100%;
+    justify-content: center;
+  }
 `;
 
 export const TitleIcon = styled.img`
@@ -111,7 +123,7 @@ export const TitleContentWrapper = styled.div`
   color: #f28316;
 
   @media screen and (max-width: 768px) {
-    width: 700px;
+    width: 100%;
     /* background-color: #f28316; */
     display: flex;
     flex-direction: column;
@@ -171,6 +183,12 @@ export const InformWrapper = styled.div`
   flex-direction: column;
   align-items: flex-start;
   margin-top: 50px;
+
+  @media screen and (max-width: 768px) {
+    width: 100%;
+    align-items: center;
+    margin-left: 0px;
+  }
 `;
 
 export const Label = styled.div`
@@ -194,7 +212,7 @@ export const ButtonWrapper = styled.div`
   margin-bottom: 150px;
 
   @media screen and (max-width: 768px) {
-    width: calc(100% - 100px);
+    /* width: calc(100% - 100px); */
     display: flex;
     justify-content: center;
     margin-top: 30px;
@@ -225,8 +243,7 @@ export const PaymentButton = styled.button`
   animation: ${fadeInAnimation} 2s ease-in-out 6s forwards;
 
   @media screen and (max-width: 768px) {
-    width: 100%;
-    margin-left: 100px;
+    /* width: 100%; */
   }
 `;
 
@@ -245,8 +262,8 @@ export const PaymentInformationImage = styled.img`
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
 
   @media screen and (max-width: 768px) {
-    width: 500px;
-    height: 300px;
+    width: 100%
+    height: 800px;
     border-radius: 5px;
     margin-top: 30px;
 
@@ -266,7 +283,7 @@ export const PaymentInformHeader = styled.div`
   /* background: #ffffff; */
 
   @media screen and (max-width: 768px) {
-    width: 500px;
+    width: calc(100%/1.5)
     font-size: 14px;
     /* color: gray; */
     font-weight: 500;

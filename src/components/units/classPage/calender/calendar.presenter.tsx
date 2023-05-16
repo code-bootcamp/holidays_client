@@ -24,14 +24,8 @@ export default function CalendarUI() {
   // // 달력 크기 지정
   // const [size] = useState<SizeType>("large");
 
-  // // 일정 onchange
-  // const onChangeDate = (dates: any, dateStrings: [string, string]) => {
-  //   console.log("Selected Range:", dates);
-  //   console.log("Range Strings:", dateStrings);
-  // };
-
   // 인원 onchange
-  const onChangeNumber = (value: number) => {
+  const onChangeNumber = (value: any) => {
     console.log("인원", value);
   };
 

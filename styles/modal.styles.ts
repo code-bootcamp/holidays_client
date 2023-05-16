@@ -13,6 +13,7 @@ export const ModalWrapper = styled.div`
 
 export const Wrapper = styled.div`
   width: 800px;
+  height: 1000px;
   background: #ffffff;
   border-radius: 15px;
   display: flex;
@@ -54,8 +55,8 @@ export const CloseButton = styled.button`
 `;
 
 export const MainImage = styled.img`
-  width: 700px;
-  height: 400px;
+  width: 600px;
+  height: 300px;
   border-radius: 5px;
   box-shadow: 0px 0px 10px gray;
 `;
