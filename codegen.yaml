@@ -1,4 +1,4 @@
-schema: http://backend-practice.codebootcamp.co.kr/graphql
+schema: https://happyholidays-server.site/graphql
 generates:
   ./src/commons/types/generated/types.ts:
     plugins:
