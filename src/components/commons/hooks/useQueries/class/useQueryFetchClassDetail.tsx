@@ -42,7 +42,6 @@ export const UseQueryFetchClassDetail = () => {
   const query = useQuery(FETCH_CLASS_DETAIL, {
     variables: { class_id: router.query.class_id },
   });
-  console.log(query);
 
   return query;
 };

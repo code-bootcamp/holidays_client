@@ -2,7 +2,7 @@ import LayoutHeader from "./header/LayoutHeader.index";
 import LayoutFooter from "./footer/LayoutFooter.index";
 import styled from "@emotion/styled";
 import { useRouter } from "next/router";
-const HIDDEN = ["/", "/loginPage"];
+const HIDDEN = ["/", "/loginPage", "/signUpPage"];
 
 const Body = styled.div`
   display: flex;

@@ -34,12 +34,8 @@ const PayModal: React.FC<ModalProps> = ({ onClose, children }) => {
   >(CREATE_CLASS_AD);
   const { data: userData } = UseQueryFetchLoginUser();
 
-  console.log(router.query.class_id);
-  console.log(userData);
-
   useEffect(() => {
     if (userData) {
-      console.log(userData?.fetchLoginUser.name);
     }
   }, [userData]);
 

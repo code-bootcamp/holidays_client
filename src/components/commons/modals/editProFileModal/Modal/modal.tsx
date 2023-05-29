@@ -61,7 +61,6 @@ const Modal: React.FC<ModalProps> = ({ onClose, children }) => {
         phone: String(data?.fetchLoginUser.phone),
       },
     });
-    console.log(result);
   };
 
   const onClickCheckPhoneToken = async () => {

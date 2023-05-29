@@ -33,7 +33,6 @@ const ModalComponent: React.FC<ModalProps> = ({ onClose, children }) => {
     useRecoilState(selectedRegionState);
 
   const handleRegionClick = (region: string) => {
-    console.log(region);
     setSelectedRegion(region);
     onClose(); // 선택된 region 값을 onClose 함수와 함께 전달
   };
