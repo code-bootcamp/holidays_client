@@ -61,10 +61,6 @@ export default function LayoutHeader(): JSX.Element {
         </S.NaviWrapper>
         {userName ? (
           <S.ButtonTie>
-            <S.Reservation>알림</S.Reservation>
-            <S.Reservation onClick={handleReservationPage}>
-              예약 관리
-            </S.Reservation>
             <DropdownMyPage />
             <DropdownWriting />
           </S.ButtonTie>
