@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import type { SizeType } from "antd/es/config-provider/SizeContext";
 import * as S from "./reservationCalendar.styles";
 import { Calendar, theme } from "antd";
 import type { CalendarMode } from "antd/es/calendar/generateCalendar";
@@ -13,8 +12,42 @@ import {
 } from "./reservationCalendar.types";
 import { reservationSchema } from "./reservationCalendar.validation";
 import { yupResolver } from "@hookform/resolvers/yup";
+import Backdrop from "../../../../commons/modals/accountModal/Backdrop/Backdrop";
+import Modal from "../../../../commons/modals/accountModal/Modal/modal";
 
 export default function CalendarUI(props: IReservationCreateProps) {
+  const [showModal, setShowModal] = useState<boolean>(false);
+
+  // const handleModalOpen = (): void => {
+  //   setShowModal(true);
+  // };
+
+  const handleModalOpen = (): void => {
+    console.log("==gg==");
+    console.log(props.data);
+    console.log("==gg==");
+
+    console.log(date); // 이건 나옴
+
+    console.log(props.personnel);
+    console.log(props.personnel || "props.personnel 값이 없습니다.");
+
+    console.log("~~~~~~~");
+    console.log(data.personnel);
+    console.log(data.personnel || "data.personnel 값이 없습니다.");
+
+    const confirmResult = window.confirm("정말 예약하시겠습니까?");
+    if (confirmResult) {
+      setShowModal(true);
+    }
+  };
+
+  const handleModalClose = (): void => {
+    setShowModal(false);
+  };
+
+  // -------------------------------------------
+
   const [date, setDate] = useState<string>("");
 
   const { data } = UseQueryFetchClassSchedules();
@@ -33,8 +66,11 @@ export default function CalendarUI(props: IReservationCreateProps) {
 
   const onSubmitForm = async (data: IFormData) => {
     const { ...value } = data;
-    await onClickReservation(value);
-    setValue("personnel", "");
+    console.log("*******");
+    console.log(value);
+    console.log("*******");
+
+    handleModalOpen();
   };
 
   useEffect(() => {
@@ -82,7 +118,10 @@ export default function CalendarUI(props: IReservationCreateProps) {
           {year}년 {month}월
         </div>
         <div>
-          <select value={date} onChange={(event) => setDate(date)}>
+          <select
+            value={date}
+            onChange={(event) => setDate(event.target.value)}
+          >
             {monthOptions}
           </select>
         </div>
@@ -117,7 +156,21 @@ export default function CalendarUI(props: IReservationCreateProps) {
           </S.Contents>
           <S.Error>{formState.errors.personnel?.message}</S.Error>
 
-          <S.BtnWrapper type="submit">예약하기</S.BtnWrapper>
+          <S.BtnWrapper type="submit" onClick={handleSubmit(onSubmitForm)}>
+            예약하기
+          </S.BtnWrapper>
+
+          {showModal && (
+            <Modal
+              onClose={handleModalClose}
+              date={date}
+              personnel={props.personnel}
+              onClickReservation={onClickReservation}
+              // data={props.data}
+              fetchClassDetail={props.data?.fetchClassDetail}
+            />
+          )}
+          {showModal && <Backdrop onClick={handleModalClose} />}
         </form>
       </S.Wrapper>
     </>
