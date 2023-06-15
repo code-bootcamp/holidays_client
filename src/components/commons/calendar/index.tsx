@@ -1,37 +1,153 @@
-import MultipleDatePicker from "react-multiple-datepicker";
-import * as S from "../../units/classPage/write/classWrite.styles";
+// import MultipleDatePicker from "react-multiple-datepicker";
+// import * as S from "../../units/classPage/write/classWrite.styles";
+
+// interface ICalendarProps {
+//   selectedDates: any[];
+//   setSelectedDates: React.Dispatch<React.SetStateAction<never[]>>;
+// }
+
+// export default function Calendar(props: ICalendarProps) {
+//   const handleDateSelect = (dates: any) => {
+//     const formattedDates = dates.map((date: any) => formatDate(date));
+//     for (let i = 0; i < formattedDates.length; i++) {
+//       props.selectedDates.push(formattedDates[i]);
+//     }
+//   };
+
+//   const formatDate = (date: any) => {
+//     const year = date.getFullYear().toString().slice(2);
+//     const month = (date.getMonth() + 1).toString().padStart(2, "0");
+//     const day = date.getDate().toString().padStart(2, "0");
+//     return `${year}${month}${day}`;
+//   };
+
+//   // -------
+
+//   return (
+//     <>
+//       <MultipleDatePicker onSubmit={handleDateSelect} minDate={new Date()} />
+
+//       <S.DatelistWrapper>
+//         {props.selectedDates.map((date) => (
+//           <S.Datelist key={date}>{date}</S.Datelist>
+//         ))}
+//       </S.DatelistWrapper>
+//     </>
+//   );
+// }
+
+import React, { useState } from "react";
+import dayjs from "dayjs";
+import "dayjs/locale/zh-cn";
+import type { Dayjs } from "dayjs";
+import dayLocaleData from "dayjs/plugin/localeData";
+import { Calendar, Select, theme } from "antd";
+
+dayjs.extend(dayLocaleData);
+
+const { Option } = Select;
 
 interface ICalendarProps {
   selectedDates: any[];
   setSelectedDates: React.Dispatch<React.SetStateAction<never[]>>;
 }
 
-export default function Calendar(props: ICalendarProps) {
-  const handleDateSelect = (dates: any) => {
-    const formattedDates = dates.map((date: any) => formatDate(date));
+const CalendarFunction = (props: ICalendarProps) => {
+  const { token } = theme.useToken();
+  const [selectedDays, setSelectedDays] = useState<Dayjs[]>([]);
+
+  console.log(selectedDays);
+
+  const onPanelChange = (value: Dayjs, mode: any) => {};
+
+  const handleDaySelect = (value: Dayjs) => {
+    const selected = [...selectedDays];
+    const isDaySelected = selected.some((day) => day.isSame(value, "day"));
+
+    if (isDaySelected) {
+      const filtered = selected.filter((day) => !day.isSame(value, "day"));
+      setSelectedDays(filtered);
+    } else {
+      selected.push(value);
+      setSelectedDays(selected);
+    }
+
+    const formattedDates = selected.map((day) => day.format("YYMMDD"));
+    console.log("formattedDates-1 :", formattedDates);
+  };
+
+  const wrapperStyle = {
+    width: 300,
+    border: `1px solid ${token.colorBorderSecondary}`,
+    borderRadius: token.borderRadiusLG,
+  };
+
+  const headerStyle: React.CSSProperties = {
+    height: "32px",
+    lineHeight: "32px",
+    textAlign: "center",
+    fontWeight: "bold",
+    fontSize: "16px",
+  };
+
+  const headerRender = ({ value }: any) => {
+    const start = 0;
+    const end = 12;
+    const monthOptions = [];
+
+    for (let i = start; i < end; i++) {
+      monthOptions.push(<option key={`${i}`}>{i + 1}</option>);
+    }
+
+    const year = String(value.year()).slice(-2);
+    const month = String(value.month() + 1).padStart(2, "0");
+    const day = String(value.date()).padStart(2, "0");
+
+    const date = year + month + day;
+    console.log(date);
+
+    const formattedDates = selectedDays.map((day) => day.format("YYMMDD"));
+    console.log("formattedDates-2 :", formattedDates);
+
     for (let i = 0; i < formattedDates.length; i++) {
       props.selectedDates.push(formattedDates[i]);
     }
-  };
 
-  const formatDate = (date: any) => {
-    const year = date.getFullYear().toString().slice(2);
-    const month = (date.getMonth() + 1).toString().padStart(2, "0");
-    const day = date.getDate().toString().padStart(2, "0");
-    return `${year}${month}${day}`;
+    return (
+      <div style={headerStyle}>
+        <div>
+          {year}년 {month}월
+        </div>
+        <div></div>
+      </div>
+    );
   };
-
-  // -------
 
   return (
-    <>
-      <MultipleDatePicker onSubmit={handleDateSelect} minDate={new Date()} />
+    <div style={wrapperStyle}>
+      <Calendar
+        fullscreen={false}
+        dateFullCellRender={(value) => {
+          const day = value.date();
 
-      <S.DatelistWrapper>
-        {props.selectedDates.map((date) => (
-          <S.Datelist key={date}>{date}</S.Datelist>
-        ))}
-      </S.DatelistWrapper>
-    </>
+          const isSelected = selectedDays.some((selectedDay) =>
+            selectedDay.isSame(value, "day")
+          );
+          const cellStyle = isSelected
+            ? { background: "orange", color: "white" }
+            : {};
+
+          return (
+            <div style={cellStyle} onClick={() => handleDaySelect(value)}>
+              {day}
+            </div>
+          );
+        }}
+        onPanelChange={onPanelChange}
+        headerRender={headerRender}
+      />
+    </div>
   );
-}
+};
+
+export default CalendarFunction;
