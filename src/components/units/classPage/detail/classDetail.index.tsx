@@ -9,12 +9,22 @@ import { UseMutationWishList } from "../../../commons/hooks/useMutations/class/u
 import ClassReviewWrite from "../../classReviewPage/write/classReviewWrite.index";
 import SlickPage from "./classDetailSlick";
 import { UseQueryFetchWishLists } from "../../../commons/hooks/useQueries/class/UseQueryFetchWishlists";
+import { useQuery } from "@apollo/client";
+import { IQuery } from "../../../../commons/types/generated/types";
+import { FETCH_LOGIN_USER } from "../../../commons/hooks/useQueries/user/UseQueryFetchLoginUser";
+import { UseQueryFetchClassSchedules } from "../../../commons/hooks/useQueries/class/useQueryFetchClassSchedules";
 
 declare const window: typeof globalThis & {
   kakao: any;
 };
 
 export default function ClassDetail() {
+  // 로그인 여부 확인
+  const { data: login } =
+    useQuery<Pick<IQuery, "fetchLoginUser">>(FETCH_LOGIN_USER);
+
+  // --------------------------------------------------------
+
   const router = useRouter();
 
   const { data } = UseQueryFetchClassDetail();
@@ -84,10 +94,24 @@ export default function ClassDetail() {
           <S.Wrapper_header_top>
             {data?.fetchClassDetail.title}
           </S.Wrapper_header_top>
+          {/* <S.Wrapper_header_bottom>
+            <S.Wrapper_header_bottom_right>
+            {  login?.fetchLoginUser.user_id ===
+              data.fetchClassDetail.user_.user_id ?
+              <S.Btn onClick={onClickMoveToClassEdit}>수정</S.Btn>
+              <S.Btn onClick={onClickClassDelete}>삭제</S.Btn>}
+            </S.Wrapper_header_bottom_right>
+          </S.Wrapper_header_bottom> */}
+
           <S.Wrapper_header_bottom>
             <S.Wrapper_header_bottom_right>
-              <S.Btn onClick={onClickMoveToClassEdit}>수정</S.Btn>
-              <S.Btn onClick={onClickClassDelete}>삭제</S.Btn>
+              {login?.fetchLoginUser.user_id ===
+                data?.fetchClassDetail.user_.user_id && (
+                <>
+                  <S.Btn onClick={onClickMoveToClassEdit}>수정</S.Btn>
+                  <S.Btn onClick={onClickClassDelete}>삭제</S.Btn>
+                </>
+              )}
             </S.Wrapper_header_bottom_right>
           </S.Wrapper_header_bottom>
         </S.Wrapper_header>
@@ -165,7 +189,7 @@ export default function ClassDetail() {
           </S.Wrapper_body_left>
 
           <S.Wrapper_body_right>
-            <CalendarUI />
+            <CalendarUI data={data} />
           </S.Wrapper_body_right>
         </S.Wrapper_body>
 

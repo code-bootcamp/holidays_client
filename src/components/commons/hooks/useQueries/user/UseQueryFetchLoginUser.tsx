@@ -4,6 +4,8 @@ import { IQuery } from "../../../../../commons/types/generated/types";
 export const FETCH_LOGIN_USER = gql`
   query fetchLoginUser {
     fetchLoginUser {
+      user_id
+
       name
       phone
       email
