@@ -14,6 +14,7 @@ import { reservationSchema } from "./reservationCalendar.validation";
 import { yupResolver } from "@hookform/resolvers/yup";
 import Backdrop from "../../../../commons/modals/accountModal/Backdrop/Backdrop";
 import Modal from "../../../../commons/modals/accountModal/Modal/modal";
+import dayjs from "dayjs"; // 추가된 부분
 
 export default function CalendarUI(props: IReservationCreateProps) {
   const [showModal, setShowModal] = useState<boolean>(false);
@@ -46,6 +47,9 @@ export default function CalendarUI(props: IReservationCreateProps) {
   const [date, setDate] = useState<string>("");
 
   const { data } = UseQueryFetchClassSchedules();
+  console.log("///////////////");
+  console.log(data);
+  console.log("///////////////");
 
   const { onClickReservation } = UseMutationReservation();
 
@@ -67,6 +71,7 @@ export default function CalendarUI(props: IReservationCreateProps) {
     console.log("*******");
 
     handleModalOpen(value); // value 함께 전달.
+    setValue("personnel", "");
   };
 
   useEffect(() => {
@@ -107,6 +112,7 @@ export default function CalendarUI(props: IReservationCreateProps) {
     const date = year + month + day;
 
     setDate(date);
+    console.log("date: ", date);
 
     return (
       <div style={headerStyle}>
@@ -138,6 +144,9 @@ export default function CalendarUI(props: IReservationCreateProps) {
                 fullscreen={false}
                 onPanelChange={onPanelChange}
                 headerRender={headerRender}
+                disabledDate={(currentDate) =>
+                  currentDate.isBefore(dayjs(), "day")
+                } // 수정된 부분
               />
             </S.Calendar>
             <S.NumberBox>

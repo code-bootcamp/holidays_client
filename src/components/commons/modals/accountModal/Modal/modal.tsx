@@ -45,6 +45,8 @@ const Modal: React.FC<ModalProps> = ({
     console.log("ㅁㅁㅁㅁㅁㅁㅁ");
 
     onClickReservation(formData);
+    // setValue("personnel", "");
+
     onClose();
   };
   return (
