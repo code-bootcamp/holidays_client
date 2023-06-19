@@ -48,8 +48,33 @@ export default function CalendarUI(props: IReservationCreateProps) {
 
   const { data } = UseQueryFetchClassSchedules();
   console.log("///////////////");
-  console.log(data);
+  // console.log(data);
   console.log("///////////////");
+
+  console.log("###########");
+
+  // 활성화되어야 하는 날짜값
+  data?.fetchClassSchedules.map((el: any) => {
+    // console.log(el.date);
+  });
+
+  const disabledDate = (date: Dayjs | null) => {
+    if (!date) {
+      return true;
+    }
+
+    const formattedDate = date.format("YYMMDD");
+
+    // 예약 가능한 날짜들을 배열로 저장
+    const reservationDates = data?.fetchClassSchedules.map(
+      (el: any) => el.date
+    );
+
+    // 현재 날짜가 예약 가능한 날짜들 중에 포함되는 경우 활성화
+    return !reservationDates?.includes(formattedDate);
+  };
+
+  console.log("###########");
 
   const { onClickReservation } = UseMutationReservation();
 
@@ -144,9 +169,10 @@ export default function CalendarUI(props: IReservationCreateProps) {
                 fullscreen={false}
                 onPanelChange={onPanelChange}
                 headerRender={headerRender}
-                disabledDate={(currentDate) =>
-                  currentDate.isBefore(dayjs(), "day")
-                } // 수정된 부분
+                // disabledDate={(currentDate) =>
+                //   currentDate.isBefore(dayjs(), "day")
+                // }
+                disabledDate={disabledDate} // 날짜 비활성화 함수 적용
               />
             </S.Calendar>
             <S.NumberBox>
