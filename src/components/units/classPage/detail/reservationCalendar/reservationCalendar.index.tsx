@@ -17,27 +17,22 @@ import Modal from "../../../../commons/modals/accountModal/Modal/modal";
 
 export default function CalendarUI(props: IReservationCreateProps) {
   const [showModal, setShowModal] = useState<boolean>(false);
+  const [formData, setFormData] = useState<IFormData | null>(null);
 
-  // const handleModalOpen = (): void => {
-  //   setShowModal(true);
-  // };
+  console.log("%%%%%%%%%%%%%%%%%%%%%%%");
+  console.log(formData);
+  console.log("%%%%%%%%%%%%%%%%%%%%%%%");
 
-  const handleModalOpen = (): void => {
-    console.log("==gg==");
-    console.log(props.data);
-    console.log("==gg==");
+  const handleModalOpen = (data: IFormData): void => {
+    console.log("ㅎㅎㅎㅎㅎㅎㅎㅎㅎㅎ");
+    console.log(data);
+    console.log("ㅎㅎㅎㅎㅎㅎㅎㅎㅎㅎ");
 
     console.log(date); // 이건 나옴
 
-    console.log(props.personnel);
-    console.log(props.personnel || "props.personnel 값이 없습니다.");
-
-    console.log("~~~~~~~");
-    console.log(data.personnel);
-    console.log(data.personnel || "data.personnel 값이 없습니다.");
-
     const confirmResult = window.confirm("정말 예약하시겠습니까?");
     if (confirmResult) {
+      setFormData(data);
       setShowModal(true);
     }
   };
@@ -68,9 +63,10 @@ export default function CalendarUI(props: IReservationCreateProps) {
     const { ...value } = data;
     console.log("*******");
     console.log(value);
+    console.log(data);
     console.log("*******");
 
-    handleModalOpen();
+    handleModalOpen(value); // value 함께 전달.
   };
 
   useEffect(() => {
@@ -164,10 +160,9 @@ export default function CalendarUI(props: IReservationCreateProps) {
             <Modal
               onClose={handleModalClose}
               date={date}
-              personnel={props.personnel}
-              onClickReservation={onClickReservation}
-              // data={props.data}
+              data={formData}
               fetchClassDetail={props.data?.fetchClassDetail}
+              onClickReservation={onClickReservation}
             />
           )}
           {showModal && <Backdrop onClick={handleModalClose} />}

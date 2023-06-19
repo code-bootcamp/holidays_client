@@ -12,6 +12,7 @@ interface ModalProps {
   personnel: string;
   onClickReservation: (data: IFormData) => void;
   fetchClassDetail?: Pick<IQuery, "fetchClassDetail">;
+  data: IFormData; // data 추가
 }
 
 const Modal: React.FC<ModalProps> = ({
@@ -20,17 +21,28 @@ const Modal: React.FC<ModalProps> = ({
   personnel,
   onClickReservation,
   fetchClassDetail,
+  data, // data를 인자로 받습니다.
 }) => {
   const handleReservation = () => {
     // 예약 처리 로직
     console.log("!@!@!@!@!@!@!@");
-    console.log(date, personnel);
+    // console.log(date, personnel);
+    console.log(data); // data를 사용할 수 있습니다.
+    console.log("data.res_date: ", data.res_date);
+    console.log("data.personnel: ", data.personnel);
     console.log("!@!@!@!@!@!@!@");
 
     const formData: IFormData = {
       res_date: date,
-      personnel,
+      // personnel,
+      personnel: data.personnel,
     };
+
+    console.log("ㅁㅁㅁㅁㅁㅁㅁ");
+    console.log(formData);
+    console.log("formData.res_date: ", formData.res_date);
+    console.log("formData.personnel: ", formData.personnel);
+    console.log("ㅁㅁㅁㅁㅁㅁㅁ");
 
     onClickReservation(formData);
     onClose();
