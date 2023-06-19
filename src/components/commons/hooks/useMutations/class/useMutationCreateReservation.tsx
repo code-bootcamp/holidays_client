@@ -43,9 +43,7 @@ export const UseMutationReservation = () => {
         });
         alert("예약 완료");
       } else {
-        alert(
-          "예약이 불가능한 날짜 입니다 자세한 사항은 문의하기를 이용하세요."
-        );
+        alert("예약이 불가능합니다. 자세한 사항은 문의하기를 이용하세요.");
       }
     } catch (error) {
       if (error instanceof Error) console.log(error.message);
