@@ -15,6 +15,7 @@ import { useAuth02 } from "../../../commons/hooks/useAuths/useAuth02";
 import { classWriteSchema } from "./classWrite.validation";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useRouter } from "next/router";
+import CalendarFunction from "../../../commons/calendar";
 
 // 웹 에디터
 const ToastEditor = dynamic(
@@ -275,7 +276,12 @@ export default function ClassWrite(props: IClassWriteProps) {
             </S.ToastEditor>
 
             <S.Label>클래스 일정을 선택해주세요</S.Label>
-            <Calendar
+            {/* <Calendar
+              selectedDates={selectedDates}
+              setSelectedDates={setSelectedDates}
+            /> */}
+
+            <CalendarFunction
               selectedDates={selectedDates}
               setSelectedDates={setSelectedDates}
             />
