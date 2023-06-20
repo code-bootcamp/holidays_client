@@ -36,8 +36,8 @@ export default function StaticRoutingPage() {
       page: `/myPage/community`,
     },
     {
-      name: "예약 관리",
-      detailed: "클래스 예약 신청을 확인해주세요",
+      name: "클랙스 예약 승인",
+      detailed: "클래스 예약 승인을 해주세요",
       src: "/myPage/user-options.png",
       page: `/myPage/reservation`,
     },
