@@ -30,7 +30,7 @@ export default function CalendarUI(props: IReservationCreateProps) {
 
     console.log(date); // 이건 나옴
 
-    const confirmResult = window.confirm("정말 예약하시겠습니까?");
+    const confirmResult = window.confirm("예약하시겠습니까?");
     if (confirmResult) {
       setFormData(data);
       setShowModal(true);
