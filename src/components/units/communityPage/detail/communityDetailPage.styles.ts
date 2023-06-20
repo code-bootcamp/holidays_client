@@ -99,3 +99,20 @@ export const CommentContents = styled.div`
   font-size: 16px;
   margin-top: 10px;
 `;
+
+export const BottomWrapper = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding-top: 50px;
+`;
+
+export const Button = styled.button`
+  width: 175px;
+  height: 45px;
+  background-color: #f5f5f5;
+  border: 1px solid #f5f5f5;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+`;

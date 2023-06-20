@@ -4,7 +4,6 @@ import Modal from "../../../commons/modals/classListModal/Modal/modal";
 import ModalComponent from "../../../commons/modals/areaListModal/Modal/modal";
 import * as S from "./classList.styles";
 import { useQuery } from "@apollo/client";
-import { FETCH_CLASSES } from "../../../commons/hooks/useQueries/class/UseQueryFetchClasses";
 import { useRecoilValue } from "recoil";
 import {
   selectedRegionState,
@@ -14,6 +13,7 @@ import { Money } from "../../../../commons/libraries/utils";
 import InfiniteScroll from "react-infinite-scroller";
 import { useRouter } from "next/router";
 import { FETCH_CLASSES_AD } from "../../../commons/hooks/useQueries/class/UseQueryFetchClassesAd";
+import { FETCH_CLASSES } from "../../../commons/hooks/useQueries/class/UseQueryFetchClassesPopular";
 
 interface PostType {
   class_id: number;

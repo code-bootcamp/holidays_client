@@ -53,6 +53,13 @@ export default function communityListPage() {
     });
   };
 
+  ///////////////////////////////////////////////////////////////
+  // 대체 이미지
+  //////////////////////////////////////////////////////////////
+  const onErrorImg = (e: any) => {
+    e.target.src = "/images/all-icon.png";
+  };
+
   return (
     <S.Wrapper>
       <S.TitleTie>
@@ -75,7 +82,7 @@ export default function communityListPage() {
               <S.Posts id={post.board_id} onClick={onClickSubmit}>
                 <S.PostBody>
                   <S.Template>
-                    <S.PostImg src={post.url} />
+                    <S.PostImg src={post.url} onError={onErrorImg} />
                   </S.Template>
                   <S.PostTitle>{post.title}</S.PostTitle>
                   <S.PostContent>

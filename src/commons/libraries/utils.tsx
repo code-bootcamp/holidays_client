@@ -63,3 +63,11 @@ export const formatDateString = (date: any) => {
 };
 
 export function replaceImageTags(content: any) {}
+
+export const Day = (date: string) => {
+  var year = date.slice(0, 2);
+  var month = date.slice(2, 4);
+  var day = date.slice(4, 6);
+
+  return year + "년" + month + "월" + day + "일";
+};

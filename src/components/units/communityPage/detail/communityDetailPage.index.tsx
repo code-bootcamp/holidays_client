@@ -4,6 +4,8 @@ import { FETCH_BOARD_DETAIL } from "../../../commons/hooks/useQueries/board/UseQ
 import { replaceImageTags } from "../../../../commons/libraries/utils";
 import DOMPurify from "dompurify";
 import * as S from "./communityDetailPage.styles";
+import { UseMutationDeleteBoard } from "../../../commons/hooks/useMutations/board/useMutationDeleteBoard";
+import { FECTCH_BOARDS } from "../../../commons/hooks/useQueries/board/UseQueryFetchBoards";
 
 export default function communityDetailPage() {
   const router = useRouter();
@@ -11,10 +13,41 @@ export default function communityDetailPage() {
     variables: { board_id: router.query.board_id },
   });
 
+  const [deleteBoard] = UseMutationDeleteBoard();
+
   // 이미지가 없을 경우에 대한 스타일 처리
   const titleImgStyle = data?.fetchBoardDetail?.image_[0]?.url
     ? undefined
     : { display: "none" };
+
+  ///////////////////////////////////////////////////////////////
+  // 사랑방 수정하기 이동
+  //////////////////////////////////////////////////////////////
+
+  const onClickUpdate = () => {
+    console.log(router.query.useditemId);
+    router.push(`/communityPage/${router.query.board_id}/edit`);
+  };
+
+  ///////////////////////////////////////////////////////////////
+  // 사랑방 리스트 이동
+  //////////////////////////////////////////////////////////////
+
+  const onClickBoard = () => {
+    router.push(`/communityPage`);
+  };
+
+  ///////////////////////////////////////////////////////////////
+  // 게시물 삭제
+  //////////////////////////////////////////////////////////////
+
+  const onClickDelete = async (event: React.MouseEvent<HTMLButtonElement>) => {
+    const result = await deleteBoard({
+      variables: { board_id: router.query.board_id },
+      refetchQueries: [{ query: FECTCH_BOARDS }],
+    });
+    router.push(`/communityPage`);
+  };
 
   return (
     <>
@@ -51,6 +84,11 @@ export default function communityDetailPage() {
           </S.CommentContents>
         </S.CommentBox>
         <S.Line /> */}
+        <S.BottomWrapper>
+          <S.Button onClick={onClickBoard}>목록으로</S.Button>
+          <S.Button onClick={onClickUpdate}>수정하기</S.Button>
+          <S.Button onClick={onClickDelete}>삭제하기</S.Button>
+        </S.BottomWrapper>
       </S.Wrapper>
     </>
   );

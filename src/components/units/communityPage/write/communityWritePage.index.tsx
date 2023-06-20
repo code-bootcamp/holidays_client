@@ -18,6 +18,8 @@ import { FETCH_BOARD_DETAIL } from "../../../commons/hooks/useQueries/board/UseQ
 import dynamic from "next/dynamic";
 import { UploadFile } from "antd";
 import { FECTCH_BOARDS } from "../../../commons/hooks/useQueries/board/UseQueryFetchBoards";
+import { UseMutationUpdateBoard } from "../../../commons/hooks/useMutations/board/useMutationUpdateBoard";
+import { UseMutationDeleteBoard } from "../../../commons/hooks/useMutations/board/useMutationDeleteBoard";
 
 const ToastEditor = dynamic(
   async () => await import("../../../commons/toastUI"),
@@ -37,12 +39,15 @@ export default function CommunityWritePage(props: any) {
   const [fileUrls, setFileUrls] = useState("");
   const contentsRef = useRef<EditorInstance | null>(null);
   const [createBoard] = UseMutationCreateBoard();
+  const [updateBoard] = UseMutationUpdateBoard();
   const [uploadFile] = UseMutationUploadFile();
   const { data } = useQuery(FETCH_BOARD_DETAIL, {
     variables: { board_id: router.query.board_id },
   });
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
+  const [email, setEmail] = useState("");
+  const [birthDate, setBirthDate] = useState("");
 
   const { register, handleSubmit, setValue, formState } = useForm<ProductInput>(
     {
@@ -51,15 +56,27 @@ export default function CommunityWritePage(props: any) {
     }
   );
 
-  const onChangeTitle = (event: ChangeEvent<HTMLInputElement>) => {
-    setTitle(event.target.value);
-  };
-
   const onChangeContents = (text: any) => {
     const editorInstance: string =
       contentsRef.current?.getInstance()?.getHTML() ?? "";
     setContent(text === "<p><br><p>" ? "" : editorInstance);
   };
+
+  const onChangeTitle = (event: ChangeEvent<HTMLInputElement>) => {
+    setTitle(event.target.value);
+  };
+
+  const onChangeEmail = (event: ChangeEvent<HTMLInputElement>) => {
+    setEmail(event.target.value);
+  };
+
+  const onChangeBirthDate = (event: ChangeEvent<HTMLInputElement>) => {
+    setBirthDate(event.target.value);
+  };
+
+  ///////////////////////////////////////////////////////////////
+  //  게시물 등록
+  //////////////////////////////////////////////////////////////
 
   const onClickSubmit = async (data: ProductInput) => {
     console.log(content);
@@ -87,15 +104,65 @@ export default function CommunityWritePage(props: any) {
     router.push(`/communityPage`);
   };
 
+  /////////////////////////////////////////////////////////////////////////////////
+  // 게시물 업데이트
+  ////////////////////////////////////////////////////////////////////////////////
+  const onClickUpdate = async (data: any) => {
+    const currentFiles = JSON.stringify(fileUrls);
+    const defaultFiles = JSON.stringify(props.data?.fetchBoard.images);
+    const isChangedFiles = currentFiles !== defaultFiles;
+
+    try {
+      if (typeof router.query.board_id !== "string") {
+        alert("시스템에 문제가 있습니다.");
+        return;
+      }
+      const result = await updateBoard({
+        variables: {
+          updateBoardInput: {
+            board_id: String(router.query.board_id),
+            title: title,
+            content: content,
+            email: "",
+            birth_date: "",
+            imageInput: [
+              {
+                url: fileUrls,
+                type: 1,
+                is_main: 1,
+              },
+            ],
+          },
+        },
+        refetchQueries: [{ query: FECTCH_BOARDS }],
+      });
+
+      if (result.data?.updateBoard === undefined) {
+        alert("요청에 문제가 있습니다.");
+        return;
+      }
+      void router.push(`/communityPage/${result.data?.updateBoard}`);
+      console.log(result.data?.updateUseditem._id);
+    } catch (error) {
+      if (error instanceof Error) alert(error.message);
+    }
+  };
+
   ///////////////////////////////////////////////////////////////
   //  이미지 등록
   //////////////////////////////////////////////////////////////
 
   const onChangeFileUrls = (fileUrl: string): void => {
-    const newFileUrls = fileUrl;
+    const newFileUrls = fileUrls;
     // newFileUrls[index] = fileUrl;
     setFileUrls(newFileUrls);
   };
+
+  useEffect(() => {
+    const images = data?.fetchBoardDetail?.image_[0].url;
+    console.log(data?.fetchBoardDetail?.image_[0].url);
+    if (images !== undefined && images !== null) setFileUrls(images);
+  }, [data]);
 
   return (
     <div>
@@ -124,7 +191,11 @@ export default function CommunityWritePage(props: any) {
         </S.ImageWrapper>
         <S.InputWrapper>
           <S.Label>제목</S.Label>
-          <S.Subject type="text" onChange={onChangeTitle} />
+          <S.Subject
+            type="text"
+            onChange={onChangeTitle}
+            defaultValue={data?.fetchBoardDetail?.title}
+          />
           <S.Error>{/* {props.titleError} */}</S.Error>
         </S.InputWrapper>
         <S.InputWrapper>
@@ -134,13 +205,15 @@ export default function CommunityWritePage(props: any) {
             <ToastEditor
               contentsRef={contentsRef}
               onChangeContents={onChangeContents}
-              initialValue={data?.fetchBoard.contents}
+              initialValue={data?.fetchBoardDetail?.content}
             />
           </S.ToastEditorWrapper>
           <S.Error>{/* {props.contentsError} */}</S.Error>
         </S.InputWrapper>
         <S.ButtonWrapper>
-          <S.SubmitButton onClick={onClickSubmit}>
+          <S.SubmitButton
+            onClick={props.isEdit ? onClickUpdate : onClickSubmit}
+          >
             {props.isEdit ? "수정하기" : "등록하기"}
           </S.SubmitButton>
           <S.CancelButton onClick={onClickCancel}>취소하기</S.CancelButton>
