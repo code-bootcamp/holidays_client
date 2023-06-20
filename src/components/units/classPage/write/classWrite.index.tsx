@@ -84,6 +84,7 @@ export default function ClassWrite(props: IClassWriteProps) {
         const options = {
           center: new window.kakao.maps.LatLng(33.450701, 126.570667),
           level: 3,
+          draggable: false, // 드래그 비활성화
         };
 
         const map = new window.kakao.maps.Map(container, options);
