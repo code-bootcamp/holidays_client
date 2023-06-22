@@ -48,7 +48,9 @@ export const UseMutationCreateClass = () => {
           });
         }
       }
-
+      console.log("aaaaa");
+      console.log(selectedDates);
+      console.log("aaaaa");
       // 달력
       const classSchedules = [];
       for (let i = 0; i < selectedDates.length; i++) {

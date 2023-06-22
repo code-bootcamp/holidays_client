@@ -71,9 +71,16 @@ const CalendarFunction = (props: ICalendarProps) => {
     const formattedDates = selectedDays.map((day) => day.format("YYMMDD"));
     console.log("formattedDates-2 :", formattedDates);
 
+    props.selectedDates.length = 0;
     for (let i = 0; i < formattedDates.length; i++) {
-      props.selectedDates.push(formattedDates[i]);
+      if (!props.selectedDates.includes(formattedDates[i])) {
+        props.selectedDates.push(formattedDates[i]);
+      }
     }
+
+    console.log("dd");
+    console.log(props.selectedDates);
+    console.log("dd");
 
     return (
       <div style={headerStyle}>
