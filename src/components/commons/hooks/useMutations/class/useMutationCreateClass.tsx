@@ -23,6 +23,10 @@ export const UseMutationCreateClass = () => {
 
   const [selectedDates, setSelectedDates] = useState([]);
 
+  console.log("*****************");
+  console.log(selectedDates);
+  console.log("*****************");
+
   const onClickClassSubmit = async (data: IFormData, address: string) => {
     try {
       const results = await Promise.all(
