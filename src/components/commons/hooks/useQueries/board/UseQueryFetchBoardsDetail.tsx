@@ -10,9 +10,12 @@ export const FETCH_BOARD_DETAIL = gql`
       createdAt
       user_ {
         name
+        email
       }
       image_ {
         url
+        type
+        is_main
       }
     }
   }

@@ -30,8 +30,8 @@ export default function StaticRoutingPage() {
       page: `/myPage/wishList`,
     },
     {
-      name: "내 사랑방 리스트",
-      detailed: "내가 작성한 사랑방 리스트",
+      name: "내 게시글 목록",
+      detailed: "내가 작성한 커뮤니티 게시글 목록",
       src: "/myPage/options-list.png",
       page: `/myPage/community`,
     },

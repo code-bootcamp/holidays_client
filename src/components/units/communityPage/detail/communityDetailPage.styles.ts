@@ -101,6 +101,7 @@ export const CommentContents = styled.div`
 `;
 
 export const BottomWrapper = styled.div`
+  width: 100%;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -115,4 +116,7 @@ export const Button = styled.button`
   border-radius: 4px;
   cursor: pointer;
   font-size: 16px;
+  &.Edit {
+    color: gray;
+  }
 `;

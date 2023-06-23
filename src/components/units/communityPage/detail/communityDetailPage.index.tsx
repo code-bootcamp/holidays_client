@@ -6,12 +6,16 @@ import DOMPurify from "dompurify";
 import * as S from "./communityDetailPage.styles";
 import { UseMutationDeleteBoard } from "../../../commons/hooks/useMutations/board/useMutationDeleteBoard";
 import { FECTCH_BOARDS } from "../../../commons/hooks/useQueries/board/UseQueryFetchBoards";
+import { FETCH_LOGIN_USER } from "../../../commons/hooks/useQueries/user/UseQueryFetchLoginUser";
+import BoardCommentList from "../commentlist/BoardCommentList.container";
+import BoardComment from "../comment/BoardComment.index";
 
 export default function communityDetailPage() {
   const router = useRouter();
   const { data, refetch } = useQuery(FETCH_BOARD_DETAIL, {
     variables: { board_id: router.query.board_id },
   });
+  const { data: LoginUser } = useQuery(FETCH_LOGIN_USER);
 
   const [deleteBoard] = UseMutationDeleteBoard();
 
@@ -25,7 +29,6 @@ export default function communityDetailPage() {
   //////////////////////////////////////////////////////////////
 
   const onClickUpdate = () => {
-    console.log(router.query.useditemId);
     router.push(`/communityPage/${router.query.board_id}/edit`);
   };
 
@@ -74,20 +77,25 @@ export default function communityDetailPage() {
           />
         </S.WrapperContents>
         <S.Line />
-        {/* <S.CommentWrite placeholder="댓글을 입력해 주세요" />
-        <S.CommentBox>
-          <S.CommentUser>최 팀장</S.CommentUser>
-          <S.CommentTime>2023.05.23</S.CommentTime>
-          <S.CommentContents>
-            그때 댓글에 하시겠다던 분과는 매칭결과가 좋지 못하셨나봅니다. 또
-            올리신 걸 보니..
-          </S.CommentContents>
-        </S.CommentBox>
-        <S.Line /> */}
+
+        <BoardComment />
+        <BoardCommentList />
+
+        <S.Line />
         <S.BottomWrapper>
+          {LoginUser?.fetchLoginUser?.email ===
+          data?.fetchBoardDetail?.user_?.email ? (
+            <S.Button onClick={onClickUpdate}>수정하기</S.Button>
+          ) : (
+            <S.Button className="Edit">수정하기</S.Button>
+          )}
           <S.Button onClick={onClickBoard}>목록으로</S.Button>
-          <S.Button onClick={onClickUpdate}>수정하기</S.Button>
-          <S.Button onClick={onClickDelete}>삭제하기</S.Button>
+          {LoginUser?.fetchLoginUser?.email ===
+          data?.fetchBoardDetail?.user_?.email ? (
+            <S.Button onClick={onClickDelete}>삭제하기</S.Button>
+          ) : (
+            <S.Button className="Edit">삭제하기</S.Button>
+          )}
         </S.BottomWrapper>
       </S.Wrapper>
     </>

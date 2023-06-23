@@ -63,12 +63,11 @@ export default function communityListPage() {
   return (
     <S.Wrapper>
       <S.TitleTie>
-        <S.Title>사랑방</S.Title>
+        <S.Title>커뮤니티</S.Title>
         <S.Service onClick={onClickWrite}>
           <S.ServiceText>글쓰기</S.ServiceText>
         </S.Service>
       </S.TitleTie>
-      <S.InputBox placeholder="검색어를 입력해 주세요" />
       <S.Line />
       <InfiniteScroll
         pageStart={0}

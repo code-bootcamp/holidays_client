@@ -94,10 +94,9 @@ export default function CommunityWritePage(props: any) {
           ],
         },
       },
-      refetchQueries: [{ query: FECTCH_BOARDS }],
+      refetchQueries: [{ query: FECTCH_BOARDS }, { query: FETCH_BOARD_DETAIL }],
     });
     void router.push(`/communityPage/${result.data?.createBoard}`);
-    console.log(result?.data?.createBoard);
   };
 
   const onClickCancel = () => {
@@ -107,7 +106,7 @@ export default function CommunityWritePage(props: any) {
   /////////////////////////////////////////////////////////////////////////////////
   // 게시물 업데이트
   ////////////////////////////////////////////////////////////////////////////////
-  const onClickUpdate = async (data: any) => {
+  const onClickUpdate = async (data: ProductInput) => {
     const currentFiles = JSON.stringify(fileUrls);
     const defaultFiles = JSON.stringify(props.data?.fetchBoard.images);
     const isChangedFiles = currentFiles !== defaultFiles;
@@ -117,14 +116,13 @@ export default function CommunityWritePage(props: any) {
         alert("시스템에 문제가 있습니다.");
         return;
       }
+
       const result = await updateBoard({
         variables: {
           updateBoardInput: {
             board_id: String(router.query.board_id),
             title: title,
             content: content,
-            email: "",
-            birth_date: "",
             imageInput: [
               {
                 url: fileUrls,
@@ -134,15 +132,21 @@ export default function CommunityWritePage(props: any) {
             ],
           },
         },
-        refetchQueries: [{ query: FECTCH_BOARDS }],
+        refetchQueries: [
+          { query: FECTCH_BOARDS },
+          {
+            query: FETCH_BOARD_DETAIL,
+            variables: { board_id: router.query.board_id },
+          },
+        ],
       });
 
       if (result.data?.updateBoard === undefined) {
         alert("요청에 문제가 있습니다.");
         return;
       }
+      alert("수정이 완료되었습니다.");
       void router.push(`/communityPage/${result.data?.updateBoard}`);
-      console.log(result.data?.updateUseditem._id);
     } catch (error) {
       if (error instanceof Error) alert(error.message);
     }
@@ -153,7 +157,7 @@ export default function CommunityWritePage(props: any) {
   //////////////////////////////////////////////////////////////
 
   const onChangeFileUrls = (fileUrl: string): void => {
-    const newFileUrls = fileUrls;
+    const newFileUrls = fileUrl;
     // newFileUrls[index] = fileUrl;
     setFileUrls(newFileUrls);
   };

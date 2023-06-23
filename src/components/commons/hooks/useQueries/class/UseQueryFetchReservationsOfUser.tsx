@@ -10,6 +10,7 @@ export const FETCH_RESERVATIONS_OF_USER = gql`
       personnel
       class_id
       url
+      status
     }
   }
 `;

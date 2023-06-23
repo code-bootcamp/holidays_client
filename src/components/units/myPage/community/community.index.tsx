@@ -31,7 +31,7 @@ export default function ProposalClass() {
         ) : !data || data.fetchBoardsOfMine.length === 0 ? (
           <>
             <S.ListNameIconWrapper>
-              <S.ListName>내 사랑방 리스트</S.ListName>
+              <S.ListName>내 게시글 목록</S.ListName>
               <S.Icon src="/myPage/options-list.png" />
             </S.ListNameIconWrapper>
             <S.Line />
@@ -47,7 +47,7 @@ export default function ProposalClass() {
         ) : (
           <>
             <S.ListNameIconWrapper>
-              <S.ListName>내 사랑방 리스트</S.ListName>
+              <S.ListName>내 게시글 목록</S.ListName>
               <S.Icon src="/myPage/options-list.png" />
             </S.ListNameIconWrapper>
             <S.Line />

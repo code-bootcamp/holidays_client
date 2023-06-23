@@ -1,14 +1,14 @@
 import { gql, useQuery } from "@apollo/client";
 import { string } from "yup";
 
-export const FETCH_CLASSES: any = gql`
-  query fetchClasses(
+export const FETCH_CLASSES_POPULAR: any = gql`
+  query fetchClassesPopular(
     $category: String = ""
     $address_category: String = ""
     $search: String = ""
     $page: Int = 1
   ) {
-    fetchClasses(
+    fetchClassesPopular(
       category: $category
       address_category: $address_category
       search: $search
