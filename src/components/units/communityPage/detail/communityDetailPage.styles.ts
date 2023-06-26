@@ -26,6 +26,11 @@ export const Title = styled.h1`
   font-size: 50px;
 `;
 
+export const UserButtonTie = styled.div`
+  display: flex;
+  justify-content: space-between;
+`;
+
 export const UserTie = styled.div`
   margin-bottom: 30px;
 `;
@@ -41,6 +46,20 @@ export const Time = styled.div`
   color: #999;
 `;
 
+export const LikeButton = styled.button`
+  height: 40px;
+  width: 80px;
+  font-size: 15px;
+  border: none;
+  background-color: white;
+  border: 1px solid rgb(242, 131, 22);
+  color: rgb(242, 131, 22);
+  font-weight: 500;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-top: 5px;
+`;
+
 export const Line = styled.div`
   width: 100%;
   border: 1px solid #fafafa;
@@ -48,10 +67,7 @@ export const Line = styled.div`
   margin-top: 20px;
 `;
 
-export const WrapperContents = styled.div`
-  width: 100%; /* 부모 요소의 너비 설정 */
-  overflow: hidden; /* 이미지가 넘치는 경우를 대비한 영역 제한 설정 */
-`;
+export const WrapperContents = styled.div``;
 
 export const Contents = styled.div`
   margin-bottom: 30px;

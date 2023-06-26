@@ -48,6 +48,7 @@ export default function CommunityWritePage(props: any) {
   const [content, setContent] = useState("");
   const [email, setEmail] = useState("");
   const [birthDate, setBirthDate] = useState("");
+  const [shouldReload, setShouldReload] = useState(false);
 
   const { register, handleSubmit, setValue, formState } = useForm<ProductInput>(
     {
@@ -79,48 +80,13 @@ export default function CommunityWritePage(props: any) {
   //////////////////////////////////////////////////////////////
 
   const onClickSubmit = async (data: ProductInput) => {
-    console.log(content);
-    const result = await createBoard({
-      variables: {
-        createBoardInput: {
-          title: title,
-          content: content,
-          imageInput: [
-            {
-              url: fileUrls,
-              type: 1,
-              is_main: 1,
-            },
-          ],
-        },
-      },
-      refetchQueries: [{ query: FECTCH_BOARDS }, { query: FETCH_BOARD_DETAIL }],
-    });
-    void router.push(`/communityPage/${result.data?.createBoard}`);
-  };
-
-  const onClickCancel = () => {
-    router.push(`/communityPage`);
-  };
-
-  /////////////////////////////////////////////////////////////////////////////////
-  // 게시물 업데이트
-  ////////////////////////////////////////////////////////////////////////////////
-  const onClickUpdate = async (data: ProductInput) => {
-    const currentFiles = JSON.stringify(fileUrls);
-    const defaultFiles = JSON.stringify(props.data?.fetchBoard.images);
-    const isChangedFiles = currentFiles !== defaultFiles;
-
-    try {
-      if (typeof router.query.board_id !== "string") {
-        alert("시스템에 문제가 있습니다.");
-        return;
-      }
-
-      const result = await updateBoard({
+    if (!title || !content) {
+      alert("내용 입력을 확인해주세요");
+    }
+    if (title && content) {
+      const result = await createBoard({
         variables: {
-          updateBoardInput: {
-            board_id: String(router.query.board_id),
+          createBoardInput: {
             title: title,
             content: content,
             imageInput: [
@@ -134,21 +100,69 @@ export default function CommunityWritePage(props: any) {
         },
         refetchQueries: [
           { query: FECTCH_BOARDS },
-          {
-            query: FETCH_BOARD_DETAIL,
-            variables: { board_id: router.query.board_id },
-          },
+          { query: FETCH_BOARD_DETAIL },
         ],
       });
 
-      if (result.data?.updateBoard === undefined) {
-        alert("요청에 문제가 있습니다.");
-        return;
+      alert("등록이 완료되었습니다.");
+      void router.push(`/communityPage/${result.data?.createBoard}`);
+    }
+  };
+  const onClickCancel = () => {
+    router.push(`/communityPage`);
+  };
+
+  /////////////////////////////////////////////////////////////////////////////////
+  // 게시물 업데이트
+  ////////////////////////////////////////////////////////////////////////////////
+  const onClickUpdate = async (data: ProductInput) => {
+    const currentFiles = JSON.stringify(fileUrls);
+    const defaultFiles = JSON.stringify(props.data?.fetchBoard.images);
+    const isChangedFiles = currentFiles !== defaultFiles;
+
+    if (!title || !content) {
+      alert("내용 입력을 확인해주세요");
+    }
+    if (title && content) {
+      try {
+        if (typeof router.query.board_id !== "string") {
+          alert("시스템에 문제가 있습니다.");
+          return;
+        }
+        const result = await updateBoard({
+          variables: {
+            updateBoardInput: {
+              board_id: String(router.query.board_id),
+              title: title,
+              content: content,
+              imageInput: [
+                {
+                  url: fileUrls,
+                  type: 1,
+                  is_main: 1,
+                },
+              ],
+            },
+          },
+          refetchQueries: [
+            { query: FECTCH_BOARDS },
+            {
+              query: FETCH_BOARD_DETAIL,
+              variables: { board_id: router.query.board_id },
+            },
+          ],
+        });
+
+        if (result.data?.updateBoard === undefined) {
+          alert("요청에 문제가 있습니다.");
+          return;
+        }
+        alert("수정이 완료되었습니다.");
+        setShouldReload(true);
+        void router.push(`/communityPage/${result.data?.updateBoard}`);
+      } catch (error) {
+        if (error instanceof Error) alert(error.message);
       }
-      alert("수정이 완료되었습니다.");
-      void router.push(`/communityPage/${result.data?.updateBoard}`);
-    } catch (error) {
-      if (error instanceof Error) alert(error.message);
     }
   };
 
@@ -168,10 +182,21 @@ export default function CommunityWritePage(props: any) {
     if (images !== undefined && images !== null) setFileUrls(images);
   }, [data]);
 
+  ///////////////////////////////////////////////////////////////
+  //  수정시 새로고침
+  //////////////////////////////////////////////////////////////
+
+  useEffect(() => {
+    if (shouldReload) {
+      setShouldReload(false);
+      window.location.reload();
+    }
+  }, [shouldReload]);
+
   return (
     <div>
       <S.Wrapper>
-        <S.TitleMain>사랑방 글쓰기</S.TitleMain>
+        <S.TitleMain>커뮤니티 글쓰기</S.TitleMain>
         <S.Box>
           <S.TitleTextWrapper>
             <S.Title>작성 가이드</S.Title>

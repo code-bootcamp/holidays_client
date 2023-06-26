@@ -13,7 +13,7 @@ import { Money } from "../../../../commons/libraries/utils";
 import InfiniteScroll from "react-infinite-scroller";
 import { useRouter } from "next/router";
 import { FETCH_CLASSES_AD } from "../../../commons/hooks/useQueries/class/UseQueryFetchClassesAd";
-import { FETCH_CLASSES } from "../../../commons/hooks/useQueries/class/UseQueryFetchClassesPopular";
+import { FETCH_CLASSES } from "../../../commons/hooks/useQueries/class/UseQueryFetchClasses";
 
 interface PostType {
   class_id: number;
