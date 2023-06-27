@@ -1,6 +1,6 @@
 # 홀리데이즈 HOLIDAYS
 
-#### 배포 사이트 : https://happyholidays.site
+#### 배포 사이트 : https://happyholidays.site (2023.06.29 2차 배포 예정)
 
 ## 멤버 구성
 ### 신재욱 (FE)
