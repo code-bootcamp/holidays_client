@@ -101,6 +101,11 @@ export type ICreateClassInput = {
   total_time: Scalars['String'];
 };
 
+export type ICreateClassInquiryInput = {
+  class_id: Scalars['String'];
+  content: Scalars['String'];
+};
+
 export type ICreateClassReviewInput = {
   class_id: Scalars['String'];
   content: Scalars['String'];
@@ -145,6 +150,14 @@ export type IFetchBoards = {
   url: Scalars['String'];
 };
 
+export type IFetchClassInquiries = {
+  __typename?: 'FetchClassInquiries';
+  ci_id: Scalars['String'];
+  content: Scalars['String'];
+  createdAt: Scalars['DateTime'];
+  name: Scalars['String'];
+};
+
 export type IFetchClassReviews = {
   __typename?: 'FetchClassReviews';
   content: Scalars['String'];
@@ -158,6 +171,7 @@ export type IFetchClasses = {
   __typename?: 'FetchClasses';
   address: Scalars['String'];
   address_detail: Scalars['String'];
+  category: Scalars['String'];
   class_id: Scalars['String'];
   content_summary: Scalars['String'];
   is_ad: Scalars['Int'];
@@ -171,6 +185,7 @@ export type IFetchClassesPopular = {
   __typename?: 'FetchClassesPopular';
   address: Scalars['String'];
   address_detail: Scalars['String'];
+  category: Scalars['String'];
   class_id: Scalars['String'];
   content_summary: Scalars['String'];
   price: Scalars['Int'];
@@ -199,6 +214,7 @@ export type IFetchReservationsOfUser = {
   name: Scalars['String'];
   personnel: Scalars['String'];
   res_id: Scalars['String'];
+  status: Scalars['String'];
   title: Scalars['String'];
   url: Scalars['String'];
 };
@@ -260,6 +276,7 @@ export type IMutation = {
   deleteBoard: Scalars['Boolean'];
   deleteBoardReview: Scalars['Boolean'];
   deleteClass: Scalars['Boolean'];
+  deleteClassInquiry: Scalars['Boolean'];
   deleteClassReview: Scalars['Boolean'];
   deleteReservation: Scalars['Boolean'];
   deleteUser: Scalars['Boolean'];
@@ -269,9 +286,10 @@ export type IMutation = {
   login: Scalars['String'];
   logout: Scalars['String'];
   restoreAccessToken: Scalars['String'];
-  updateBoard: Scalars['Boolean'];
+  updateBoard: Scalars['String'];
   updateBoardReview: IBoardReview;
   updateClass: Scalars['Boolean'];
+  updateClassInquiry: Scalars['Boolean'];
   updateClassReview: Scalars['Boolean'];
   updateReservation: Scalars['Boolean'];
   updateUser: IUser;
@@ -318,8 +336,7 @@ export type IMutationCreateClassAdArgs = {
 
 
 export type IMutationCreateClassInquiryArgs = {
-  class_id: Scalars['String'];
-  content: Scalars['String'];
+  createClassInquiryInput: ICreateClassInquiryInput;
 };
 
 
@@ -363,6 +380,11 @@ export type IMutationDeleteBoardReviewArgs = {
 
 export type IMutationDeleteClassArgs = {
   class_id: Scalars['String'];
+};
+
+
+export type IMutationDeleteClassInquiryArgs = {
+  ci_id: Scalars['String'];
 };
 
 
@@ -413,6 +435,11 @@ export type IMutationUpdateClassArgs = {
 };
 
 
+export type IMutationUpdateClassInquiryArgs = {
+  updateClassInquiryInput: IUpdateClassInquiryInput;
+};
+
+
 export type IMutationUpdateClassReviewArgs = {
   updateClassReviewInput: IUpdateClassReviewInput;
 };
@@ -445,6 +472,7 @@ export type IQuery = {
   fetchBoards: Array<IFetchBoards>;
   fetchBoardsOfMine: Array<IFetchBoards>;
   fetchClassDetail: IClass;
+  fetchClassInquiries: Array<IFetchClassInquiries>;
   fetchClassReviews: Array<IFetchClassReviews>;
   fetchClassSchedules: Array<IClassSchedule>;
   fetchClasses: Array<IFetchClasses>;
@@ -478,6 +506,12 @@ export type IQueryFetchBoardsArgs = {
 
 export type IQueryFetchClassDetailArgs = {
   class_id: Scalars['String'];
+};
+
+
+export type IQueryFetchClassInquiriesArgs = {
+  class_id: Scalars['String'];
+  page?: InputMaybe<Scalars['Int']>;
 };
 
 
@@ -525,10 +559,8 @@ export type IQueryFetchWishlistOfMineArgs = {
 };
 
 export type IUpdateBoardInput = {
-  birth_date: Scalars['String'];
   board_id: Scalars['String'];
   content: Scalars['String'];
-  email: Scalars['String'];
   imageInput?: InputMaybe<Array<IImageInput>>;
   title: Scalars['String'];
 };
@@ -546,7 +578,7 @@ export type IUpdateClassInput = {
   address_detail: Scalars['String'];
   bankName: Scalars['String'];
   category: Scalars['String'];
-  classSchedulesInput: Array<ICreateClassScheduleInput>;
+  classSchedulesInput: Array<IUpdateClassScheduleInput>;
   class_id: Scalars['String'];
   class_mNum: Scalars['Int'];
   content: Scalars['String'];
@@ -557,10 +589,21 @@ export type IUpdateClassInput = {
   total_time: Scalars['String'];
 };
 
+export type IUpdateClassInquiryInput = {
+  ci_id: Scalars['String'];
+  content: Scalars['String'];
+};
+
 export type IUpdateClassReviewInput = {
   content: Scalars['String'];
   cr_id: Scalars['String'];
   grade: Scalars['Int'];
+};
+
+export type IUpdateClassScheduleInput = {
+  cs_id: Scalars['String'];
+  date: Scalars['String'];
+  remain: Scalars['Int'];
 };
 
 export type IUpdateUserInput = {

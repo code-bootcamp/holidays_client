@@ -1,14 +1,14 @@
 import { useForm } from "react-hook-form";
-import { useMutationCreateInQuiry } from "../../commons/hooks/useMutations/class/useMutationCreateClassInQuiry";
-import * as S from "./classQuestion.styles";
-import { classQuestionSchema } from "./classQuestion.validation";
+import { useMutationCreateInQuiry } from "../../../commons/hooks/useMutations/class/useMutationCreateClassInQuiry";
+import * as S from "./classQuestionWrite.styles";
+import { classQuestionSchema } from "./classQuestionWrite.validation";
 import { yupResolver } from "@hookform/resolvers/yup";
 
 export interface IFormData {
   content: string;
 }
 
-export default function ClassQuestionUI() {
+export default function ClassQuestionWrite() {
   const { onClickClassInQuiry } = useMutationCreateInQuiry();
 
   const { register, handleSubmit, setValue, formState } = useForm<IFormData>({
