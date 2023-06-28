@@ -67,6 +67,7 @@
 - [Team Project 11일차](https://velog.io/@sju4486/TIL-Team-Project-11%EC%9D%BC%EC%B0%A8)
 - [Team Project 12일차](https://velog.io/@sju4486/TIL-Team-Project-12%EC%9D%BC%EC%B0%A8)
 - [Team Project 회고록](https://velog.io/@sju4486/TIL-Team-Project-%ED%9A%8C%EA%B3%A0%EB%A1%9D)
+- [Team Project 리팩토링 회고록](https://velog.io/@sju4486/Project-Team-Project-%EB%A6%AC%ED%8C%A9%ED%86%A0%EB%A7%81-%ED%9A%8C%EA%B3%A0)
 
 ## 구현 기능
 
