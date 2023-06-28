@@ -127,13 +127,14 @@ export default function ClassWrite(props: IClassWriteProps) {
 
   const {
     onClickClassSubmit,
-    fileList,
-    setFileList,
+    // fileList,
+    // setFileList,
     selectedDates,
     setSelectedDates,
   } = UseMutationCreateClass();
 
-  const { onClickClassUpdate } = useMutationUpdateClass();
+  const { onClickClassUpdate, fileList, setFileList } =
+    useMutationUpdateClass();
 
   const { register, setValue, handleSubmit, formState } = useForm<IFormData>({
     resolver: yupResolver(classWriteSchema),
@@ -199,7 +200,11 @@ export default function ClassWrite(props: IClassWriteProps) {
             <S.Label>
               대표 이미지를 올려주세요 (최대 5개까지 업로드 가능)
             </S.Label>
-            <ClassImage fileList={fileList} setFileList={setFileList} />
+            <ClassImage
+              fileList={fileList}
+              setFileList={setFileList}
+              data={props.data?.fetchClassDetail?.image_}
+            />
 
             <S.Wrapper_body_middle>
               <S.Wrapper_body_middle_left>

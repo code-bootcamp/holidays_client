@@ -4,6 +4,9 @@ import { IFormData } from "../../../../units/classPage/write/classWrite.types";
 import { FETCH_CLASS_DETAIL } from "../../useQueries/class/useQueryFetchClassDetail";
 import { useRouter } from "next/router";
 import { getFirstTwoChars } from "../../../../../commons/libraries/utils";
+import { useState } from "react";
+import { UploadFile } from "antd";
+import { useMutationUploadFile } from "./useMutationUploadFile";
 
 export const UPDATE_CLASS = gql`
   mutation updateClass($updateClassInput: UpdateClassInput!) {
@@ -16,12 +19,66 @@ export const useMutationUpdateClass = () => {
 
   const [updateClass] = useMutation(UPDATE_CLASS);
 
+  const [uploadFile] = useMutationUploadFile();
+  const [fileList, setFileList] = useState<UploadFile[]>([]);
+
+  console.log("111");
   const onClickClassUpdate = async (data: IFormData, address: string) => {
+    console.log("2222");
     try {
       if (typeof router.query.class_id !== "string") {
         alert("시스템에 문제가 있습니다.");
         return;
       }
+      let updateFile = fileList.filter((el) => el.originFileObj !== undefined);
+      let prevFile = fileList
+        .filter((el) => el.originFileObj === undefined)
+        .map((el, index) => {
+          console.log(index, "########");
+          if (index === 0) {
+            return { url: el.url ?? "", type: 1, is_main: 1 };
+          } else {
+            return { url: el.url ?? "", type: 1, is_main: 2 };
+          }
+        });
+
+      console.log(prevFile.length);
+
+      const results = await Promise.all(
+        updateFile.map((el) =>
+          uploadFile({ variables: { files: el.originFileObj } })
+        )
+      );
+      // const results = await Promise.all(
+      //   fileList.map(
+      //     (el) => el && uploadFile({ variables: { files: el.originFileObj } })
+      //   )
+      // );
+      // console.log(props);
+      console.log(fileList);
+      console.log(uploadFile);
+      console.log("파일리스트??");
+
+      // 이미지 //추가start
+      const resultUrls = [];
+      for (let i = 0; i < results.length; i++) {
+        if (i === 0 && prevFile.length === 0) {
+          resultUrls.push({
+            url: results[i].data.uploadFile[0],
+            type: 1,
+            is_main: 1,
+          });
+        } else {
+          resultUrls.push({
+            url: results[i].data.uploadFile[0],
+            type: 1,
+            is_main: 2,
+          });
+        }
+      }
+
+      const resultUrl = [...resultUrls, ...prevFile];
+      //추가end
 
       const result = await updateClass({
         variables: {
@@ -45,11 +102,12 @@ export const useMutationUpdateClass = () => {
               date: "date",
               remain: 7,
             },
-            imageInput: {
-              url: "111",
-              type: 1,
-              is_main: 1,
-            },
+            // imageInput: {
+            //   url: "111",
+            //   type: 1,
+            //   is_main: 1,
+            // },
+            imageInput: resultUrl,
           },
         },
         refetchQueries: [
@@ -66,5 +124,9 @@ export const useMutationUpdateClass = () => {
       if (error instanceof Error) console.log(error.message);
     }
   };
-  return { onClickClassUpdate };
+  return {
+    onClickClassUpdate,
+    fileList,
+    setFileList,
+  };
 };

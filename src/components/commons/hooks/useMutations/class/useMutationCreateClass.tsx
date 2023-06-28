@@ -34,7 +34,7 @@ export const UseMutationCreateClass = () => {
           (el) => el && uploadFile({ variables: { files: el.originFileObj } })
         )
       );
-
+      console.log(fileList);
       // 이미지
       const resultUrls = [];
       for (let i = 0; i < results.length; i++) {
@@ -92,7 +92,7 @@ export const UseMutationCreateClass = () => {
 
       const class_id = result.data?.createClass;
 
-      void router.push(`/classPage/${class_id}`);
+      // void router.push(`/classPage/${class_id}`);
     } catch (error) {
       if (error instanceof Error) console.log(error.message);
     }

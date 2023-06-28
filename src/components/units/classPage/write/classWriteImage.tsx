@@ -1,35 +1,63 @@
 import { PlusOutlined } from "@ant-design/icons";
-import { Modal, Upload } from "antd";
-import type { RcFile, UploadProps } from "antd/es/upload";
-import type { UploadFile } from "antd/es/upload/interface";
-import { useState } from "react";
+import { Modal, Upload, UploadFile } from "antd";
+import { RcFile, UploadProps } from "antd/es/upload";
+import { useRouter } from "next/router";
+import { useEffect, useState } from "react";
 
-interface IClassImageProps {
-  fileList: UploadFile[];
-  setFileList: React.Dispatch<React.SetStateAction<UploadFile[]>>;
+interface IData {
+  url: string;
 }
 
-// 클래스 등록 이미지 파일
-export default function ClassImage(props: IClassImageProps) {
-  // 이미지 등록
-  const getBase64 = (file: RcFile): Promise<string> =>
-    new Promise((resolve, reject) => {
-      const reader = new FileReader();
-      reader.readAsDataURL(file);
-      reader.onload = () => resolve(reader.result as string);
-      reader.onerror = (error) => reject(error);
-    });
+const getBase64 = (file: RcFile): Promise<string> =>
+  new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = () => resolve(reader.result as string);
+    reader.onerror = (error) => reject(error);
+  });
 
+const uploadButton = (
+  <div>
+    <PlusOutlined />
+    <div style={{ marginTop: 8 }}>Upload</div>
+  </div>
+);
+
+function ClassImage(props: any): JSX.Element {
   const [previewOpen, setPreviewOpen] = useState(false);
   const [previewImage, setPreviewImage] = useState("");
   const [previewTitle, setPreviewTitle] = useState("");
 
-  const handleCancel = () => setPreviewOpen(false);
+  // 이미지 수정부분
+  useEffect(() => {
+    console.log("이미지미리보기?");
+    console.log(props.data);
+    console.log("이미지미리보기?");
+    const array = props.data?.map((el: IData) => el.url);
+    if (array !== undefined) {
+      let arr: { url: string }[] = [];
+      array.map((el: string) => {
+        let obj = { url: `${el}` };
+        arr.push(obj);
+      });
+
+      console.log("여기 배열에 있니?");
+      console.log(arr);
+      console.log("여기 배열에 있니?");
+
+      props.setFileList(arr);
+      console.log("^^^^^^^^^^^^^");
+      console.log(props.fileList);
+      console.log("^^^^^^^^^^^^^");
+    }
+  }, [props.data]);
+
+  const handleChange: UploadProps["onChange"] = ({ fileList: newFileList }) => {
+    props.setFileList(newFileList);
+  };
 
   const handlePreview = async (file: UploadFile) => {
-    if (!file.url && !file.preview) {
-      file.preview = await getBase64(file.originFileObj as RcFile);
-    }
+    file.preview = await getBase64(file.originFileObj as RcFile);
 
     setPreviewImage(file.url || (file.preview as string));
     setPreviewOpen(true);
@@ -38,27 +66,17 @@ export default function ClassImage(props: IClassImageProps) {
     );
   };
 
-  const handleChange: UploadProps["onChange"] = ({ fileList: newFileList }) =>
-    props.setFileList(newFileList);
+  const handleCancel = () => setPreviewOpen(false);
 
-  const uploadButton = (
-    <div>
-      <PlusOutlined />
-      <div>Upload</div>
-    </div>
-  );
-
-  // -----------
   return (
     <>
       <Upload
-        action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
         listType="picture-card"
-        fileList={props.fileList}
-        onPreview={handlePreview}
         onChange={handleChange}
+        onPreview={handlePreview}
+        fileList={props.fileList}
       >
-        {props.fileList.length >= 5 ? null : uploadButton}
+        {props.fileList?.length >= 8 ? null : uploadButton}
       </Upload>
       <Modal
         open={previewOpen}
@@ -71,3 +89,4 @@ export default function ClassImage(props: IClassImageProps) {
     </>
   );
 }
+export default ClassImage;
