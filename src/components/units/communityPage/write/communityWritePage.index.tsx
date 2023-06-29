@@ -20,6 +20,7 @@ import { UploadFile } from "antd";
 import { FECTCH_BOARDS } from "../../../commons/hooks/useQueries/board/UseQueryFetchBoards";
 import { UseMutationUpdateBoard } from "../../../commons/hooks/useMutations/board/useMutationUpdateBoard";
 import { UseMutationDeleteBoard } from "../../../commons/hooks/useMutations/board/useMutationDeleteBoard";
+import { useAuth01 } from "../../../commons/hooks/useAuths/useAuth01";
 
 const ToastEditor = dynamic(
   async () => await import("../../../commons/toastUI"),

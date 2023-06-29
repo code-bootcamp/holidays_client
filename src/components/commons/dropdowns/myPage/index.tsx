@@ -28,12 +28,12 @@ const DropdownMyPage: React.FC = () => {
   };
 
   const handleLogOutClick = (event: any) => {
+    router.push("/classPage");
     logout({
       refetchQueries: [{ query: FETCH_LOGIN_USER }],
     });
     setIsLoggedOut(true);
   };
-
   useEffect(() => {
     if (isLoggedOut) {
       window.location.reload();

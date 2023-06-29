@@ -54,7 +54,6 @@ export default function madeClass() {
     const target = event.currentTarget;
     const postId = target.id;
     router.push(`/classPage/${postId}`);
-    console.log(postId);
   };
 
   ///////////////////////////////////////////////////////////////

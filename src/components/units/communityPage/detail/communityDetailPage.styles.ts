@@ -48,7 +48,7 @@ export const Time = styled.div`
 
 export const LikeButton = styled.button`
   height: 40px;
-  width: 80px;
+  width: 85px;
   font-size: 15px;
   border: none;
   background-color: white;
