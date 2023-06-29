@@ -20,7 +20,7 @@ export const useMutationUpdateClass = () => {
   const [updateClass] = useMutation(UPDATE_CLASS);
 
   const [uploadFile] = useMutationUploadFile();
-  const [fileList, setFileList] = useState<UploadFile[]>([]);
+  const [fileList2, setFileList2] = useState<UploadFile[]>([]);
 
   console.log("111");
   const onClickClassUpdate = async (data: IFormData, address: string) => {
@@ -30,8 +30,8 @@ export const useMutationUpdateClass = () => {
         alert("시스템에 문제가 있습니다.");
         return;
       }
-      let updateFile = fileList.filter((el) => el.originFileObj !== undefined);
-      let prevFile = fileList
+      let updateFile = fileList2.filter((el) => el.originFileObj !== undefined);
+      let prevFile = fileList2
         .filter((el) => el.originFileObj === undefined)
         .map((el, index) => {
           console.log(index, "########");
@@ -50,12 +50,12 @@ export const useMutationUpdateClass = () => {
         )
       );
       // const results = await Promise.all(
-      //   fileList.map(
+      //   fileList2.map(
       //     (el) => el && uploadFile({ variables: { files: el.originFileObj } })
       //   )
       // );
       // console.log(props);
-      console.log(fileList);
+      console.log(fileList2);
       console.log(uploadFile);
       console.log("파일리스트??");
 
@@ -126,7 +126,7 @@ export const useMutationUpdateClass = () => {
   };
   return {
     onClickClassUpdate,
-    fileList,
-    setFileList,
+    fileList2,
+    setFileList2,
   };
 };

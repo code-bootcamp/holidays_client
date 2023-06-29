@@ -133,14 +133,14 @@ export default function ClassWrite(props: IClassWriteProps) {
     setSelectedDates,
   } = UseMutationCreateClass();
 
-  // const { onClickClassUpdate, fileList, setFileList } =
-  //   useMutationUpdateClass();
+  const { onClickClassUpdate, fileList2, setFileList2 } =
+    useMutationUpdateClass();
 
-  const {
-    onClickClassUpdate,
-    fileList: updateFileList, // fileList 변수의 이름을 변경
-    setFileList: setUpdateFileList, // setFileList 변수의 이름을 변경
-  } = useMutationUpdateClass();
+  // const {
+  //   onClickClassUpdate,
+  //   fileList: updateFileList, // fileList 변수의 이름을 변경
+  //   setFileList: setUpdateFileList, // setFileList 변수의 이름을 변경
+  // } = useMutationUpdateClass();
 
   const { register, setValue, handleSubmit, formState } = useForm<IFormData>({
     resolver: yupResolver(classWriteSchema),
@@ -184,7 +184,6 @@ export default function ClassWrite(props: IClassWriteProps) {
               <option value="운동">운동</option>
               <option value="요리">요리</option>
             </S.CustomSelect>
-
             <S.Label>클래스 이름을 입력해주세요</S.Label>
             <S.TextInput
               type="text"
@@ -193,7 +192,6 @@ export default function ClassWrite(props: IClassWriteProps) {
               defaultValue={props.data?.fetchClassDetail.title}
             />
             <S.Error>{formState.errors.title?.message}</S.Error>
-
             <S.Label>클래스 한줄요약을 입력해주세요</S.Label>
             <S.TextInput
               type="text"
@@ -202,16 +200,22 @@ export default function ClassWrite(props: IClassWriteProps) {
               defaultValue={props.data?.fetchClassDetail.content_summary}
             />
             <S.Error>{formState.errors.content_summary?.message}</S.Error>
-
             <S.Label>
               대표 이미지를 올려주세요 (최대 5개까지 업로드 가능)
             </S.Label>
-            <ClassImage
-              fileList={fileList}
-              setFileList={setFileList}
-              data={props.data?.fetchClassDetail?.image_}
-            />
-
+            {props.isEdit ? (
+              <ClassImage
+                fileList={fileList2}
+                setFileList={setFileList2}
+                data={props.data?.fetchClassDetail?.image_}
+              />
+            ) : (
+              <ClassImage
+                fileList={fileList}
+                setFileList={setFileList}
+                data={props.data?.fetchClassDetail?.image_}
+              />
+            )}
             <S.Wrapper_body_middle>
               <S.Wrapper_body_middle_left>
                 <S.Label>클래스 소요 시간을 선택해주세요</S.Label>
@@ -245,7 +249,6 @@ export default function ClassWrite(props: IClassWriteProps) {
               defaultValue={props.data?.fetchClassDetail.price}
             />
             <S.Error>{formState.errors.price?.message}</S.Error>
-
             <S.Label>클래스 위치를 입력해주세요</S.Label>
             <S.Wrapper_body_map>
               <S.Map id="map" />
@@ -276,9 +279,7 @@ export default function ClassWrite(props: IClassWriteProps) {
                 </S.Wrapper_body_map_right_bottom>
               </S.Wrapper_body_map_right>
             </S.Wrapper_body_map>
-
             <S.Label>클래스 세부내용을 작성해주세요</S.Label>
-
             <S.ToastEditor>
               <ToastEditor
                 contentsRef={contentsRef}
@@ -286,18 +287,15 @@ export default function ClassWrite(props: IClassWriteProps) {
                 initialValue={props.data?.fetchClassDetail.content}
               />
             </S.ToastEditor>
-
             <S.Label>클래스 일정을 선택해주세요</S.Label>
             {/* <Calendar
               selectedDates={selectedDates}
               setSelectedDates={setSelectedDates}
             /> */}
-
             <CalendarFunction
               selectedDates={selectedDates}
               setSelectedDates={setSelectedDates}
             />
-
             <S.Label>입금 계좌를 작성해주세요</S.Label>
             <S.TextInput
               type="text"
@@ -306,7 +304,6 @@ export default function ClassWrite(props: IClassWriteProps) {
               defaultValue={props.data?.fetchClassDetail.accountNum}
             />
             <S.Error>{formState.errors.accountNum?.message}</S.Error>
-
             <S.BankWrapper>
               <div>
                 <S.Label>예금주를 작성해주세요</S.Label>
@@ -330,7 +327,6 @@ export default function ClassWrite(props: IClassWriteProps) {
                 <S.Error>{formState.errors.bankName?.message}</S.Error>
               </div>
             </S.BankWrapper>
-
             <S.BtnWrapper>
               <S.CancelBtn onClick={onClickCancel}>취소</S.CancelBtn>
               <S.SubmitBtn type="submit">
