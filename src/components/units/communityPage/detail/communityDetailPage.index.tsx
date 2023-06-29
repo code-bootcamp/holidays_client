@@ -73,7 +73,7 @@ export default function communityDetailPage() {
               <S.UserName>{data?.fetchBoardDetail?.user_?.name}</S.UserName>
               <S.Time>{Days(data?.fetchBoardDetail?.createdAt)}</S.Time>
             </S.UserTie>
-            <S.LikeButton>좋아요</S.LikeButton>
+            <S.LikeButton>20 좋아요</S.LikeButton>
           </S.UserButtonTie>
           <S.TitleImg
             src={data?.fetchBoardDetail?.image_[0]?.url}

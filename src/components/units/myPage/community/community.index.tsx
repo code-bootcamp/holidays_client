@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { MouseEventHandler, useState } from "react";
 import { useQuery } from "@apollo/client";
 import { formatDateString } from "../../../../commons/libraries/utils";
 import { FECTCH_BOARDS_OF_MINE } from "../../../commons/hooks/useQueries/board/UseQueryFetchBoardsOfMine";
@@ -24,6 +24,16 @@ export default function ProposalClass() {
   //////////////////////////////////////////////////////////////
   const onErrorImg = (e: any) => {
     e.target.src = "/images/all-icon.png";
+  };
+
+  ///////////////////////////////////////////////////////////////
+  //  게시물 이동
+  //////////////////////////////////////////////////////////////
+
+  const onClickSubmit: MouseEventHandler<HTMLDivElement> = (event) => {
+    const target = event.currentTarget;
+    const postId = target.id;
+    router.push(`/communityPage/${postId}`);
   };
 
   return (
@@ -61,7 +71,7 @@ export default function ProposalClass() {
             <S.PremiumWrapper>
               {data?.fetchBoardsOfMine.map((post: any, index: any) => (
                 <div key={index}>
-                  <S.PremiumPosts>
+                  <S.PremiumPosts id={post.board_id} onClick={onClickSubmit}>
                     <S.PremiumPostBody>
                       <S.PremiumTemplate>
                         <S.PremiumPostImg src={post.url} onError={onErrorImg} />

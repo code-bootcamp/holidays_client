@@ -2,7 +2,6 @@ import LayoutHeader from "./header/LayoutHeader.index";
 import LayoutFooter from "./footer/LayoutFooter.index";
 import styled from "@emotion/styled";
 import { useRouter } from "next/router";
-const HIDDEN = ["/", "/loginPage", "/signUpPage"];
 
 const Body = styled.div`
   display: flex;
@@ -22,6 +21,13 @@ interface ILayoutProps {
 }
 export default function Layout(props: ILayoutProps): JSX.Element {
   const router = useRouter();
+  const HIDDEN = [
+    "/",
+    "/loginPage",
+    "/signUpPage",
+    // "/communityPage/write",
+    // `/communityPage/${router.query.board_id}/edit`,
+  ];
   const isHidden = HIDDEN.includes(router.asPath);
   return (
     <>
