@@ -127,14 +127,20 @@ export default function ClassWrite(props: IClassWriteProps) {
 
   const {
     onClickClassSubmit,
-    // fileList,
-    // setFileList,
+    fileList,
+    setFileList,
     selectedDates,
     setSelectedDates,
   } = UseMutationCreateClass();
 
-  const { onClickClassUpdate, fileList, setFileList } =
-    useMutationUpdateClass();
+  // const { onClickClassUpdate, fileList, setFileList } =
+  //   useMutationUpdateClass();
+
+  const {
+    onClickClassUpdate,
+    fileList: updateFileList, // fileList 변수의 이름을 변경
+    setFileList: setUpdateFileList, // setFileList 변수의 이름을 변경
+  } = useMutationUpdateClass();
 
   const { register, setValue, handleSubmit, formState } = useForm<IFormData>({
     resolver: yupResolver(classWriteSchema),
