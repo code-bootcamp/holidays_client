@@ -92,7 +92,7 @@ export const UseMutationCreateClass = () => {
 
       const class_id = result.data?.createClass;
 
-      // void router.push(`/classPage/${class_id}`);
+      void router.push(`/classPage/${class_id}`);
     } catch (error) {
       if (error instanceof Error) console.log(error.message);
     }

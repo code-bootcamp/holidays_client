@@ -3,6 +3,7 @@ import { UseQueryFetchClassInQuiries } from "../../../commons/hooks/useQueries/c
 import InfiniteScroll from "react-infinite-scroller";
 import { IFetchClassInquiries } from "../../../../commons/types/generated/types";
 import ClassQuestionListEl from "./classQuestionListEl.index";
+import { useEffect, useState } from "react";
 
 export interface IClassQuestionListProps {
   el?: IFetchClassInquiries;
@@ -10,6 +11,24 @@ export interface IClassQuestionListProps {
 }
 
 export default function ClassQuestionList(props: IClassQuestionListProps) {
+  const [divHeight, setDivHeight] = useState("auto");
+
+  useEffect(() => {
+    if (props.data && props.data.fetchClassInquiries.length == 1) {
+      setDivHeight("120px"); // height 값을 200px로 업데이트합니다.
+    } else if (props.data && props.data.fetchClassInquiries.length == 2) {
+      setDivHeight("240px");
+    } else if (props.data && props.data.fetchClassInquiries.length == 3) {
+      setDivHeight("360px");
+    } else if (props.data && props.data.fetchClassInquiries.length == 4) {
+      setDivHeight("480px");
+    } else if (props.data && props.data.fetchClassInquiries.length > 4) {
+      setDivHeight("500px");
+    } else {
+      setDivHeight("auto");
+    }
+  }, [props.data]);
+
   const { data, fetchMore } = UseQueryFetchClassInQuiries();
 
   const onLoadMore = (): void => {
@@ -38,9 +57,9 @@ export default function ClassQuestionList(props: IClassQuestionListProps) {
     <>
       <S.Wrapper>
         <S.Box
-        //   style={{
-        //     height: divHeight,
-        //   }}
+          style={{
+            height: divHeight,
+          }}
         >
           <InfiniteScroll pageStart={0} loadMore={onLoadMore} hasMore={true}>
             {props.data &&

@@ -19,7 +19,8 @@ export const Wrapper = styled.div`
 `;
 
 export const Box = styled.div`
-  width: 1130px;
+  width: 1113px;
+
   overflow: auto;
   margin: auto;
 
@@ -46,13 +47,13 @@ export const ReviewCount = styled.div`
 
 export const Row = styled.div`
   margin-bottom: 20px;
-  /* background-color: purple; */
 `;
 
 export const Wrapper_header_top = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
+  justify-content: space-between;
 
   @media ${mobile} {
     width: 92vh;
@@ -67,20 +68,12 @@ export const ReviewWriter = styled.div`
   width: 100px;
 `;
 
-// 별점
-export const Star = styled(Rate)`
-  @media ${mobileSmall} {
-    width: 20vh;
-  }
-`;
-
 export const BtnWrapper = styled.div`
   width: 65px;
 
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  margin-left: 811px;
 
   @media ${mobile} {
     margin-left: 50vh;

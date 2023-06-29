@@ -13,10 +13,18 @@ import { useQuery } from "@apollo/client";
 import { IQuery } from "../../../../commons/types/generated/types";
 import { FETCH_LOGIN_USER } from "../../../commons/hooks/useQueries/user/UseQueryFetchLoginUser";
 import { UseQueryFetchClassSchedules } from "../../../commons/hooks/useQueries/class/useQueryFetchClassSchedules";
+import dynamic from "next/dynamic";
 
 declare const window: typeof globalThis & {
   kakao: any;
 };
+
+const Viewer = dynamic(
+  async () => await import("@toast-ui/react-editor").then((mod) => mod.Viewer),
+  {
+    ssr: false,
+  }
+);
 
 export default function ClassDetail() {
   // 로그인 여부 확인
@@ -174,7 +182,7 @@ export default function ClassDetail() {
                 <S.Contents_wrapper>
                   <S.Title>클래스 소개</S.Title>
                   <S.Contents>
-                    {typeof window !== "undefined" && (
+                    {/* {typeof window !== "undefined" && (
                       <div
                         dangerouslySetInnerHTML={{
                           __html: DOMPurify.sanitize(
@@ -182,7 +190,10 @@ export default function ClassDetail() {
                           ),
                         }}
                       />
-                    )}
+                    )} */}
+                    <Viewer
+                      initialValue={data?.fetchClassDetail?.content || ""}
+                    />
                   </S.Contents>
                 </S.Contents_wrapper>
               </S.Wrapper_body_bottom_left>

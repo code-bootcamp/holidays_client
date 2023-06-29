@@ -7,9 +7,10 @@ export const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
   margin: auto;
-  margin-bottom: 150px;
   padding-top: 90px;
   border-top: 1px solid rgba(189, 189, 189, 1);
+  /* background-color: skyblue; */
+  margin-bottom: 50px;
 
   @media ${mobile} {
     width: 95vh;
