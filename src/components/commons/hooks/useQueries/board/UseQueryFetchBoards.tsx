@@ -9,6 +9,7 @@ export const FECTCH_BOARDS = gql`
       createdAt
       name
       url
+      row_count
     }
   }
 `;

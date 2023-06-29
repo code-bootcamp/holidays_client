@@ -77,6 +77,7 @@ export default function BoardComment(props: any): JSX.Element {
         ],
       });
       props.setIsEdit?.(false);
+      alert("댓글 수정이 완료되었습니다.");
     } catch (error) {
       if (error instanceof Error) alert(error.message);
     }

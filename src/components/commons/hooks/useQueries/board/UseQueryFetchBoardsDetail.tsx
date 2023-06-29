@@ -17,6 +17,9 @@ export const FETCH_BOARD_DETAIL = gql`
         type
         is_main
       }
+      bp_ {
+        bp_id
+      }
     }
   }
 `;

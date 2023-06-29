@@ -11,6 +11,8 @@ import BoardCommentList from "../commentlist/BoardCommentList.container";
 import BoardComment from "../comment/BoardComment.index";
 import "@toast-ui/editor/dist/toastui-editor-viewer.css";
 import dynamic from "next/dynamic";
+import { UseMutationCreateBoardPost } from "../../../commons/hooks/useMutations/board/useMutationCreateBoardPost";
+import { UseMutationDeleteBoardPost } from "../../../commons/hooks/useMutations/board/useMutationDeleteBoardPost";
 
 const Viewer = dynamic(
   async () => await import("@toast-ui/react-editor").then((mod) => mod.Viewer),
@@ -27,6 +29,8 @@ export default function communityDetailPage() {
   const { data: LoginUser } = useQuery(FETCH_LOGIN_USER);
 
   const [deleteBoard] = UseMutationDeleteBoard();
+  const [createBoardPost] = UseMutationCreateBoardPost();
+  const [deleteBoardPost] = UseMutationDeleteBoardPost();
 
   // 이미지가 없을 경우에 대한 스타일 처리
   const titleImgStyle = data?.fetchBoardDetail?.image_[0]?.url
@@ -61,6 +65,37 @@ export default function communityDetailPage() {
     router.push(`/communityPage`);
   };
 
+  ///////////////////////////////////////////////////////////////
+  // 게시물 좋아요
+  //////////////////////////////////////////////////////////////
+
+  const onClickBoardPost = async (
+    event: React.MouseEvent<HTMLButtonElement>
+  ) => {
+    const result = await createBoardPost({
+      variables: { board_id: router.query.board_id },
+      refetchQueries: [
+        {
+          query: FETCH_BOARD_DETAIL,
+          variables: { board_id: router.query.board_id },
+        },
+      ],
+    });
+  };
+
+  ///////////////////////////////////////////////////////////////
+  // 게시물 싫어요
+  //////////////////////////////////////////////////////////////
+
+  const onDeleteBoardPost = async (
+    event: React.MouseEvent<HTMLButtonElement>
+  ) => {
+    const result = await deleteBoardPost({
+      variables: { board_id: router.query.board_id },
+      refetchQueries: [{ query: FETCH_BOARD_DETAIL }],
+    });
+  };
+
   return (
     <>
       {loading ? (
@@ -73,7 +108,9 @@ export default function communityDetailPage() {
               <S.UserName>{data?.fetchBoardDetail?.user_?.name}</S.UserName>
               <S.Time>{Days(data?.fetchBoardDetail?.createdAt)}</S.Time>
             </S.UserTie>
-            <S.LikeButton>20 좋아요</S.LikeButton>
+            <S.LikeButton onClick={onClickBoardPost}>
+              {data?.fetchBoardDetail?.bp_?.length} 좋아요
+            </S.LikeButton>
           </S.UserButtonTie>
           <S.TitleImg
             src={data?.fetchBoardDetail?.image_[0]?.url}
