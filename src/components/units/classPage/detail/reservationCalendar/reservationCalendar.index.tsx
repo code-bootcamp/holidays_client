@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import * as S from "./reservationCalendar.styles";
-import { Calendar, theme } from "antd";
+import { Calendar, theme, Col, Radio, Row, Select } from "antd";
 import type { CalendarMode } from "antd/es/calendar/generateCalendar";
 import type { Dayjs } from "dayjs";
 import { UseQueryFetchClassSchedules } from "../../../../commons/hooks/useQueries/class/useQueryFetchClassSchedules";
@@ -30,7 +30,7 @@ export default function CalendarUI(props: IReservationCreateProps) {
 
     console.log(date); // 이건 나옴
 
-    const confirmResult = window.confirm("정말 예약하시겠습니까?");
+    const confirmResult = window.confirm("예약하시겠습니까?");
     if (confirmResult) {
       setFormData(data);
       setShowModal(true);
@@ -131,17 +131,38 @@ export default function CalendarUI(props: IReservationCreateProps) {
     fontSize: "16px",
   };
 
-  const headerRender = ({ value }: any) => {
+  const headerRender = ({ value, type, onChange, onTypeChange }: any) => {
     const start = 0;
     const end = 12;
     const monthOptions = [];
 
-    for (let i = start; i < end; i++) {
-      monthOptions.push(<option key={`${i}`}>{i + 1}</option>);
+    let current = value.clone();
+    const localeData = value.localeData();
+    const months = [];
+    console.log("*******");
+    console.log(value);
+    // for (let i = 0; i < 12; i++) {
+    //   current = current.month(i);
+    //   months.push(localeData.monthsShort(current));
+    // }
+
+    for (let i = 0; i < 12; i++) {
+      current = current.month(i);
+      months.push(i + 1);
     }
 
+    for (let i = start; i < end; i++) {
+      // monthOptions.push(<option key={`${i}`}>{i + 1}</option>);
+      monthOptions.push(
+        <Select.Option key={i} value={i} className="month-item">
+          {months[i]}
+        </Select.Option>
+      );
+    }
+
+    // console.log(monthOptions.);
     const year = String(value.year()).slice(-2);
-    const month = String(value.month() + 1).padStart(2, "0");
+    const month = String(value.month() + 1).padStart(2, "0") + "월";
     const day = String(value.date()).padStart(2, "0");
 
     const date = year + month + day;
@@ -152,7 +173,18 @@ export default function CalendarUI(props: IReservationCreateProps) {
     return (
       <div style={headerStyle}>
         <div>
-          {year}년 {month}월
+          {year}년
+          <Select
+            size="small"
+            dropdownMatchSelectWidth={false}
+            value={month}
+            onChange={(newMonth) => {
+              const now = value.clone().month(newMonth);
+              onChange(now);
+            }}
+          >
+            {monthOptions}
+          </Select>
         </div>
         <div></div>
       </div>

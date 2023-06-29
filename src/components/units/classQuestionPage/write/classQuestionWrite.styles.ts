@@ -1,6 +1,6 @@
 import styled from "@emotion/styled";
 import { Input } from "antd";
-import { mobile, mobileSmall } from "../../../commons/styles/breakPoints";
+import { mobile, mobileSmall } from "../../../../commons/styles/breakPoints";
 
 export const Wrapper = styled.div`
   width: 1113px;

@@ -1,15 +1,19 @@
 import { useForm } from "react-hook-form";
-import { useMutationCreateInQuiry } from "../../commons/hooks/useMutations/class/useMutationCreateClassInQuiry";
-import * as S from "./classQuestion.styles";
-import { classQuestionSchema } from "./classQuestion.validation";
+import { useMutationCreateInQuirySubmit } from "../../../commons/hooks/useMutations/class/useMutatioClassInQuiry";
+import * as S from "./classQuestionWrite.styles";
+import { classQuestionSchema } from "./classQuestionWrite.validation";
 import { yupResolver } from "@hookform/resolvers/yup";
+import { IClassInquiriesWriteProps } from "../list/classQuestion.types";
 
 export interface IFormData {
   content: string;
+  ci_id: string;
 }
 
-export default function ClassQuestionUI() {
-  const { onClickClassInQuiry } = useMutationCreateInQuiry();
+export default function ClassQuestionWrite(props: IClassInquiriesWriteProps) {
+  const { onClickClassInQuiry, onClickUpdate } = useMutationCreateInQuirySubmit(
+    props.setIsEdit2
+  );
 
   const { register, handleSubmit, setValue, formState } = useForm<IFormData>({
     resolver: yupResolver(classQuestionSchema),
@@ -19,7 +23,11 @@ export default function ClassQuestionUI() {
   const onSubmitForm = async (data: IFormData) => {
     const { ...value } = data;
 
-    onClickClassInQuiry(value);
+    if (!props.isEdit2) {
+      await onClickClassInQuiry(value);
+    } else {
+      await onClickUpdate(value);
+    }
 
     setValue("content", "");
   };

@@ -23,6 +23,10 @@ export const UseMutationCreateClass = () => {
 
   const [selectedDates, setSelectedDates] = useState([]);
 
+  console.log("*****************");
+  console.log(selectedDates);
+  console.log("*****************");
+
   const onClickClassSubmit = async (data: IFormData, address: string) => {
     try {
       const results = await Promise.all(
@@ -30,7 +34,7 @@ export const UseMutationCreateClass = () => {
           (el) => el && uploadFile({ variables: { files: el.originFileObj } })
         )
       );
-
+      console.log(fileList);
       // 이미지
       const resultUrls = [];
       for (let i = 0; i < results.length; i++) {
@@ -48,7 +52,9 @@ export const UseMutationCreateClass = () => {
           });
         }
       }
-
+      console.log("aaaaa");
+      console.log(selectedDates);
+      console.log("aaaaa");
       // 달력
       const classSchedules = [];
       for (let i = 0; i < selectedDates.length; i++) {
@@ -86,7 +92,7 @@ export const UseMutationCreateClass = () => {
 
       const class_id = result.data?.createClass;
 
-      void router.push(`/classPage/${class_id}`);
+      // void router.push(`/classPage/${class_id}`);
     } catch (error) {
       if (error instanceof Error) console.log(error.message);
     }

@@ -42,6 +42,7 @@ export const UseMutationReservation = () => {
           ],
         });
         alert("예약 완료");
+        void router.push(`/myPage/proposalClass`);
       } else {
         alert("예약이 불가능합니다. 자세한 사항은 문의하기를 이용하세요.");
       }
