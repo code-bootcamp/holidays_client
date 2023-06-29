@@ -19,6 +19,13 @@ export default function ProposalClass() {
     void router.push("/communityPage/write");
   };
 
+  ///////////////////////////////////////////////////////////////
+  // 대체 이미지
+  //////////////////////////////////////////////////////////////
+  const onErrorImg = (e: any) => {
+    e.target.src = "/images/all-icon.png";
+  };
+
   return (
     <>
       <S.Wrapper>
@@ -31,23 +38,23 @@ export default function ProposalClass() {
         ) : !data || data.fetchBoardsOfMine.length === 0 ? (
           <>
             <S.ListNameIconWrapper>
-              <S.ListName>내 사랑방 리스트</S.ListName>
+              <S.ListName>내 게시글 목록</S.ListName>
               <S.Icon src="/myPage/options-list.png" />
             </S.ListNameIconWrapper>
             <S.Line />
             <S.Box>
               <S.Emoji>🤔</S.Emoji>
-              <S.Text>아직 작성한 사랑방 게시물이 없어요</S.Text>
-              <S.MainText>사랑방 게시물을 작성해 보실까요?</S.MainText>
+              <S.Text>아직 작성한 커뮤니티 게시물이 없어요</S.Text>
+              <S.MainText>커뮤니티 게시물을 작성해 보실까요?</S.MainText>
               <S.Button onClick={onClickMenu}>
-                사랑방 게시물 작성해보기
+                커뮤니티 게시물 작성해보기
               </S.Button>
             </S.Box>
           </>
         ) : (
           <>
             <S.ListNameIconWrapper>
-              <S.ListName>내 사랑방 리스트</S.ListName>
+              <S.ListName>내 게시글 목록</S.ListName>
               <S.Icon src="/myPage/options-list.png" />
             </S.ListNameIconWrapper>
             <S.Line />
@@ -57,7 +64,7 @@ export default function ProposalClass() {
                   <S.PremiumPosts>
                     <S.PremiumPostBody>
                       <S.PremiumTemplate>
-                        <S.PremiumPostImg src={post.url} />
+                        <S.PremiumPostImg src={post.url} onError={onErrorImg} />
                       </S.PremiumTemplate>
                       <S.PremiumPostTitle>{post.title}</S.PremiumPostTitle>
                       <S.PremiumUser>{post.name}</S.PremiumUser>

@@ -1,17 +1,30 @@
 import { useRouter } from "next/router";
 import { useQuery } from "@apollo/client";
 import { FETCH_BOARD_DETAIL } from "../../../commons/hooks/useQueries/board/UseQueryFetchBoardsDetail";
-import { replaceImageTags } from "../../../../commons/libraries/utils";
+import { Days, replaceImageTags } from "../../../../commons/libraries/utils";
 import DOMPurify from "dompurify";
 import * as S from "./communityDetailPage.styles";
 import { UseMutationDeleteBoard } from "../../../commons/hooks/useMutations/board/useMutationDeleteBoard";
 import { FECTCH_BOARDS } from "../../../commons/hooks/useQueries/board/UseQueryFetchBoards";
+import { FETCH_LOGIN_USER } from "../../../commons/hooks/useQueries/user/UseQueryFetchLoginUser";
+import BoardCommentList from "../commentlist/BoardCommentList.container";
+import BoardComment from "../comment/BoardComment.index";
+import "@toast-ui/editor/dist/toastui-editor-viewer.css";
+import dynamic from "next/dynamic";
+
+const Viewer = dynamic(
+  async () => await import("@toast-ui/react-editor").then((mod) => mod.Viewer),
+  {
+    ssr: false,
+  }
+);
 
 export default function communityDetailPage() {
   const router = useRouter();
-  const { data, refetch } = useQuery(FETCH_BOARD_DETAIL, {
+  const { data, refetch, loading } = useQuery(FETCH_BOARD_DETAIL, {
     variables: { board_id: router.query.board_id },
   });
+  const { data: LoginUser } = useQuery(FETCH_LOGIN_USER);
 
   const [deleteBoard] = UseMutationDeleteBoard();
 
@@ -25,7 +38,6 @@ export default function communityDetailPage() {
   //////////////////////////////////////////////////////////////
 
   const onClickUpdate = () => {
-    console.log(router.query.useditemId);
     router.push(`/communityPage/${router.query.board_id}/edit`);
   };
 
@@ -51,45 +63,49 @@ export default function communityDetailPage() {
 
   return (
     <>
-      <S.Wrapper>
-        <S.Title>{data?.fetchBoardDetail?.title}</S.Title>
-        <S.UserTie>
-          <S.UserName>{data?.fetchBoardDetail?.user_?.name}</S.UserName>
-          <S.Time>2023.05.23</S.Time>
-        </S.UserTie>
-        <S.TitleImg
-          src={data?.fetchBoardDetail?.image_[0]?.url}
-          style={titleImgStyle}
-        />
-        <S.Line />
-        <S.WrapperContents>
-          <S.Contents
-            dangerouslySetInnerHTML={
-              data?.fetchBoardDetail?.content
-                ? {
-                    __html: DOMPurify.sanitize(data.fetchBoardDetail?.content),
-                  }
-                : undefined
-            }
+      {loading ? (
+        <div>Loading...</div>
+      ) : (
+        <S.Wrapper>
+          <S.Title>{data?.fetchBoardDetail?.title}</S.Title>
+          <S.UserButtonTie>
+            <S.UserTie>
+              <S.UserName>{data?.fetchBoardDetail?.user_?.name}</S.UserName>
+              <S.Time>{Days(data?.fetchBoardDetail?.createdAt)}</S.Time>
+            </S.UserTie>
+            <S.LikeButton>좋아요</S.LikeButton>
+          </S.UserButtonTie>
+          <S.TitleImg
+            src={data?.fetchBoardDetail?.image_[0]?.url}
+            style={titleImgStyle}
           />
-        </S.WrapperContents>
-        <S.Line />
-        {/* <S.CommentWrite placeholder="댓글을 입력해 주세요" />
-        <S.CommentBox>
-          <S.CommentUser>최 팀장</S.CommentUser>
-          <S.CommentTime>2023.05.23</S.CommentTime>
-          <S.CommentContents>
-            그때 댓글에 하시겠다던 분과는 매칭결과가 좋지 못하셨나봅니다. 또
-            올리신 걸 보니..
-          </S.CommentContents>
-        </S.CommentBox>
-        <S.Line /> */}
-        <S.BottomWrapper>
-          <S.Button onClick={onClickBoard}>목록으로</S.Button>
-          <S.Button onClick={onClickUpdate}>수정하기</S.Button>
-          <S.Button onClick={onClickDelete}>삭제하기</S.Button>
-        </S.BottomWrapper>
-      </S.Wrapper>
+          <S.Line />
+          <S.WrapperContents>
+            <Viewer initialValue={data?.fetchBoardDetail?.content || ""} />
+          </S.WrapperContents>
+          <S.Line />
+
+          <BoardComment />
+          <BoardCommentList />
+
+          <S.Line />
+          <S.BottomWrapper>
+            <S.Button onClick={onClickBoard}>목록으로</S.Button>
+            {LoginUser?.fetchLoginUser?.email ===
+            data?.fetchBoardDetail?.user_?.email ? (
+              <S.Button onClick={onClickUpdate}>수정하기</S.Button>
+            ) : (
+              <S.Button className="Edit">수정하기</S.Button>
+            )}
+            {LoginUser?.fetchLoginUser?.email ===
+            data?.fetchBoardDetail?.user_?.email ? (
+              <S.Button onClick={onClickDelete}>삭제하기</S.Button>
+            ) : (
+              <S.Button className="Edit">삭제하기</S.Button>
+            )}
+          </S.BottomWrapper>
+        </S.Wrapper>
+      )}
     </>
   );
 }

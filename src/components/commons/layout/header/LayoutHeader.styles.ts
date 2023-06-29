@@ -45,7 +45,7 @@ export const Logo = styled.img`
 
 export const NaviWrapper = styled.div`
   display: flex;
-  width: 400px;
+  width: 420px;
   @media ${tablet} {
     display: none;
   }

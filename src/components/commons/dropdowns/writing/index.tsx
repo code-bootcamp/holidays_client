@@ -68,23 +68,10 @@ const DropdownWriting: React.FC = () => {
         <a
           target="_blank"
           rel="noopener noreferrer"
-          onClick={handlePaymentPage}
-          style={{ fontSize: "14px", fontWeight: 500 }}
-        >
-          클래스 광고하기
-        </a>
-      ),
-    },
-    {
-      key: "3",
-      label: (
-        <a
-          target="_blank"
-          rel="noopener noreferrer"
           onClick={handleCommunityPage}
           style={{ fontSize: "14px", fontWeight: 500 }}
         >
-          사랑방 글쓰기
+          커뮤니티 글쓰기
         </a>
       ),
     },

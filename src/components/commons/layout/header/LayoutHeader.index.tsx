@@ -28,7 +28,7 @@ export default function LayoutHeader(): JSX.Element {
 
   const NAVIGATION_MENUS = [
     { name: "클래스", page: "/classPage" },
-    { name: "사랑방", page: "/communityPage" },
+    { name: "커뮤니티", page: "/communityPage" },
     { name: "메거진", page: "/magazinePage" },
   ];
 

@@ -10,6 +10,7 @@ export default function MypagePoint() {
   const router = useRouter();
   const [Contents, setContents] = useState(false);
   const { data, loading, refetch } = useQuery(FETCH_RESERVATIONS_OF_USER);
+  console.log(data?.fetchReservationsOfUser);
 
   ///////////////////////////////////////////////////////////////
   //  화면 없을때 이동
@@ -79,6 +80,17 @@ export default function MypagePoint() {
                           </S.PremiumContent>
                           <S.PremiumContent>
                             신청인원 : {post.personnel}명
+                          </S.PremiumContent>
+                          <S.PremiumContent>
+                            예약상태 :{" "}
+                            <S.TextColor
+                              style={{
+                                color:
+                                  post.status === "WAITING" ? "red" : "green",
+                              }}
+                            >
+                              {post.status === "WAITING" ? "미승인" : "승인"}
+                            </S.TextColor>
                           </S.PremiumContent>
                         </S.PremiumAvatarContentTie>
                       </S.PremiumPostInfo>
