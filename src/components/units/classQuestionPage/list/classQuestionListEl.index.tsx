@@ -6,7 +6,7 @@ import { getDate } from "../../../../commons/libraries/utils";
 import {
   useMutationCreateInQuiry,
   useMutationCreateInQuirySubmit,
-} from "../../../commons/hooks/useMutations/class/useMutatioClassInQuiry";
+} from "../../../commons/hooks/useMutations/class/useMutationClassInQuiry";
 import ClassQuestionWrite from "../write/classQuestionWrite.index";
 
 export default function ClassQuestionListEl(props: any) {

@@ -15,7 +15,7 @@ export default function ClassQuestionList(props: IClassQuestionListProps) {
 
   useEffect(() => {
     if (props.data && props.data.fetchClassInquiries.length == 1) {
-      setDivHeight("120px"); // height 값을 200px로 업데이트합니다.
+      setDivHeight("120px");
     } else if (props.data && props.data.fetchClassInquiries.length == 2) {
       setDivHeight("240px");
     } else if (props.data && props.data.fetchClassInquiries.length == 3) {

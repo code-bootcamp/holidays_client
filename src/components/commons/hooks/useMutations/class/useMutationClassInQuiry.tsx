@@ -13,7 +13,9 @@ export const CREATE_CLASS_INQUIRY = gql`
 `;
 
 export const UPDATE_CLASS_INQUIRY = gql`
-  mutation updateClassInquiry($updateClassInquiry: UpdateClassInquiryInput!) {
+  mutation updateClassInquiry(
+    $updateClassInquiryInput: UpdateClassInquiryInput!
+  ) {
     updateClassInquiry(updateClassInquiryInput: $updateClassInquiryInput)
   }
 `;
@@ -35,7 +37,7 @@ export const useMutationCreateInQuiry = () => {
   const [updateClassInquiry] = useMutation(UPDATE_CLASS_INQUIRY);
   const [deleteClassInquiry] = useMutation(DELETE_CLASS_INQUIRY);
 
-  const onClickWrite = async (data: IFormData, grade: number) => {
+  const onClickWrite = async (data: IFormData) => {
     try {
       const result = await createClassInquiry({
         variables: {
@@ -119,7 +121,8 @@ export const useMutationCreateInQuirySubmit = (propsSetIsEdit2: any) => {
       alert("내용이 수정되지 않았습니다.");
       return;
     }
-
+    alert(data.ci_id);
+    alert(data.content);
     try {
       const result = await updateClassInquiry({
         variables: {
@@ -135,6 +138,10 @@ export const useMutationCreateInQuirySubmit = (propsSetIsEdit2: any) => {
           },
         ],
       });
+      console.log("------------");
+      console.log(result);
+      console.log("------------");
+
       alert("문의 수정 완료");
 
       setIsEdit2(false);
