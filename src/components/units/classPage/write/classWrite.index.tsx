@@ -47,11 +47,12 @@ export default function ClassWrite(props: IClassWriteProps) {
   // ToastEditor
   const contentsRef = useRef<EditorInstance | null>(null);
 
+  // const [content, setContent] = useState("");
   const onChangeContents = (text: any) => {
     const editorInstance: string =
       contentsRef.current?.getInstance()?.getHTML() ?? "";
-
     setValue("content", editorInstance === "<p><br></p>" ? "" : editorInstance);
+    // setContent(text === "<p><br><p>" ? "" : editorInstance);
   };
 
   // 우편주소(카카오지도)
@@ -66,9 +67,10 @@ export default function ClassWrite(props: IClassWriteProps) {
 
   const handleComplete = (data: Address): void => {
     onToggleModal();
-
     setValue("address", data.address);
     setFulladdress(data.address);
+    // alert("여기오니?");
+    // alert(data.address);
   };
 
   useEffect(() => {
@@ -148,12 +150,22 @@ export default function ClassWrite(props: IClassWriteProps) {
   });
 
   const onSubmitForm = async (data: IFormData) => {
+    // alert(data.content);
+    // onChangeContents();
+    // const content = props.data?.fetchClassDetail.content;
+    // setContent(props.data?.fetchClassDetail.content ?? "asd");
+    let content = props.data?.fetchClassDetail.content ?? "";
+    let fulladdress = data.address
+      ? data.address
+      : props.data?.fetchClassDetail.address ?? "";
+
     const { ...value } = data;
+    // alert(data.address);
 
     if (!props.isEdit) {
-      await onClickClassSubmit(value, fulladdress);
+      await onClickClassSubmit(value, fulladdress, content);
     } else {
-      await onClickClassUpdate(value, fulladdress);
+      await onClickClassUpdate(value, fulladdress, content);
     }
   };
 
@@ -262,6 +274,7 @@ export default function ClassWrite(props: IClassWriteProps) {
                         ? fulladdress ?? ""
                         : props.data?.fetchClassDetail.address ?? ""
                     }
+                    // defaultValue={props.data?.fetchClassDetail.address}
                   />
                   <S.AddressBtn type="button" onClick={onToggleModal}>
                     주소 검색

@@ -23,7 +23,11 @@ export const useMutationUpdateClass = () => {
   const [fileList2, setFileList2] = useState<UploadFile[]>([]);
 
   console.log("111");
-  const onClickClassUpdate = async (data: IFormData, address: string) => {
+  const onClickClassUpdate = async (
+    data: IFormData,
+    address: string,
+    content: string
+  ) => {
     console.log("2222");
     try {
       if (typeof router.query.class_id !== "string") {
@@ -79,7 +83,19 @@ export const useMutationUpdateClass = () => {
 
       const resultUrl = [...resultUrls, ...prevFile];
       //추가end
+      // alert(data.content);
 
+      // 상세내용 수정 없을 시 기존 내용으로 저장
+      if (data.content) {
+        content = data.content;
+      }
+
+      // 주소 수정 없을 시 기존 내용으로 저장
+      if (address) {
+        data.address = address;
+      }
+      alert(data.address);
+      alert(address);
       const result = await updateClass({
         variables: {
           updateClassInput: {
@@ -88,12 +104,12 @@ export const useMutationUpdateClass = () => {
             content_summary: data.content_summary,
             price: Number(data.price),
             class_mNum: Number(data.class_mNum),
-            address: address,
+            address: data.address,
             address_detail: data.address_detail,
             category: data.category,
             address_category: getFirstTwoChars(address),
             total_time: data.total_time,
-            content: data.content,
+            content: content,
             accountNum: String(data.accountNum),
             accountName: data.accountName,
             bankName: data.bankName,
@@ -102,11 +118,7 @@ export const useMutationUpdateClass = () => {
               date: "date",
               remain: 7,
             },
-            // imageInput: {
-            //   url: "111",
-            //   type: 1,
-            //   is_main: 1,
-            // },
+
             imageInput: resultUrl,
           },
         },

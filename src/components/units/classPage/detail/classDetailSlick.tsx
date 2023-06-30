@@ -107,6 +107,12 @@ export default function SlickPage(props: any) {
     slidesToScroll: 1,
   };
 
+  // let fileList = []
+  // fileList = props.src.slice().sort((a: any, b: any) => {
+  //   if (a.is_main < b.is_main) return -1;
+  // });
+
+  console.log(props.src);
   return (
     <Wrapper>
       <SliderComponent {...settings}>
