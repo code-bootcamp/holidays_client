@@ -85,6 +85,11 @@ export const useMutationUpdateClass = () => {
       //추가end
       // alert(data.content);
 
+      if (resultUrl.length === 0) {
+        alert("대표 이미지는 필수 입력 사항입니다 이미지를 등록 해 주세요.");
+        return;
+      }
+
       // 상세내용 수정 없을 시 기존 내용으로 저장
       if (data.content) {
         content = data.content;

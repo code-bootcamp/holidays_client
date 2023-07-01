@@ -14,19 +14,25 @@ export default function ClassQuestionList(props: IClassQuestionListProps) {
   const [divHeight, setDivHeight] = useState("auto");
 
   useEffect(() => {
-    if (props.data && props.data.fetchClassInquiries.length == 1) {
-      setDivHeight("120px");
-    } else if (props.data && props.data.fetchClassInquiries.length == 2) {
-      setDivHeight("240px");
-    } else if (props.data && props.data.fetchClassInquiries.length == 3) {
-      setDivHeight("360px");
-    } else if (props.data && props.data.fetchClassInquiries.length == 4) {
-      setDivHeight("480px");
-    } else if (props.data && props.data.fetchClassInquiries.length > 4) {
+    if (props.data && props.data.fetchClassInquiries.length > 4) {
       setDivHeight("500px");
     } else {
       setDivHeight("auto");
     }
+
+    // if (props.data && props.data.fetchClassInquiries.length == 1) {
+    //   setDivHeight("120px");
+    // } else if (props.data && props.data.fetchClassInquiries.length == 2) {
+    //   setDivHeight("240px");
+    // } else if (props.data && props.data.fetchClassInquiries.length == 3) {
+    //   setDivHeight("360px");
+    // } else if (props.data && props.data.fetchClassInquiries.length == 4) {
+    //   setDivHeight("480px");
+    // } else if (props.data && props.data.fetchClassInquiries.length > 4) {
+    //   setDivHeight("500px");
+    // } else {
+    //   setDivHeight("auto");
+    // }
   }, [props.data]);
 
   const { data, fetchMore } = UseQueryFetchClassInQuiries();

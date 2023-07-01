@@ -35,6 +35,10 @@ export const UseMutationCreateClass = () => {
     content: string
   ) => {
     try {
+      if (fileList.length === 0) {
+        alert("대표 이미지는 필수 입력 사항입니다 이미지를 등록 해 주세요.");
+        return;
+      }
       const results = await Promise.all(
         fileList.map(
           (el) => el && uploadFile({ variables: { files: el.originFileObj } })
