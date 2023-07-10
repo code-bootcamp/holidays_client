@@ -1,35 +1,29 @@
 # 홀리데이즈 HOLIDAYS
 
-#### 배포 사이트 : https://happyholidays.site (2023.06.29 2차 배포 예정)
+점점 더 많은 사람들이 새로운 스킬을 배우고 개인적인 관심사를 탐구하기 위해  원데이클래스에 대한 수요가 증가하고 있습니다. 그러나 원데이클래스를 찾고 참여하기 위해서는 여러 가지 장벽이 존재하곤 합니다. HOLIDAYS는 이러한 장벽을 극복하고, 원데이클래스를 원하는 사람들에게 쉽게  접근 가능하고 매칭이 용이한 서비스를 제공하는 것을 목표로 합니다.
 
-## 멤버 구성
-### 신재욱 (FE)
-- 마이페이지 (마이페이지 메인, 내가 만든 클래스, 내가 신청한 클래스, 위시리스트, 내 사랑방 리스트, 예약 관리, 회원 탈퇴)
-- 커뮤니티 페이지 (커뮤니티 리스트, 커뮤니티 작성, 커뮤니티 조회)
-- 클래스 페이지 (클래스 리스트)
+# ✅ 배포 주소
+
+**HOLIDAYS** [https://happyholidays.site](https://happyholidays.site)
+
+# ✅ 기술 스택
+
+`TypeScript`, `Next.js`, `React`, `GraphQL`, `React-Hooks`, `Emotion`, `Recoil`
+<br></br>
+
+# ✅ FrontEnd 팀원
+## 신재욱 (FE)
+- 커뮤니티 페이지, 회원관리 페이지, 원데이클래스 페이지(리스트)
 - 레이아웃 제작
-- FE git 관리
-- 발표자료 제작
-### 이중한 (FE)
-- 로그인 / 회원가입 페이지 (소셜로그인, 비밀번호 찾기, 권한분기, 휴대폰/이메일 인정 )
-- 결제페이지
-- 랜딩페이지 제작
-- 메거진 페이지 제작
-- PWA (구글 플레이스토어 앱 배포,반응형 디자인)
-### 유시영 (FE)
-- 클래스 생성 및 조회 페이지(클래스 등록/수정/삭제, 카카오 지도 api, 이미지 업로드, 리뷰 등록/수정/삭제하기, 예약하기, 찜하기)
+- Git 관리
+## 이중한 (FE)
+- 로그인 페이지, 결제 페이지, 랜딩페이지
+- PWA 배포
+## 유시영 (FE)
+- 원데이클래스 페이지
 - AWS 배포
-- 노션 제작 및 관리
-- 회의록 작성
+- 노션 관리
 
-## 기획의도
-점점 더 많은 사람들이 새로운 스킬을 배우고 개인적인 관심사를 탐구하기 위해 
-원데이클래스에 대한 수요가 증가하고 있습니다. 
-
-그러나 원데이클래스를 찾고 참여하기 위해서는 여러 가지 장벽이 존재하곤 합니다. 
-
-"HOLIDAYS"는 이러한 장벽을 극복하고, 원데이클래스를 원하는 사람들에게 쉽게 
-접근 가능하고 매칭이 용이한 서비스를 제공하는 것을 목표로 합니다.
 
 ## 기능 설명
 
@@ -45,15 +39,7 @@
 ### 4. 매칭 시스템
  "HOLIDAYS"는 강사와 수강생을 매칭해주는 기능을 제공합니다. 강사는 자신의 클래스에 대한 신청을 받고, 수강생은 원하는 클래스에 신청할 수 있습니다. 시스템은 이를 기반으로 가장 적합한 매칭을 제안하여 수강생과 강사를 연결합니다.
 
-## 개발 기간
-2023년 5월 8일 ~ 2023년 5월 26일
-
-## 기술
-- HTML, CSS, JavaScript, TypeScript, React, Next.js, GraphQL
-- PWA, AWS, 도커
-- GIT
-
-## 프로젝트 기록
+# ✅ 프로젝트 기록
 - [Team Project 1일차](https://velog.io/@sju4486/TIL-Team-Project-1%EC%9D%BC%EC%B0%A8)
 - [Team Project 2일차](https://velog.io/@sju4486/TIL-Team-Project-2%EC%9D%BC%EC%B0%A8)
 - [Team Project 3일차](https://velog.io/@sju4486/TIL-Team-Project-3%EC%9D%BC%EC%B0%A8)
@@ -69,7 +55,7 @@
 - [Team Project 회고록](https://velog.io/@sju4486/TIL-Team-Project-%ED%9A%8C%EA%B3%A0%EB%A1%9D)
 - [Team Project 리팩토링 회고록](https://velog.io/@sju4486/Project-Team-Project-%EB%A6%AC%ED%8C%A9%ED%86%A0%EB%A7%81-%ED%9A%8C%EA%B3%A0)
 
-## 구현 기능
+# ✅ 구현 기능
 
 ![1](https://github.com/code-bootcamp/holidays_client/assets/114569429/b62f819d-630d-468e-a2ca-c279eb513abc)
 
