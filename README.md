@@ -9,7 +9,6 @@
 ## 기술 스택
 
 `TypeScript`, `Next.js`, `React`, `GraphQL`, `React-Hooks`, `Emotion`, `Recoil`
-<br></br>
 
 ## FrontEnd 팀원
 ### 신재욱 (FE)
@@ -42,6 +41,10 @@
 
 ## 화면 구성
 ![스크린샷, 2023-07-13 19-02-53](https://github.com/mrpumpkin98/Reused_client/assets/114569429/0022329b-ddd8-4908-961d-4b2f2c4ea233)
+
+
+## ERD
+![Untitled](https://github.com/mrpumpkin98/Reused_client/assets/114569429/c32c9ae3-987a-4301-8d34-97d4450241bc)
 
 
 ## 구현 기능
