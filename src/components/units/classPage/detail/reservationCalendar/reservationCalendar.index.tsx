@@ -48,6 +48,7 @@ export default function CalendarUI(props: IReservationCreateProps) {
   const { data } = UseQueryFetchClassSchedules();
   console.log("///////////////");
   console.log(data);
+
   console.log("///////////////");
 
   console.log("###########");
@@ -207,7 +208,8 @@ export default function CalendarUI(props: IReservationCreateProps) {
                 disabledDate={disabledDate} // 날짜 비활성화 함수 적용
                 dateFullCellRender={(value) => {
                   const day = value.date();
-
+                  console.log("asdasdasdasdaF");
+                  console.log(selectedDay);
                   const isSelected = selectedDay?.isSame(value, "day");
                   const cellStyle = isSelected
                     ? { background: "orange", color: "white" }

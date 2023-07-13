@@ -308,6 +308,7 @@ export default function ClassWrite(props: IClassWriteProps) {
             <CalendarFunction
               selectedDates={selectedDates}
               setSelectedDates={setSelectedDates}
+              isEdit={props.isEdit}
             />
             <S.Label>입금 계좌를 작성해주세요</S.Label>
             <S.TextInput
