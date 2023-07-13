@@ -1,4 +1,5 @@
 import styled from "@emotion/styled";
+import { mobile } from "../../../../commons/styles/breakPoints";
 
 export const Wrapper = styled.div`
   width: 700px;
@@ -12,6 +13,13 @@ export const Wrapper = styled.div`
   flex-direction: column;
   border: none;
   box-shadow: 0px 0px 10px gray;
+  @media ${mobile} {
+    width: 100%;
+    box-shadow: 0px 0px 0px;
+    margin-top: 30px;
+    padding: 80px 34px 100px 34px;
+    margin-bottom: 5vh;
+  }
 `;
 
 export const TitleImg = styled.img`
@@ -19,11 +27,17 @@ export const TitleImg = styled.img`
   height: 300px;
   object-fit: cover;
   object-position: center;
+  @media ${mobile} {
+    height: 30vh;
+  }
 `;
 
 export const Title = styled.h1`
   margin-bottom: 19px;
   font-size: 50px;
+  @media ${mobile} {
+    font-size: 30px;
+  }
 `;
 
 export const UserButtonTie = styled.div`
@@ -62,7 +76,7 @@ export const LikeButton = styled.button`
 
 export const Line = styled.div`
   width: 100%;
-  border: 1px solid #fafafa;
+  border: 1px solid #e4e4e4;
   margin-bottom: 20px;
   margin-top: 20px;
 `;
@@ -122,6 +136,8 @@ export const BottomWrapper = styled.div`
   flex-direction: row;
   justify-content: space-between;
   padding-top: 50px;
+  @media ${mobile} {
+  }
 `;
 
 export const Button = styled.button`
@@ -134,5 +150,9 @@ export const Button = styled.button`
   font-size: 16px;
   &.Edit {
     color: gray;
+  }
+  @media ${mobile} {
+    width: 100%;
+    border-radius: 0px;
   }
 `;

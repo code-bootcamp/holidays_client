@@ -140,6 +140,7 @@ export const PremiumWrapper = styled.div`
 `;
 
 export const PremiumPosts = styled.div`
+  height: 420px;
   margin-bottom: 50px;
   cursor: pointer;
   width: 250px;
@@ -174,6 +175,7 @@ export const PremiumPostImg = styled.img`
 
 export const PremiumPostTitle = styled.div`
   font-weight: 700;
+  height: 60px;
   font-size: 20px;
   margin-bottom: 5px;
   @media ${mobile} {
@@ -185,7 +187,7 @@ export const PremiumPostContent = styled.div``;
 
 export const PremiumPostInfo = styled.div`
   display: flex;
-  align-items: center;
+  flex-direction: column;
 `;
 
 export const PremiumUser = styled.div`
@@ -205,6 +207,7 @@ export const PremiumUser = styled.div`
   overflow: hidden;
   margin-bottom: 5px;
   margin-right: 4px;
+  margin-top: 5px;
 `;
 
 export const PremiumAvatarContentTie = styled.div``;
@@ -238,4 +241,5 @@ export const PremiumTime = styled.div`
   overflow: hidden;
   margin-bottom: 5px;
   margin-right: 4px;
+  margin-top: 5px;
 `;

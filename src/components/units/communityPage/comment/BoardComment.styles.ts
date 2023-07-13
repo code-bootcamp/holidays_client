@@ -6,14 +6,23 @@ import {
   PaperClipOutlined,
   ExportOutlined,
 } from "@ant-design/icons";
+import { mobile } from "../../../../commons/styles/breakPoints";
 
-export const Wrapper = styled.div``;
+export const Wrapper = styled.div`
+  @media ${mobile} {
+    margin-top: 4vh;
+  }
+`;
 
 export const CardWrapper = styled.div`
   width: 100%;
 `;
 
-export const Body = styled.div``;
+export const Body = styled.div`
+  @media ${mobile} {
+    display: flex;
+  }
+`;
 
 export const BodyInput = styled.input<{ Active: any }>`
   margin-top: 20px;
@@ -29,12 +38,20 @@ export const BodyInput = styled.input<{ Active: any }>`
   :focus {
     outline: none;
   }
+  @media ${mobile} {
+    margin-top: 0px;
+    height: 50px;
+    border-radius: 4px 0px 0px 4px;
+  }
 `;
 
 export const BodyNumberTie = styled.div`
   display: flex;
   justify-content: end;
   margin-top: 20px;
+  @media ${mobile} {
+    margin-top: 0px;
+  }
 `;
 
 export const BodyButton = styled.button<{ Active: any }>`
@@ -47,6 +64,11 @@ export const BodyButton = styled.button<{ Active: any }>`
   cursor: pointer;
   font-size: 15px;
   border-radius: 4px;
+  @media ${mobile} {
+    width: 20vw;
+    height: 50px;
+    border-radius: 0px;
+  }
 `;
 
 export const Export = styled.button`
@@ -59,4 +81,9 @@ export const Export = styled.button`
   font-size: 15px;
   border-radius: 4px;
   margin-left: 10px;
+  @media ${mobile} {
+    width: 20vw;
+    margin-left: 0px;
+    height: 50px;
+  }
 `;

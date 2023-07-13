@@ -36,6 +36,13 @@ export default function WishList() {
     console.log(postId);
   };
 
+  ///////////////////////////////////////////////////////////////
+  // 대체 이미지
+  //////////////////////////////////////////////////////////////
+  const onErrorImg = (e: any) => {
+    e.target.src = "/images/all-icon.png";
+  };
+
   return (
     <S.Wrapper>
       {loading ? (
@@ -71,7 +78,7 @@ export default function WishList() {
                 <S.PremiumPosts>
                   <S.PremiumPostBody id={post.class_id} onClick={onClickSubmit}>
                     <S.PremiumTemplate>
-                      <S.PremiumPostImg src={post.url} />
+                      <S.PremiumPostImg src={post.url} onError={onErrorImg} />
                     </S.PremiumTemplate>
                     <S.PremiumPostTitle>{post.title}</S.PremiumPostTitle>
                     <S.PremiumPostContent>
