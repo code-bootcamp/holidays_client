@@ -79,9 +79,13 @@
 
 ![커뮤니티(작성)](https://github.com/mrpumpkin98/Reused_client/assets/114569429/654de327-a292-43f6-b39a-63b13c0170ab)
 
+<hr/>
+
+![커뮤니티(수정)](https://github.com/code-bootcamp/holidays_client/assets/114569429/ca476e0e-548f-40f5-b92d-930467456414)
 
 - TOAST UI Editor 3.0 라이브러리를 사용했습니다.
 - 대표이미지 등록과 게시물작성시 필요한 이미지들을 자유롭게 등록할 수 있습니다.
+- 작성한 제목과 내용은 게시물을 작성한 작성자만 수정이 가능합니다.
 - 댓글 작성과 수정 시 apolloClient에서 제공하는 기능인 refetchQueries를 사용해서 즉각적으로 반영되도록 구현했습니다.
 
 <br/>
