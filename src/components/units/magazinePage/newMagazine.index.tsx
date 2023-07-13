@@ -1,28 +1,28 @@
 import { MouseEventHandler, useState } from "react";
 import Backdrop from "../../commons/modals/newMagazineModal/Backdrop/Backdrop";
 import Modal from "../../commons/modals/newMagazineModal/Modal/modal";
-import { FECTCH_BOARDS } from "../../commons/hooks/useQueries/board/UseQueryFetchBoards";
-import { FETCH_BOARD_DETAIL } from "../../commons/hooks/useQueries/board/UseQueryFetchBoardsDetail";
 
 import * as S from "./newMagazine.styles";
 import { useQuery } from "@apollo/client";
 import { useRouter } from "next/router";
 import { useRecoilValue } from "recoil";
 import { selectMonth } from "../../../commons/stores";
+import { FETCH_MAGAZINES } from "../../commons/hooks/useQueries/board/UseQueryFetchMagazines";
+
+interface IMagazine {
+  board_id: string;
+  title: string;
+  content: string;
+  createdAt: string;
+  name: string;
+  url: string;
+  row_count: number;
+}
 
 export default function Magazine(): JSX.Element {
   const router = useRouter();
-  const [isHovered, setIsHovered] = useState<boolean>(false);
 
-  const { data } = useQuery(FECTCH_BOARDS);
-
-  const handleMouseEnter = (): void => {
-    setIsHovered(true);
-  };
-
-  const handleMouseLeave = (): void => {
-    setIsHovered(false);
-  };
+  const { data } = useQuery<{ fetchMagazines: IMagazine[] }>(FETCH_MAGAZINES);
 
   // 월간호 클릭 시
   const [showModal, setShowModal] = useState(false);
@@ -43,16 +43,19 @@ export default function Magazine(): JSX.Element {
     const target = event.currentTarget;
     const postId = target.id;
     router.push(`/communityPage/${postId}`);
+    console.log(postId);
   };
 
   // 월별 필터링된 게시글 가져오기
-  const filteredPosts = data?.fetchBoards.filter(
-    (post: any) => new Date(post.createdAt).getMonth() === 6
-  );
+  const filteredPosts: IMagazine[] =
+    data?.fetchMagazines?.filter((post: IMagazine) => {
+      const postMonth = new Date(post.createdAt).getMonth() + 1;
+      return postMonth === 6;
+    }) ?? [];
 
   // 추천수 기준으로 내림차순 정렬된 게시글 가져오기
-  const sortedPosts = filteredPosts?.sort(
-    (a: any, b: any) => b.likes - a.likes
+  const sortedPosts: IMagazine[] = filteredPosts?.sort(
+    (a: IMagazine, b: IMagazine) => b.row_count - a.row_count
   );
 
   // 상위 3개의 게시글 가져오기
@@ -79,42 +82,64 @@ export default function Magazine(): JSX.Element {
         <S.Body>
           <S.Contents>
             <S.ImageBox1
-              onMouseEnter={handleMouseEnter}
-              onMouseLeave={handleMouseLeave}
               onClick={onClickMove}
-            >
-              <S.ContentsTextWrapper
-                className={isHovered ? "visible" : "hidden"}
-              >
-                <S.ContentsLabel>{data?.fetchBoards[0].title}</S.ContentsLabel>
-                <S.ContentsRemarks>
-                  {data?.fetchBoards[0].name}
-                </S.ContentsRemarks>
-              </S.ContentsTextWrapper>
-            </S.ImageBox1>
+              style={{
+                backgroundImage: topThreePosts[0]?.url
+                  ? `url(${topThreePosts[0].url})`
+                  : "",
+              }}
+              id={topThreePosts[0]?.board_id ?? ""}
+            ></S.ImageBox1>
+            <S.ContentsTextWrapper>
+              <S.ContentsLabel>
+                {topThreePosts[0]?.title ?? "데이터 오류"}
+              </S.ContentsLabel>
+              <S.ContentsRemarks>
+                {topThreePosts[0]?.name ?? "데이터 오류"} &nbsp; &nbsp;
+                {topThreePosts[0]?.createdAt.slice(0, 10)}
+              </S.ContentsRemarks>
+            </S.ContentsTextWrapper>
           </S.Contents>
           <S.Contents>
-            <S.ImageBox2
-              onMouseEnter={handleMouseEnter}
-              onMouseLeave={handleMouseLeave}
-            >
-              <S.ContentsTextWrapper2
-                className={isHovered ? "visible" : "hidden"}
-              >
-                <S.ContentsLabel>{data?.fetchBoards[1].title}</S.ContentsLabel>
-                <S.ContentsRemarks>
-                  {data?.fetchBoards[1].name}
-                </S.ContentsRemarks>
-              </S.ContentsTextWrapper2>
-            </S.ImageBox2>
-          </S.Contents>
-          {/* <S.Contents>
-            <S.ContentsImage src="/mainPage/매거진메인.png" />
+            <S.ImageBox1
+              onClick={onClickMove}
+              style={{
+                backgroundImage: topThreePosts[0]?.url
+                  ? `url(${topThreePosts[0].url})`
+                  : "",
+              }}
+              id={topThreePosts[0]?.board_id ?? ""}
+            ></S.ImageBox1>
             <S.ContentsTextWrapper>
-              <S.ContentsLabel>빈센트의 인생 레시피</S.ContentsLabel>
-              <S.ContentsRemarks>연령별 인생 레시피를 맛보다</S.ContentsRemarks>
+              <S.ContentsLabel>
+                {topThreePosts[0]?.title ?? "데이터 오류"}
+              </S.ContentsLabel>
+              <S.ContentsRemarks>
+                {topThreePosts[0]?.name ?? "데이터 오류"} &nbsp; &nbsp;
+                {topThreePosts[0]?.createdAt.slice(0, 10)}
+              </S.ContentsRemarks>
             </S.ContentsTextWrapper>
-          </S.Contents> */}
+          </S.Contents>
+          <S.Contents>
+            <S.ImageBox1
+              onClick={onClickMove}
+              style={{
+                backgroundImage: topThreePosts[0]?.url
+                  ? `url(${topThreePosts[0].url})`
+                  : "",
+              }}
+              id={topThreePosts[0]?.board_id ?? ""}
+            ></S.ImageBox1>
+            <S.ContentsTextWrapper>
+              <S.ContentsLabel>
+                {topThreePosts[0]?.title ?? "데이터 오류"}
+              </S.ContentsLabel>
+              <S.ContentsRemarks>
+                {topThreePosts[0]?.name ?? "데이터 오류"} &nbsp; &nbsp;
+                {topThreePosts[0]?.createdAt.slice(0, 10)}
+              </S.ContentsRemarks>
+            </S.ContentsTextWrapper>
+          </S.Contents>
         </S.Body>
       </S.Wrapper>
     </>
