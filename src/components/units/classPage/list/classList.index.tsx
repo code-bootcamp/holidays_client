@@ -14,6 +14,7 @@ import InfiniteScroll from "react-infinite-scroller";
 import { useRouter } from "next/router";
 import { FETCH_CLASSES_AD } from "../../../commons/hooks/useQueries/class/UseQueryFetchClassesAd";
 import { FETCH_CLASSES } from "../../../commons/hooks/useQueries/class/UseQueryFetchClasses";
+import { FETCH_CLASSES_POPULAR } from "../../../commons/hooks/useQueries/class/UseQueryFetchClassesPopular";
 
 interface PostType {
   class_id: number;
@@ -36,6 +37,7 @@ export default function StaticRoutingPage() {
   const [writer, setWriter] = useState("");
   const [showModal, setShowModal] = useState(false);
   const [showModal2, setShowModal2] = useState(false);
+  const [ByPopularity, setByPopularity] = useState(false);
 
   const addressCategory = selectedRegion === "지역 전체" ? "" : selectedRegion;
   const category =
@@ -53,6 +55,18 @@ export default function StaticRoutingPage() {
     }
   };
   const { data, refetch, fetchMore } = useQuery(FETCH_CLASSES, {
+    variables: {
+      category: category,
+      address_category: addressCategory,
+      search: writer,
+    },
+  });
+
+  const {
+    data: dataPopular,
+    refetch: refetchPopular,
+    fetchMore: fetchMorePopular,
+  } = useQuery(FETCH_CLASSES_POPULAR, {
     variables: {
       category: category,
       address_category: addressCategory,
@@ -98,7 +112,7 @@ export default function StaticRoutingPage() {
   };
 
   ///////////////////////////////////////////////////////////////
-  // 무한 스크롤
+  // 무한 스크롤(기본)
   //////////////////////////////////////////////////////////////
 
   const onLoadMore = (): void => {
@@ -118,6 +132,60 @@ export default function StaticRoutingPage() {
         };
       },
     });
+  };
+
+  ///////////////////////////////////////////////////////////////
+  // 무한 스크롤(인기순)
+  //////////////////////////////////////////////////////////////
+
+  const onLoadMorePopular = (): void => {
+    if (
+      dataPopular === undefined ||
+      dataPopular?.fetchClassesPopular === undefined
+    )
+      return;
+    void fetchMorePopular({
+      variables: {
+        page:
+          Math.ceil((dataPopular?.fetchClassesPopular.length ?? 10) / 10) + 1,
+      },
+      updateQuery: (prev, { fetchMoreResult }) => {
+        if (fetchMoreResult?.fetchClassesPopular === undefined) {
+          return {
+            fetchClassesPopular: [...prev.fetchClassesPopular],
+          };
+        }
+        return {
+          fetchClassesPopular: [
+            ...prev.fetchClassesPopular,
+            ...fetchMoreResult.fetchClassesPopular,
+          ],
+        };
+      },
+    });
+  };
+
+  ///////////////////////////////////////////////////////////////
+  //  인기순 클릭
+  //////////////////////////////////////////////////////////////
+
+  const onClickPopularity: MouseEventHandler<HTMLDivElement> = (event) => {
+    setByPopularity(true);
+  };
+
+  ///////////////////////////////////////////////////////////////
+  //  최신순 클릭
+  //////////////////////////////////////////////////////////////
+
+  const onClickNewest: MouseEventHandler<HTMLDivElement> = (event) => {
+    setByPopularity(false);
+  };
+
+  ///////////////////////////////////////////////////////////////
+  // 대체 이미지
+  //////////////////////////////////////////////////////////////
+  const onErrorImg = (e: any) => {
+    e.target.src = "/images/all-icon.png";
   };
 
   return (
@@ -163,7 +231,7 @@ export default function StaticRoutingPage() {
                 <S.PremiumPosts id={post.class_id} onClick={onClickSubmit}>
                   <S.PremiumPostBody>
                     <S.PremiumTemplate>
-                      <S.PremiumPostImg src={post.url} />
+                      <S.PremiumPostImg src={post.url} onError={onErrorImg} />
                     </S.PremiumTemplate>
                     <S.ClassWrapper>
                       <S.Class>{post.category}</S.Class>
@@ -198,39 +266,74 @@ export default function StaticRoutingPage() {
             onKeyPress={handleKeyPress}
           />
           <S.NewestPopularity>
-            <S.Newest>최신순</S.Newest>
-            <S.Popularity>인기순</S.Popularity>
+            <S.Newest onClick={onClickNewest}>최신순</S.Newest>
+            <S.Popularity onClick={onClickPopularity}>인기순</S.Popularity>
           </S.NewestPopularity>
-          <InfiniteScroll
-            pageStart={0}
-            loadMore={onLoadMore}
-            hasMore={true}
-            useWindow={true}
-          >
-            {data?.fetchClasses.map((post: any, index: number) => (
-              <div key={index}>
-                <S.Posts id={post.class_id} onClick={onClickSubmit}>
-                  <S.PostBody>
-                    <S.PostContent>
-                      <S.ClassWrapper>
-                        <S.Class>{post.category}</S.Class>
-                        <S.Time>진행시간 : {post.total_time}</S.Time>
-                      </S.ClassWrapper>
-                      <S.PostTitle>{post.title}</S.PostTitle>
-                      <S.PostInfo>
-                        <S.AvatarContentTie></S.AvatarContentTie>
-                      </S.PostInfo>
-                      <S.PriceTie>
-                        <S.Address>{post.address}</S.Address>
-                        <S.Price>{Money(post.price)}</S.Price>
-                      </S.PriceTie>
-                    </S.PostContent>
-                    <S.PostImg src={post.url} />
-                  </S.PostBody>
-                </S.Posts>
-              </div>
-            ))}
-          </InfiniteScroll>
+          {!ByPopularity ? (
+            <InfiniteScroll
+              pageStart={0}
+              loadMore={onLoadMore}
+              hasMore={true}
+              useWindow={true}
+            >
+              {data?.fetchClasses.map((post: any, index: number) => (
+                <div key={index}>
+                  <S.Posts id={post.class_id} onClick={onClickSubmit}>
+                    <S.PostBody>
+                      <S.PostContent>
+                        <S.ClassWrapper>
+                          <S.Class>{post.category}</S.Class>
+                          <S.Time>진행시간 : {post.total_time}</S.Time>
+                        </S.ClassWrapper>
+                        <S.PostTitle>{post.title}</S.PostTitle>
+                        <S.PostInfo>
+                          <S.AvatarContentTie></S.AvatarContentTie>
+                        </S.PostInfo>
+                        <S.PriceTie>
+                          <S.Address>{post.address}</S.Address>
+                          <S.Price>{Money(post.price)}</S.Price>
+                        </S.PriceTie>
+                      </S.PostContent>
+                      <S.PostImg src={post.url} onError={onErrorImg} />
+                    </S.PostBody>
+                  </S.Posts>
+                </div>
+              ))}
+            </InfiniteScroll>
+          ) : (
+            <InfiniteScroll
+              pageStart={0}
+              loadMore={onLoadMorePopular}
+              hasMore={true}
+              useWindow={true}
+            >
+              {dataPopular?.fetchClassesPopular.map(
+                (post: any, index: number) => (
+                  <div key={index}>
+                    <S.Posts id={post.class_id} onClick={onClickSubmit}>
+                      <S.PostBody>
+                        <S.PostContent>
+                          <S.ClassWrapper>
+                            <S.Class>{post.category}</S.Class>
+                            <S.Time>진행시간 : {post.total_time}</S.Time>
+                          </S.ClassWrapper>
+                          <S.PostTitle>{post.title}</S.PostTitle>
+                          <S.PostInfo>
+                            <S.AvatarContentTie></S.AvatarContentTie>
+                          </S.PostInfo>
+                          <S.PriceTie>
+                            <S.Address>{post.address}</S.Address>
+                            <S.Price>{Money(post.price)}</S.Price>
+                          </S.PriceTie>
+                        </S.PostContent>
+                        <S.PostImg src={post.url} onError={onErrorImg} />
+                      </S.PostBody>
+                    </S.Posts>
+                  </div>
+                )
+              )}
+            </InfiniteScroll>
+          )}
         </S.BodyWrapper>
       </S.Body>
     </S.Wrapper>

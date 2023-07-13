@@ -121,11 +121,8 @@ export default function communityDetailPage() {
             <Viewer initialValue={data?.fetchBoardDetail?.content || ""} />
           </S.WrapperContents>
           <S.Line />
-
           <BoardComment />
           <BoardCommentList />
-
-          <S.Line />
           <S.BottomWrapper>
             <S.Button onClick={onClickBoard}>목록으로</S.Button>
             {LoginUser?.fetchLoginUser?.email ===

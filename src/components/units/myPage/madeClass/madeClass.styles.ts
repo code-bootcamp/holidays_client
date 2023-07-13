@@ -10,7 +10,7 @@ export const Wrapper = styled.div`
   margin-bottom: 350px;
   @media ${mobile} {
     width: 100%;
-    padding: 0vw 5vw;
+    padding: 0vw 8vw;
     margin-bottom: 30vw;
   }
 `;
@@ -19,6 +19,7 @@ export const ListNameIconWrapper = styled.div`
   display: flex;
   margin-top: 50px;
   @media ${mobile} {
+    width: 100%;
   }
 `;
 
@@ -131,7 +132,6 @@ export const PremiumWrapper = styled.div`
   margin-bottom: 10px;
   @media ${mobile} {
     width: 100%;
-    padding: 0px;
   }
 `;
 
@@ -141,6 +141,7 @@ export const PremiumPosts = styled.div`
   justify-content: center;
   width: 100%;
   @media ${mobile} {
+    margin-bottom: 30px;
   }
 `;
 
@@ -149,6 +150,7 @@ export const PremiumPostBody = styled.div`
   flex-direction: row;
   padding: 15px;
   @media ${mobile} {
+    width: 88vw;
     flex-direction: column;
     padding: 0vw;
   }
@@ -159,6 +161,7 @@ export const Card = styled.div`
   flex-direction: row;
   @media ${mobile} {
     flex-direction: column;
+    height: 47vh;
   }
 `;
 
@@ -305,8 +308,10 @@ export const AdButton = styled.button`
   }
   @media ${mobile} {
     margin-top: 0vw;
+    width: 100%;
     &.Advertising {
-      width: 43vw;
+      margin-top: 0vw;
+      width: 100%;
     }
   }
 `;
@@ -323,6 +328,6 @@ export const DeleteButton = styled.button`
   margin-top: 20px;
   @media ${mobile} {
     margin-top: 0vw;
-    width: 43vw;
+    width: 100%;
   }
 `;

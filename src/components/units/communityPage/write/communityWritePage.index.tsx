@@ -230,7 +230,6 @@ export default function CommunityWritePage(props: any) {
         </S.InputWrapper>
         <S.InputWrapper>
           <S.Label>내용</S.Label>
-          {/* <S.Contents onChange={onChangeTitle} /> */}
           <S.ToastEditorWrapper>
             <ToastEditor
               contentsRef={contentsRef}
