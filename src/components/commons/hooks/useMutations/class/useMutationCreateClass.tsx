@@ -23,12 +23,22 @@ export const UseMutationCreateClass = () => {
 
   const [selectedDates, setSelectedDates] = useState([]);
 
+  const [content, setContent] = useState("");
+
   console.log("*****************");
   console.log(selectedDates);
   console.log("*****************");
 
-  const onClickClassSubmit = async (data: IFormData, address: string) => {
+  const onClickClassSubmit = async (
+    data: IFormData,
+    address: string,
+    content: string
+  ) => {
     try {
+      if (fileList.length === 0) {
+        alert("대표 이미지는 필수 입력 사항입니다 이미지를 등록 해 주세요.");
+        return;
+      }
       const results = await Promise.all(
         fileList.map(
           (el) => el && uploadFile({ variables: { files: el.originFileObj } })
@@ -76,7 +86,9 @@ export const UseMutationCreateClass = () => {
             category: data.category,
             address_category: getFirstTwoChars(address),
             total_time: data.total_time,
-            content: data.content,
+            // content: data.content,
+            content: content,
+
             accountNum: String(data.accountNum),
             accountName: data.accountName,
             bankName: data.bankName,

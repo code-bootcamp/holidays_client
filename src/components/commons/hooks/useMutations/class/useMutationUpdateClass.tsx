@@ -20,18 +20,22 @@ export const useMutationUpdateClass = () => {
   const [updateClass] = useMutation(UPDATE_CLASS);
 
   const [uploadFile] = useMutationUploadFile();
-  const [fileList, setFileList] = useState<UploadFile[]>([]);
+  const [fileList2, setFileList2] = useState<UploadFile[]>([]);
 
   console.log("111");
-  const onClickClassUpdate = async (data: IFormData, address: string) => {
+  const onClickClassUpdate = async (
+    data: IFormData,
+    address: string,
+    content: string
+  ) => {
     console.log("2222");
     try {
       if (typeof router.query.class_id !== "string") {
         alert("시스템에 문제가 있습니다.");
         return;
       }
-      let updateFile = fileList.filter((el) => el.originFileObj !== undefined);
-      let prevFile = fileList
+      let updateFile = fileList2.filter((el) => el.originFileObj !== undefined);
+      let prevFile = fileList2
         .filter((el) => el.originFileObj === undefined)
         .map((el, index) => {
           console.log(index, "########");
@@ -50,12 +54,12 @@ export const useMutationUpdateClass = () => {
         )
       );
       // const results = await Promise.all(
-      //   fileList.map(
+      //   fileList2.map(
       //     (el) => el && uploadFile({ variables: { files: el.originFileObj } })
       //   )
       // );
       // console.log(props);
-      console.log(fileList);
+      console.log(fileList2);
       console.log(uploadFile);
       console.log("파일리스트??");
 
@@ -79,7 +83,24 @@ export const useMutationUpdateClass = () => {
 
       const resultUrl = [...resultUrls, ...prevFile];
       //추가end
+      // alert(data.content);
 
+      if (resultUrl.length === 0) {
+        alert("대표 이미지는 필수 입력 사항입니다 이미지를 등록 해 주세요.");
+        return;
+      }
+
+      // 상세내용 수정 없을 시 기존 내용으로 저장
+      if (data.content) {
+        content = data.content;
+      }
+
+      // 주소 수정 없을 시 기존 내용으로 저장
+      if (address) {
+        data.address = address;
+      }
+      alert(data.address);
+      alert(address);
       const result = await updateClass({
         variables: {
           updateClassInput: {
@@ -88,12 +109,12 @@ export const useMutationUpdateClass = () => {
             content_summary: data.content_summary,
             price: Number(data.price),
             class_mNum: Number(data.class_mNum),
-            address: address,
+            address: data.address,
             address_detail: data.address_detail,
             category: data.category,
             address_category: getFirstTwoChars(address),
             total_time: data.total_time,
-            content: data.content,
+            content: content,
             accountNum: String(data.accountNum),
             accountName: data.accountName,
             bankName: data.bankName,
@@ -102,11 +123,7 @@ export const useMutationUpdateClass = () => {
               date: "date",
               remain: 7,
             },
-            // imageInput: {
-            //   url: "111",
-            //   type: 1,
-            //   is_main: 1,
-            // },
+
             imageInput: resultUrl,
           },
         },
@@ -126,7 +143,7 @@ export const useMutationUpdateClass = () => {
   };
   return {
     onClickClassUpdate,
-    fileList,
-    setFileList,
+    fileList2,
+    setFileList2,
   };
 };

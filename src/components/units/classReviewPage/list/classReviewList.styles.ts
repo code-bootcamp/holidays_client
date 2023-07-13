@@ -22,6 +22,7 @@ export const Box = styled.div`
   width: 1130px;
   overflow: auto;
   margin: auto;
+  height: auto;
 
   @media ${mobile} {
     width: 95vh;

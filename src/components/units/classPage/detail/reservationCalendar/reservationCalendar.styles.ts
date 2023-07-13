@@ -74,13 +74,12 @@ export const Number = styled.input`
   margin-bottom: 10px;
   border: 1px solid #bdbdbd;
   border-radius: 5px;
-  text-align: right;
-  padding-right: 17px;
+  text-align: center;
+  width: 190px;
 `;
 
 export const Number2 = styled.div`
   font-size: 15px;
-  margin-left: 10px;
   margin-bottom: 5px;
 `;
 

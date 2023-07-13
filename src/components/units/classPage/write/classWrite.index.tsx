@@ -47,11 +47,12 @@ export default function ClassWrite(props: IClassWriteProps) {
   // ToastEditor
   const contentsRef = useRef<EditorInstance | null>(null);
 
+  // const [content, setContent] = useState("");
   const onChangeContents = (text: any) => {
     const editorInstance: string =
       contentsRef.current?.getInstance()?.getHTML() ?? "";
-
     setValue("content", editorInstance === "<p><br></p>" ? "" : editorInstance);
+    // setContent(text === "<p><br><p>" ? "" : editorInstance);
   };
 
   // 우편주소(카카오지도)
@@ -66,9 +67,10 @@ export default function ClassWrite(props: IClassWriteProps) {
 
   const handleComplete = (data: Address): void => {
     onToggleModal();
-
     setValue("address", data.address);
     setFulladdress(data.address);
+    // alert("여기오니?");
+    // alert(data.address);
   };
 
   useEffect(() => {
@@ -133,14 +135,14 @@ export default function ClassWrite(props: IClassWriteProps) {
     setSelectedDates,
   } = UseMutationCreateClass();
 
-  // const { onClickClassUpdate, fileList, setFileList } =
-  //   useMutationUpdateClass();
+  const { onClickClassUpdate, fileList2, setFileList2 } =
+    useMutationUpdateClass();
 
-  const {
-    onClickClassUpdate,
-    fileList: updateFileList, // fileList 변수의 이름을 변경
-    setFileList: setUpdateFileList, // setFileList 변수의 이름을 변경
-  } = useMutationUpdateClass();
+  // const {
+  //   onClickClassUpdate,
+  //   fileList: updateFileList, // fileList 변수의 이름을 변경
+  //   setFileList: setUpdateFileList, // setFileList 변수의 이름을 변경
+  // } = useMutationUpdateClass();
 
   const { register, setValue, handleSubmit, formState } = useForm<IFormData>({
     resolver: yupResolver(classWriteSchema),
@@ -148,12 +150,22 @@ export default function ClassWrite(props: IClassWriteProps) {
   });
 
   const onSubmitForm = async (data: IFormData) => {
+    // alert(data.content);
+    // onChangeContents();
+    // const content = props.data?.fetchClassDetail.content;
+    // setContent(props.data?.fetchClassDetail.content ?? "asd");
+    let content = props.data?.fetchClassDetail.content ?? "";
+    let fulladdress = data.address
+      ? data.address
+      : props.data?.fetchClassDetail.address ?? "";
+
     const { ...value } = data;
+    // alert(data.address);
 
     if (!props.isEdit) {
-      await onClickClassSubmit(value, fulladdress);
+      await onClickClassSubmit(value, fulladdress, content);
     } else {
-      await onClickClassUpdate(value, fulladdress);
+      await onClickClassUpdate(value, fulladdress, content);
     }
   };
 
@@ -184,7 +196,6 @@ export default function ClassWrite(props: IClassWriteProps) {
               <option value="운동">운동</option>
               <option value="요리">요리</option>
             </S.CustomSelect>
-
             <S.Label>클래스 이름을 입력해주세요</S.Label>
             <S.TextInput
               type="text"
@@ -193,7 +204,6 @@ export default function ClassWrite(props: IClassWriteProps) {
               defaultValue={props.data?.fetchClassDetail.title}
             />
             <S.Error>{formState.errors.title?.message}</S.Error>
-
             <S.Label>클래스 한줄요약을 입력해주세요</S.Label>
             <S.TextInput
               type="text"
@@ -202,16 +212,22 @@ export default function ClassWrite(props: IClassWriteProps) {
               defaultValue={props.data?.fetchClassDetail.content_summary}
             />
             <S.Error>{formState.errors.content_summary?.message}</S.Error>
-
             <S.Label>
               대표 이미지를 올려주세요 (최대 5개까지 업로드 가능)
             </S.Label>
-            <ClassImage
-              fileList={fileList}
-              setFileList={setFileList}
-              data={props.data?.fetchClassDetail?.image_}
-            />
-
+            {props.isEdit ? (
+              <ClassImage
+                fileList={fileList2}
+                setFileList={setFileList2}
+                data={props.data?.fetchClassDetail?.image_}
+              />
+            ) : (
+              <ClassImage
+                fileList={fileList}
+                setFileList={setFileList}
+                data={props.data?.fetchClassDetail?.image_}
+              />
+            )}
             <S.Wrapper_body_middle>
               <S.Wrapper_body_middle_left>
                 <S.Label>클래스 소요 시간을 선택해주세요</S.Label>
@@ -245,7 +261,6 @@ export default function ClassWrite(props: IClassWriteProps) {
               defaultValue={props.data?.fetchClassDetail.price}
             />
             <S.Error>{formState.errors.price?.message}</S.Error>
-
             <S.Label>클래스 위치를 입력해주세요</S.Label>
             <S.Wrapper_body_map>
               <S.Map id="map" />
@@ -259,6 +274,7 @@ export default function ClassWrite(props: IClassWriteProps) {
                         ? fulladdress ?? ""
                         : props.data?.fetchClassDetail.address ?? ""
                     }
+                    // defaultValue={props.data?.fetchClassDetail.address}
                   />
                   <S.AddressBtn type="button" onClick={onToggleModal}>
                     주소 검색
@@ -276,9 +292,7 @@ export default function ClassWrite(props: IClassWriteProps) {
                 </S.Wrapper_body_map_right_bottom>
               </S.Wrapper_body_map_right>
             </S.Wrapper_body_map>
-
             <S.Label>클래스 세부내용을 작성해주세요</S.Label>
-
             <S.ToastEditor>
               <ToastEditor
                 contentsRef={contentsRef}
@@ -286,18 +300,16 @@ export default function ClassWrite(props: IClassWriteProps) {
                 initialValue={props.data?.fetchClassDetail.content}
               />
             </S.ToastEditor>
-
             <S.Label>클래스 일정을 선택해주세요</S.Label>
             {/* <Calendar
               selectedDates={selectedDates}
               setSelectedDates={setSelectedDates}
             /> */}
-
             <CalendarFunction
               selectedDates={selectedDates}
               setSelectedDates={setSelectedDates}
+              isEdit={props.isEdit}
             />
-
             <S.Label>입금 계좌를 작성해주세요</S.Label>
             <S.TextInput
               type="text"
@@ -306,7 +318,6 @@ export default function ClassWrite(props: IClassWriteProps) {
               defaultValue={props.data?.fetchClassDetail.accountNum}
             />
             <S.Error>{formState.errors.accountNum?.message}</S.Error>
-
             <S.BankWrapper>
               <div>
                 <S.Label>예금주를 작성해주세요</S.Label>
@@ -330,7 +341,6 @@ export default function ClassWrite(props: IClassWriteProps) {
                 <S.Error>{formState.errors.bankName?.message}</S.Error>
               </div>
             </S.BankWrapper>
-
             <S.BtnWrapper>
               <S.CancelBtn onClick={onClickCancel}>취소</S.CancelBtn>
               <S.SubmitBtn type="submit">

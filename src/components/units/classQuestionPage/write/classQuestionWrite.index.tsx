@@ -1,5 +1,5 @@
 import { useForm } from "react-hook-form";
-import { useMutationCreateInQuirySubmit } from "../../../commons/hooks/useMutations/class/useMutatioClassInQuiry";
+import { useMutationCreateInQuirySubmit } from "../../../commons/hooks/useMutations/class/useMutationClassInQuiry";
 import * as S from "./classQuestionWrite.styles";
 import { classQuestionSchema } from "./classQuestionWrite.validation";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -17,6 +17,11 @@ export default function ClassQuestionWrite(props: IClassInquiriesWriteProps) {
 
   const { register, handleSubmit, setValue, formState } = useForm<IFormData>({
     resolver: yupResolver(classQuestionSchema),
+
+    defaultValues: {
+      content: props.isEdit2 ? props.el?.content : "",
+      ci_id: props.el?.ci_id,
+    },
     mode: "onChange",
   });
 
@@ -37,7 +42,9 @@ export default function ClassQuestionWrite(props: IClassInquiriesWriteProps) {
       <S.Wrapper>
         <form onSubmit={handleSubmit(onSubmitForm)}>
           <S.Wrapper_body>
-            <S.Wrapper_body_header>문의하기</S.Wrapper_body_header>
+            <S.Wrapper_body_header>
+              문의 {props.isEdit2 ? "수정" : "등록"}하기
+            </S.Wrapper_body_header>
 
             <S.ReviewBox>
               <S.TextArea7
@@ -48,7 +55,9 @@ export default function ClassQuestionWrite(props: IClassInquiriesWriteProps) {
               />
 
               <S.ButtonWrapper>
-                <S.ReviewWriteBtn>문의하기</S.ReviewWriteBtn>
+                <S.ReviewWriteBtn type="submit">
+                  {props.isEdit2 ? "수정" : "등록"}
+                </S.ReviewWriteBtn>
               </S.ButtonWrapper>
             </S.ReviewBox>
           </S.Wrapper_body>

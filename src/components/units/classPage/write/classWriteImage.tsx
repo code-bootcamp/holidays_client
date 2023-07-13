@@ -33,6 +33,7 @@ function ClassImage(props: any): JSX.Element {
     console.log("이미지미리보기?");
     console.log(props.data);
     console.log("이미지미리보기?");
+
     const array = props.data?.map((el: IData) => el.url);
     if (array !== undefined) {
       let arr: { url: string }[] = [];

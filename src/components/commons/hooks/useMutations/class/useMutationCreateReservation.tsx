@@ -18,10 +18,14 @@ export const UseMutationReservation = () => {
   const router = useRouter();
 
   const onClickReservation = async (data: IFormData) => {
+    console.log("hhhhhhhhhhh");
     try {
+      console.log("ㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㄴ");
+      console.log(schedules);
+      console.log(data);
       let is_schedule = false;
       for (let i = 0; i < schedules.length; i++) {
-        if (schedules[i].date == data.res_date) {
+        if (schedules[i].date == data.res_date.replace("월", "")) {
           if (schedules[i].remain - Number(data.personnel) >= 0) {
             is_schedule = true;
           }

@@ -6,8 +6,9 @@ import { getDate } from "../../../../commons/libraries/utils";
 import {
   useMutationCreateInQuiry,
   useMutationCreateInQuirySubmit,
-} from "../../../commons/hooks/useMutations/class/useMutatioClassInQuiry";
+} from "../../../commons/hooks/useMutations/class/useMutationClassInQuiry";
 import ClassQuestionWrite from "../write/classQuestionWrite.index";
+import { UseQueryFetchClassDetail } from "../../../commons/hooks/useQueries/class/useQueryFetchClassDetail";
 
 export default function ClassQuestionListEl(props: any) {
   // 로그인 여부 확인
@@ -19,6 +20,13 @@ export default function ClassQuestionListEl(props: any) {
   const handleEditClick = (ci_id: any) => {
     setIsEdit2(true);
   };
+
+  const { data } = UseQueryFetchClassDetail();
+  console.log("정희준바보");
+  console.log(data);
+  console.log("정희준바보");
+
+  // --------------------------------
 
   return (
     <div>
@@ -45,7 +53,13 @@ export default function ClassQuestionListEl(props: any) {
             </S.Wrapper_header_top>
             <S.Date>{getDate(props.el.createdAt)}</S.Date>
           </S.Wrapper_header>
-          <S.Contents>{props.el.content}</S.Contents>
+
+          {login?.fetchLoginUser.name === props.el.name ||
+          login?.fetchLoginUser.name === data?.fetchClassDetail.user_.name ? (
+            <S.Contents>{props.el.content}</S.Contents>
+          ) : (
+            <S.Contents>비밀글 입니다.</S.Contents>
+          )}
         </S.Row>
       )}
 

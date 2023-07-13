@@ -116,7 +116,7 @@ export const UseMutationClassReviewSubmit = (propsSetIsEdit: any) => {
       alert("내용이 수정되지 않았습니다.");
       return;
     }
-
+    alert(data.cr_id);
     try {
       const result = await updateClassReview({
         variables: {
