@@ -40,6 +40,10 @@
 - [Team Project 회고록](https://velog.io/@sju4486/TIL-Team-Project-%ED%9A%8C%EA%B3%A0%EB%A1%9D)
 - [Team Project 리팩토링 회고록](https://velog.io/@sju4486/Project-Team-Project-%EB%A6%AC%ED%8C%A9%ED%86%A0%EB%A7%81-%ED%9A%8C%EA%B3%A0)
 
+## 화면 구성
+![스크린샷, 2023-07-13 19-02-53](https://github.com/mrpumpkin98/Reused_client/assets/114569429/0022329b-ddd8-4908-961d-4b2f2c4ea233)
+
+
 ## 구현 기능
 
 ### 원데이클래스 List Page (Service / Area Category)
