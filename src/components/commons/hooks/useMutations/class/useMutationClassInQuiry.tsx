@@ -26,8 +26,6 @@ export const DELETE_CLASS_INQUIRY = gql`
   }
 `;
 
-// -------------------------------
-
 export const useMutationCreateInQuiry = () => {
   const router = useRouter();
 
@@ -80,7 +78,6 @@ export const useMutationCreateInQuiry = () => {
 
   return { onClickWrite, onClickDelete, isEdit2, setIsEdit2 };
 };
-// -------------------------------
 
 export const useMutationCreateInQuirySubmit = (propsSetIsEdit2: any) => {
   const router = useRouter();
@@ -138,9 +135,6 @@ export const useMutationCreateInQuirySubmit = (propsSetIsEdit2: any) => {
           },
         ],
       });
-      console.log("------------");
-      console.log(result);
-      console.log("------------");
 
       alert("문의 수정 완료");
 

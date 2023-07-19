@@ -1,57 +1,31 @@
-import { IQuery } from "../../../../../commons/types/generated/types";
 import { IFormData } from "../../../../units/classPage/detail/reservationCalendar/reservationCalendar.types";
 import * as S from "./modal.styles";
-
-// interface ModalProps {
-//   onClose: () => void;
-// }
 
 interface ModalProps {
   onClose: () => void;
   date: string;
-  // personnel: string;
   onClickReservation: (data: IFormData) => void;
   fetchClassDetail?: any;
-  data: any; // data 추가
+  data: any;
 }
 
 const Modal: React.FC<ModalProps> = ({
   onClose,
   date,
-  // personnel,
   onClickReservation,
   fetchClassDetail,
-  data, // data를 인자로 받습니다.
+  data,
 }) => {
   const handleReservation = () => {
-    // 예약 처리 로직
-    console.log("!@!@!@!@!@!@!@");
-    // console.log(date, personnel);
-    console.log(data); // data를 사용할 수 있습니다.
-    console.log("data.res_date: ", data.res_date);
-    console.log("data.personnel: ", data.personnel);
-    console.log("!@!@!@!@!@!@!@");
-
     const formData: IFormData = {
       res_date: date,
-      // personnel,
       personnel: data.personnel,
     };
-
-    console.log("ㅁㅁㅁㅁㅁㅁㅁ");
-    console.log(formData);
-    console.log("formData.res_date: ", formData.res_date);
-    console.log("formData.personnel: ", formData.personnel);
-    console.log("ㅁㅁㅁㅁㅁㅁㅁ");
-
     onClickReservation(formData);
-    // setValue("personnel", "");
-
     onClose();
   };
   return (
     <S.ModalWrapper>
-      {/* {children} */}
       <S.Wrapper>
         <S.TitleWrapper>
           <S.Title>결제 정보</S.Title>
@@ -84,7 +58,6 @@ const Modal: React.FC<ModalProps> = ({
               </S.Context_Tr>
             </S.Context>
 
-            {/* <S.BtnWrapper type="submit">예약하기</S.BtnWrapper> */}
             <S.BtnWrapper type="submit" onClick={handleReservation}>
               예약하기
             </S.BtnWrapper>

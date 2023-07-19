@@ -8,11 +8,8 @@ import { FETCH_LOGIN_USER } from "../../../commons/hooks/useQueries/user/UseQuer
 import { FETCH_RESERVATIONS_OF_USER } from "../../../commons/hooks/useQueries/class/UseQueryFetchReservationsOfUser";
 
 export default function ClassReviewListEl(props: any) {
-  // 로그인 여부 확인
   const { data: login } =
     useQuery<Pick<IQuery, "fetchLoginUser">>(FETCH_LOGIN_USER);
-
-  // --------------------------------------------------------
 
   const { onClickDelete, isEdit, setIsEdit } = UseMutationClassReview();
 

@@ -21,9 +21,7 @@ export const UseMutationReservation = () => {
   const router = useRouter();
 
   const onClickReservation = async (data: IFormData) => {
-    console.log("hhhhhhhhhhh");
     try {
-      console.log("ㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㄴ");
       console.log(schedules);
       console.log(data);
       let is_schedule = false;

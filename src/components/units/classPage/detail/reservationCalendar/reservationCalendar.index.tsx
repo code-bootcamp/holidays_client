@@ -19,17 +19,7 @@ export default function CalendarUI(props: IReservationCreateProps) {
   const [showModal, setShowModal] = useState<boolean>(false);
   const [formData, setFormData] = useState<IFormData | null>(null);
 
-  console.log("%%%%%%%%%%%%%%%%%%%%%%%");
-  console.log(formData);
-  console.log("%%%%%%%%%%%%%%%%%%%%%%%");
-
   const handleModalOpen = (data: IFormData): void => {
-    console.log("ㅎㅎㅎㅎㅎㅎㅎㅎㅎㅎ");
-    console.log(data);
-    console.log("ㅎㅎㅎㅎㅎㅎㅎㅎㅎㅎ");
-
-    console.log(date); // 이건 나옴
-
     const confirmResult = window.confirm("예약하시겠습니까?");
     if (confirmResult) {
       setFormData(data);
@@ -41,22 +31,11 @@ export default function CalendarUI(props: IReservationCreateProps) {
     setShowModal(false);
   };
 
-  // -------------------------------------------
-
   const [date, setDate] = useState<string>("");
 
   const { data } = UseQueryFetchClassSchedules();
-  console.log("///////////////");
-  console.log(data);
 
-  console.log("///////////////");
-
-  console.log("###########");
-
-  // 활성화되어야 하는 날짜값(예약 가능한 날짜들)
-  data?.fetchClassSchedules.map((el: any) => {
-    // console.log(el.date);
-  });
+  data?.fetchClassSchedules.map((el: any) => {});
 
   const disabledDate = (date: Dayjs | null) => {
     if (!date) {
@@ -65,20 +44,16 @@ export default function CalendarUI(props: IReservationCreateProps) {
 
     const formattedDate = date.format("YYMMDD");
 
-    // 예약 가능한 날짜들을 배열로 저장
     const reservationDates = data?.fetchClassSchedules.map(
       (el: any) => el.date
     );
 
-    // 현재 날짜가 예약 가능한 날짜들 중에 포함되는 경우 활성화
     return (
       !reservationDates?.includes(formattedDate) ||
       data?.fetchClassSchedules.find((el: any) => el.date === formattedDate)
         ?.remain <= 0
     );
   };
-
-  console.log("###########");
 
   const { onClickReservation } = UseMutationReservation();
 
@@ -94,12 +69,8 @@ export default function CalendarUI(props: IReservationCreateProps) {
 
   const onSubmitForm = async (data: IFormData) => {
     const { ...value } = data;
-    console.log("*******");
-    console.log(value);
-    console.log(data);
-    console.log("*******");
 
-    handleModalOpen(value); // value 함께 전달.
+    handleModalOpen(value);
     setValue("personnel", "");
   };
 
@@ -113,11 +84,8 @@ export default function CalendarUI(props: IReservationCreateProps) {
   const onPanelChange = (value: Dayjs, mode: CalendarMode) => {};
 
   const handleDaySelect = (value: Dayjs) => {
-    console.log(value);
-    console.log("@@@@@@@@@@@@@@@@@@@@@@@@@@");
     setSelectedDay(value);
     const formattedDate = value.format("YYMMDD");
-    console.log("formattedDate: ", formattedDate);
   };
 
   const wrapperStyle: React.CSSProperties = {
@@ -142,12 +110,6 @@ export default function CalendarUI(props: IReservationCreateProps) {
     let current = value.clone();
     const localeData = value.localeData();
     const months = [];
-    console.log("*******");
-    console.log(value);
-    // for (let i = 0; i < 12; i++) {
-    //   current = current.month(i);
-    //   months.push(localeData.monthsShort(current));
-    // }
 
     for (let i = 0; i < 12; i++) {
       current = current.month(i);
@@ -155,7 +117,6 @@ export default function CalendarUI(props: IReservationCreateProps) {
     }
 
     for (let i = start; i < end; i++) {
-      // monthOptions.push(<option key={`${i}`}>{i + 1}</option>);
       monthOptions.push(
         <Select.Option key={i} value={i} className="month-item">
           {months[i]}
@@ -163,7 +124,6 @@ export default function CalendarUI(props: IReservationCreateProps) {
       );
     }
 
-    // console.log(monthOptions.);
     const year = String(value.year()).slice(-2);
     const month = String(value.month() + 1).padStart(2, "0") + "월";
     const day = String(value.date()).padStart(2, "0");
@@ -171,7 +131,6 @@ export default function CalendarUI(props: IReservationCreateProps) {
     const date = year + month + day;
 
     setDate(date);
-    console.log("date: ", date);
 
     return (
       <div style={headerStyle}>
@@ -207,13 +166,10 @@ export default function CalendarUI(props: IReservationCreateProps) {
                 fullscreen={false}
                 onPanelChange={onPanelChange}
                 headerRender={headerRender}
-                disabledDate={disabledDate} // 날짜 비활성화 함수 적용
+                disabledDate={disabledDate}
                 dateFullCellRender={(value) => {
-                  console.log(value);
-                  console.log("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
                   const day = value.date();
-                  // console.log("asdasdasdasdaF");
-                  // console.log(selectedDay);
+
                   const isSelected = selectedDay?.isSame(value, "day");
                   const cellStyle = isSelected
                     ? { background: "orange", color: "white" }
