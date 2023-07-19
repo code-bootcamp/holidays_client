@@ -9,16 +9,16 @@ import * as S from "./modal.styles";
 interface ModalProps {
   onClose: () => void;
   date: string;
-  personnel: string;
+  // personnel: string;
   onClickReservation: (data: IFormData) => void;
-  fetchClassDetail?: Pick<IQuery, "fetchClassDetail">;
-  data: IFormData; // data 추가
+  fetchClassDetail?: any;
+  data: any; // data 추가
 }
 
 const Modal: React.FC<ModalProps> = ({
   onClose,
   date,
-  personnel,
+  // personnel,
   onClickReservation,
   fetchClassDetail,
   data, // data를 인자로 받습니다.

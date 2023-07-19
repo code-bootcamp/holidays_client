@@ -30,9 +30,9 @@ function ClassImage(props: any): JSX.Element {
 
   // 이미지 수정부분
   useEffect(() => {
-    console.log("이미지미리보기?");
-    console.log(props.data);
-    console.log("이미지미리보기?");
+    // console.log("이미지미리보기?");
+    // console.log(props.data);
+    // console.log("이미지미리보기?");
 
     const array = props.data?.map((el: IData) => el.url);
     if (array !== undefined) {
@@ -42,14 +42,14 @@ function ClassImage(props: any): JSX.Element {
         arr.push(obj);
       });
 
-      console.log("여기 배열에 있니?");
-      console.log(arr);
-      console.log("여기 배열에 있니?");
+      // console.log("여기 배열에 있니?");
+      // console.log(arr);
+      // console.log("여기 배열에 있니?");
 
       props.setFileList(arr);
-      console.log("^^^^^^^^^^^^^");
-      console.log(props.fileList);
-      console.log("^^^^^^^^^^^^^");
+      // console.log("^^^^^^^^^^^^^");
+      // console.log(props.fileList);
+      // console.log("^^^^^^^^^^^^^");
     }
   }, [props.data]);
 

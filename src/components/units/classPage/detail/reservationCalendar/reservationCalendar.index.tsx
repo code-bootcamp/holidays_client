@@ -113,6 +113,8 @@ export default function CalendarUI(props: IReservationCreateProps) {
   const onPanelChange = (value: Dayjs, mode: CalendarMode) => {};
 
   const handleDaySelect = (value: Dayjs) => {
+    console.log(value);
+    console.log("@@@@@@@@@@@@@@@@@@@@@@@@@@");
     setSelectedDay(value);
     const formattedDate = value.format("YYMMDD");
     console.log("formattedDate: ", formattedDate);
@@ -207,9 +209,11 @@ export default function CalendarUI(props: IReservationCreateProps) {
                 headerRender={headerRender}
                 disabledDate={disabledDate} // 날짜 비활성화 함수 적용
                 dateFullCellRender={(value) => {
+                  console.log(value);
+                  console.log("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
                   const day = value.date();
-                  console.log("asdasdasdasdaF");
-                  console.log(selectedDay);
+                  // console.log("asdasdasdasdaF");
+                  // console.log(selectedDay);
                   const isSelected = selectedDay?.isSame(value, "day");
                   const cellStyle = isSelected
                     ? { background: "orange", color: "white" }

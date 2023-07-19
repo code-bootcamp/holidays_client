@@ -1,6 +1,9 @@
 import { gql, useMutation } from "@apollo/client";
 import { useRouter } from "next/router";
-import { UseQueryFetchClassSchedules } from "../../useQueries/class/useQueryFetchClassSchedules";
+import {
+  FETCH_CLASS_SCHEDULES,
+  UseQueryFetchClassSchedules,
+} from "../../useQueries/class/useQueryFetchClassSchedules";
 import { IFormData } from "../../../../units/classPage/detail/reservationCalendar/reservationCalendar.types";
 import { FETCH_RESERVATIONS_OF_CLASS } from "../../useQueries/class/UseQueryFetchReservationsOfClass";
 import { FECTCH_CLASS_OF_MINE } from "../../useQueries/class/UseQueryFetchClassesOfMine";
@@ -36,13 +39,17 @@ export const UseMutationReservation = () => {
           variables: {
             createReservationInput: {
               class_id: router.query.class_id,
-              res_date: data.res_date,
+              res_date: data.res_date.replace("월", ""),
               personnel: Number(data.personnel),
             },
           },
           refetchQueries: [
             { query: FETCH_RESERVATIONS_OF_CLASS },
             { query: FECTCH_CLASS_OF_MINE },
+            {
+              query: FETCH_CLASS_SCHEDULES,
+              variables: { class_id: router.query.class_id },
+            },
           ],
         });
         alert("예약 완료");

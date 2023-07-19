@@ -133,10 +133,21 @@ export default function ClassWrite(props: IClassWriteProps) {
     setFileList,
     selectedDates,
     setSelectedDates,
+    date,
+    remain,
+    cs_id,
   } = UseMutationCreateClass();
 
-  const { onClickClassUpdate, fileList2, setFileList2 } =
-    useMutationUpdateClass();
+  const {
+    onClickClassUpdate,
+    fileList2,
+    setFileList2,
+    selectedDates2,
+    setSelectedDates2,
+    date2,
+    remain2,
+    cs_id2,
+  } = useMutationUpdateClass();
 
   // const {
   //   onClickClassUpdate,
@@ -301,15 +312,36 @@ export default function ClassWrite(props: IClassWriteProps) {
               />
             </S.ToastEditor>
             <S.Label>클래스 일정을 선택해주세요</S.Label>
-            {/* <Calendar
-              selectedDates={selectedDates}
-              setSelectedDates={setSelectedDates}
-            /> */}
-            <CalendarFunction
+
+            {/* <CalendarFunction
               selectedDates={selectedDates}
               setSelectedDates={setSelectedDates}
               isEdit={props.isEdit}
-            />
+              class_mNum={props.data?.fetchClassDetail.class_mNum}
+            /> */}
+
+            {props.isEdit ? (
+              <CalendarFunction
+                selectedDates={selectedDates2}
+                setSelectedDates={setSelectedDates2}
+                remain={remain2}
+                date={date2}
+                class_mNum={props.data?.fetchClassDetail.class_mNum}
+                cs_id={cs_id2}
+                isEdit={props.isEdit}
+              />
+            ) : (
+              <CalendarFunction
+                selectedDates={selectedDates}
+                setSelectedDates={setSelectedDates}
+                remain={remain}
+                date={date}
+                class_mNum={props.data?.fetchClassDetail.class_mNum}
+                cs_id={cs_id}
+                isEdit={props.isEdit}
+              />
+            )}
+
             <S.Label>입금 계좌를 작성해주세요</S.Label>
             <S.TextInput
               type="text"

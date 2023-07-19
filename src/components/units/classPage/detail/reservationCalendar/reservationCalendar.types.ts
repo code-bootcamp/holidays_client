@@ -1,7 +1,7 @@
 import { IQuery } from "../../../../../commons/types/generated/types";
 
 export interface IReservationCreateProps {
-  data?: Pick<IQuery, "fetchClassDetail">;
+  data?: any;
 
   date?: string;
   personnel?: string;

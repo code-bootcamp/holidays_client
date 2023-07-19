@@ -12,11 +12,15 @@ const { Option } = Select;
 let formattedDates: any[] = [];
 let cellStyle = {};
 let onClickDate: any;
-let test = true;
+let init = true;
 interface ICalendarProps {
   selectedDates: any[];
   setSelectedDates: React.Dispatch<React.SetStateAction<never[]>>;
   isEdit: boolean;
+  class_mNum: any;
+  remain: any[];
+  date: any[];
+  cs_id: any[];
 }
 
 const CalendarFunction = (props: ICalendarProps) => {
@@ -24,6 +28,9 @@ const CalendarFunction = (props: ICalendarProps) => {
   const [selectedDays, setSelectedDays] = useState<Dayjs[]>([]);
 
   // -------------------------------------------
+  console.log("&&&&&&&");
+  console.log(props.class_mNum);
+  console.log("&&&&&&&");
 
   const [date, setDate] = useState<string>("");
 
@@ -35,12 +42,11 @@ const CalendarFunction = (props: ICalendarProps) => {
   // console.log("###########");
   // 활성화되어야 하는 날짜값(예약 가능한 날짜들)
   // formattedDates = [];
-  if (test) {
+  if (init && props.isEdit) {
     data?.fetchClassSchedules.map((el: any) => {
       // console.log(el.date);
       // console.log("ggg");
       if (el.date !== onClickDate) {
-        console.log("여기여기여기");
         formattedDates.push(el.date);
       } else {
         // onClickDate = "";
@@ -52,11 +58,12 @@ const CalendarFunction = (props: ICalendarProps) => {
       // handleDaySelect(el.date);
     });
 
-    test = false;
+    init = false;
   }
 
   useEffect(() => {
-    test = true;
+    init = true;
+    formattedDates = [];
   }, []);
 
   const disabledDate = (date: Dayjs) => {
@@ -101,6 +108,26 @@ const CalendarFunction = (props: ICalendarProps) => {
 
     onClickDate = year + month + day;
 
+    if (props.isEdit) {
+      const result = data?.fetchClassSchedules;
+
+      for (let i = 0; i < result.length; i++) {
+        if (result[i].date === onClickDate) {
+          if (result[i].remain !== props.class_mNum) {
+            console.log("%%%%%%%%%%%");
+            console.log(result[i].remain, props.class_mNum);
+            console.log("%%%%%%%%%%%");
+
+            alert("예약자가 있어 수정이 불가능 합니다.");
+            console.log(props.remain);
+            return;
+          }
+        }
+      }
+    }
+
+    console.log("askldnklasndkaslnkl~~~");
+
     const selected = [...selectedDays];
     let isDaySelected = selected.some((day) => day.isSame(value, "day"));
     console.log(isDaySelected, "???");
@@ -126,8 +153,13 @@ const CalendarFunction = (props: ICalendarProps) => {
         setSelectedDays(selected);
       } else {
         console.log("여기 33333333");
+        formattedDates = formattedDates.filter(
+          (v, i) => formattedDates.indexOf(v) === i
+        );
         let index = formattedDates.indexOf(onClickDate);
         let idx = selectedDays.indexOf(value);
+        console.log(index);
+        console.log(formattedDates);
         formattedDates.splice(index, 1);
         selectedDays.splice(idx, 1);
         console.log(formattedDates, "asdasdasdasd");
@@ -179,11 +211,29 @@ const CalendarFunction = (props: ICalendarProps) => {
         formattedDates.push(selectedDays[i].format("YYMMDD"));
       }
     }
+    formattedDates = formattedDates.filter(
+      (v, i) => formattedDates.indexOf(v) === i
+    );
     console.log("formattedDates-2 :", formattedDates);
 
+    const result = data?.fetchClassSchedules;
     props.selectedDates.length = 0;
     for (let i = 0; i < formattedDates.length; i++) {
       if (!props.selectedDates.includes(formattedDates[i])) {
+        if (props.isEdit) {
+          for (let j = 0; j < result.length; j++) {
+            if (result[j].date === formattedDates[i]) {
+              if (!props.date.includes(formattedDates[i])) {
+                props.date.push(formattedDates[i]);
+              }
+
+              if (!props.cs_id.includes(result[j].cs_id)) {
+                props.remain.push(result[j].remain);
+                props.cs_id.push(result[j].cs_id);
+              }
+            }
+          }
+        }
         props.selectedDates.push(formattedDates[i]);
       }
     }

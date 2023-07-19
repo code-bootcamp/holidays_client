@@ -24,10 +24,13 @@ export const UseMutationCreateClass = () => {
   const [selectedDates, setSelectedDates] = useState([]);
 
   const [content, setContent] = useState("");
+  const [remain] = useState([]);
+  const [date] = useState([]);
+  const [cs_id] = useState([]);
 
-  console.log("*****************");
-  console.log(selectedDates);
-  console.log("*****************");
+  // console.log("*****************");
+  // console.log(selectedDates);
+  // console.log("*****************");
 
   const onClickClassSubmit = async (
     data: IFormData,
@@ -86,9 +89,7 @@ export const UseMutationCreateClass = () => {
             category: data.category,
             address_category: getFirstTwoChars(address),
             total_time: data.total_time,
-            // content: data.content,
-            content: content,
-
+            content: data.content,
             accountNum: String(data.accountNum),
             accountName: data.accountName,
             bankName: data.bankName,
@@ -116,5 +117,8 @@ export const UseMutationCreateClass = () => {
     setFileList,
     selectedDates,
     setSelectedDates,
+    remain,
+    date,
+    cs_id,
   };
 };
