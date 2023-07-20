@@ -26,7 +26,6 @@ const Modal: React.FC<ModalProps> = ({ onClose, children, isSelected }) => {
       <S.Wrapper>
         <S.TitleWrapper>
           <S.Title>서비스</S.Title>
-          <S.Close onClick={onClose} />
         </S.TitleWrapper>
         <S.DivideLine />
         <S.ContentsWrapper>

@@ -1,5 +1,6 @@
 import { CloseOutlined, CloseSquareOutlined } from "@ant-design/icons";
 import styled from "@emotion/styled";
+import { mobile } from "../../../../../commons/styles/breakPoints";
 
 export const ModalWrapper = styled.div`
   position: fixed;
@@ -15,6 +16,9 @@ export const Wrapper = styled.div`
   background: #ffffff;
   display: flex;
   flex-direction: column;
+  @media ${mobile} {
+    width: 80vw;
+  }
 `;
 
 export const TitleWrapper = styled.div`
