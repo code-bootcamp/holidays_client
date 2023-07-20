@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
-import type { SizeType } from "antd/es/config-provider/SizeContext";
 import * as S from "./reservationCalendar.styles";
-import { Calendar, theme } from "antd";
+import { Calendar, theme, Col, Radio, Row, Select } from "antd";
 import type { CalendarMode } from "antd/es/calendar/generateCalendar";
 import type { Dayjs } from "dayjs";
 import { UseQueryFetchClassSchedules } from "../../../../commons/hooks/useQueries/class/useQueryFetchClassSchedules";
@@ -13,11 +12,48 @@ import {
 } from "./reservationCalendar.types";
 import { reservationSchema } from "./reservationCalendar.validation";
 import { yupResolver } from "@hookform/resolvers/yup";
+import Backdrop from "../../../../commons/modals/accountModal/Backdrop/Backdrop";
+import Modal from "../../../../commons/modals/accountModal/Modal/modal";
 
 export default function CalendarUI(props: IReservationCreateProps) {
+  const [showModal, setShowModal] = useState<boolean>(false);
+  const [formData, setFormData] = useState<IFormData | null>(null);
+
+  const handleModalOpen = (data: IFormData): void => {
+    const confirmResult = window.confirm("예약하시겠습니까?");
+    if (confirmResult) {
+      setFormData(data);
+      setShowModal(true);
+    }
+  };
+
+  const handleModalClose = (): void => {
+    setShowModal(false);
+  };
+
   const [date, setDate] = useState<string>("");
 
   const { data } = UseQueryFetchClassSchedules();
+
+  data?.fetchClassSchedules.map((el: any) => {});
+
+  const disabledDate = (date: Dayjs | null) => {
+    if (!date) {
+      return true;
+    }
+
+    const formattedDate = date.format("YYMMDD");
+
+    const reservationDates = data?.fetchClassSchedules.map(
+      (el: any) => el.date
+    );
+
+    return (
+      !reservationDates?.includes(formattedDate) ||
+      data?.fetchClassSchedules.find((el: any) => el.date === formattedDate)
+        ?.remain <= 0
+    );
+  };
 
   const { onClickReservation } = UseMutationReservation();
 
@@ -33,7 +69,8 @@ export default function CalendarUI(props: IReservationCreateProps) {
 
   const onSubmitForm = async (data: IFormData) => {
     const { ...value } = data;
-    await onClickReservation(value);
+
+    handleModalOpen(value);
     setValue("personnel", "");
   };
 
@@ -42,8 +79,14 @@ export default function CalendarUI(props: IReservationCreateProps) {
   }, [date, setValue]);
 
   const { token } = theme.useToken();
+  const [selectedDay, setSelectedDay] = useState<Dayjs | null>(null);
 
   const onPanelChange = (value: Dayjs, mode: CalendarMode) => {};
+
+  const handleDaySelect = (value: Dayjs) => {
+    setSelectedDay(value);
+    const formattedDate = value.format("YYMMDD");
+  };
 
   const wrapperStyle: React.CSSProperties = {
     width: 291,
@@ -59,17 +102,30 @@ export default function CalendarUI(props: IReservationCreateProps) {
     fontSize: "16px",
   };
 
-  const headerRender = ({ value }: any) => {
+  const headerRender = ({ value, type, onChange, onTypeChange }: any) => {
     const start = 0;
     const end = 12;
     const monthOptions = [];
 
+    let current = value.clone();
+    const localeData = value.localeData();
+    const months = [];
+
+    for (let i = 0; i < 12; i++) {
+      current = current.month(i);
+      months.push(i + 1);
+    }
+
     for (let i = start; i < end; i++) {
-      monthOptions.push(<option key={`${i}`}>{i + 1}</option>);
+      monthOptions.push(
+        <Select.Option key={i} value={i} className="month-item">
+          {months[i]}
+        </Select.Option>
+      );
     }
 
     const year = String(value.year()).slice(-2);
-    const month = String(value.month() + 1).padStart(2, "0");
+    const month = String(value.month() + 1).padStart(2, "0") + "월";
     const day = String(value.date()).padStart(2, "0");
 
     const date = year + month + day;
@@ -79,13 +135,20 @@ export default function CalendarUI(props: IReservationCreateProps) {
     return (
       <div style={headerStyle}>
         <div>
-          {year}년 {month}월
-        </div>
-        <div>
-          <select value={date} onChange={(event) => setDate(date)}>
+          {year}년
+          <Select
+            size="small"
+            dropdownMatchSelectWidth={false}
+            value={month}
+            onChange={(newMonth) => {
+              const now = value.clone().month(newMonth);
+              onChange(now);
+            }}
+          >
             {monthOptions}
-          </select>
+          </Select>
         </div>
+        <div></div>
       </div>
     );
   };
@@ -103,6 +166,24 @@ export default function CalendarUI(props: IReservationCreateProps) {
                 fullscreen={false}
                 onPanelChange={onPanelChange}
                 headerRender={headerRender}
+                disabledDate={disabledDate}
+                dateFullCellRender={(value) => {
+                  const day = value.date();
+
+                  const isSelected = selectedDay?.isSame(value, "day");
+                  const cellStyle = isSelected
+                    ? { background: "orange", color: "white" }
+                    : {};
+
+                  return (
+                    <div
+                      style={cellStyle}
+                      onClick={() => handleDaySelect(value)}
+                    >
+                      {day}
+                    </div>
+                  );
+                }}
               />
             </S.Calendar>
             <S.NumberBox>
@@ -117,7 +198,20 @@ export default function CalendarUI(props: IReservationCreateProps) {
           </S.Contents>
           <S.Error>{formState.errors.personnel?.message}</S.Error>
 
-          <S.BtnWrapper type="submit">예약하기</S.BtnWrapper>
+          <S.BtnWrapper type="submit" onClick={handleSubmit(onSubmitForm)}>
+            예약하기
+          </S.BtnWrapper>
+
+          {showModal && (
+            <Modal
+              onClose={handleModalClose}
+              date={date}
+              data={formData}
+              fetchClassDetail={props.data?.fetchClassDetail}
+              onClickReservation={onClickReservation}
+            />
+          )}
+          {showModal && <Backdrop onClick={handleModalClose} />}
         </form>
       </S.Wrapper>
     </>

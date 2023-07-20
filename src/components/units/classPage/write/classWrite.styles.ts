@@ -205,7 +205,6 @@ export const Img = styled.img`
   border: 1px solid rgba(189, 189, 189, 1);
 `;
 
-// 클래스 소요 시간, 클래스 최대 인원
 export const Wrapper_body_middle = styled.div`
   display: flex;
   flex-direction: row;

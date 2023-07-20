@@ -8,6 +8,7 @@ import { useRouter } from "next/router";
 import { DELETE_RESERVATION } from "../../../commons/hooks/useMutations/class/useMutationDeleteReservation";
 import { FECTCH_CLASS_OF_MINE } from "../../../commons/hooks/useQueries/class/UseQueryFetchClassesOfMine";
 import { FETCH_RESERVATIONS_OF_USER } from "../../../commons/hooks/useQueries/class/UseQueryFetchReservationsOfUser";
+import { Day } from "../../../../commons/libraries/utils";
 
 export default function Reservation() {
   const router = useRouter();
@@ -55,7 +56,8 @@ export default function Reservation() {
   //////////////////////////////////////////////////////////////
 
   const onClickMenu = () => {
-    void router.push("/classPage");
+    // void router.push("/classPage");
+    console.log(data);
   };
 
   return (
@@ -69,7 +71,7 @@ export default function Reservation() {
       ) : !data || data.fetchReservationsOfClass.length === 0 ? (
         <>
           <S.ListNameIconWrapper>
-            <S.ListName>예약 관리</S.ListName>
+            <S.ListName>클랙스 예약 승인</S.ListName>
             <S.Icon src="/myPage/user-options.png" />
           </S.ListNameIconWrapper>
           <S.Line />
@@ -83,7 +85,7 @@ export default function Reservation() {
       ) : (
         <>
           <S.ListNameIconWrapper>
-            <S.ListName>예약 관리</S.ListName>
+            <S.ListName>클랙스 예약 승인</S.ListName>
             <S.Icon src="/myPage/user-options.png" />
           </S.ListNameIconWrapper>
           <S.Line />
@@ -103,14 +105,13 @@ export default function Reservation() {
                         </S.PremiumUser>
                       </S.PremiumUserTie>
                       <S.PremiumPostInfo>
-                        <S.PremiumDate>신청날짜 : {post.date}</S.PremiumDate>
+                        <S.PremiumDate>
+                          신청날짜 : {Day(post.date)}
+                        </S.PremiumDate>
                         <S.PremiumAvatarContentTie>
                           <S.PremiumContent>
                             신청인원 :{" "}
                             <S.TextColor>{post.personnel}</S.TextColor>명
-                          </S.PremiumContent>
-                          <S.PremiumContent>
-                            잔여인원 : {post.remain}명
                           </S.PremiumContent>
                         </S.PremiumAvatarContentTie>
                       </S.PremiumPostInfo>

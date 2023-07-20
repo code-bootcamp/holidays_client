@@ -1,5 +1,6 @@
 import { gql, useMutation } from "@apollo/client";
 import { useRouter } from "next/router";
+import { FETCH_CLASSES } from "../../useQueries/class/UseQueryFetchClassesPopular";
 
 export const DELETE_CLASS = gql`
   mutation deleteClass($class_id: String!) {
@@ -16,6 +17,8 @@ export const useMutationDeleteClass = () => {
     try {
       void deleteClass({
         variables: { class_id: router.query.class_id },
+
+        refetchQueries: [{ query: FETCH_CLASSES }],
       });
 
       alert("클래스 삭제가 완료되었습니다.");

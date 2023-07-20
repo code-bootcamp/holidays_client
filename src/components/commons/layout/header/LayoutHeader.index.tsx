@@ -28,7 +28,7 @@ export default function LayoutHeader(): JSX.Element {
 
   const NAVIGATION_MENUS = [
     { name: "클래스", page: "/classPage" },
-    { name: "사랑방", page: "/communityPage" },
+    { name: "커뮤니티", page: "/communityPage" },
     { name: "메거진", page: "/magazinePage" },
   ];
 
@@ -61,10 +61,6 @@ export default function LayoutHeader(): JSX.Element {
         </S.NaviWrapper>
         {userName ? (
           <S.ButtonTie>
-            <S.Reservation>알림</S.Reservation>
-            <S.Reservation onClick={handleReservationPage}>
-              예약 관리
-            </S.Reservation>
             <DropdownMyPage />
             <DropdownWriting />
           </S.ButtonTie>

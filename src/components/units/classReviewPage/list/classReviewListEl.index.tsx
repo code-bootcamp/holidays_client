@@ -2,8 +2,15 @@ import { UseMutationClassReview } from "../../../commons/hooks/useMutations/clas
 import ClassReviewWrite from "../write/classReviewWrite.index";
 import * as S from "./classReviewList.styles";
 import { getDate } from "../../../../commons/libraries/utils";
+import { useQuery } from "@apollo/client";
+import { IQuery } from "../../../../commons/types/generated/types";
+import { FETCH_LOGIN_USER } from "../../../commons/hooks/useQueries/user/UseQueryFetchLoginUser";
+import { FETCH_RESERVATIONS_OF_USER } from "../../../commons/hooks/useQueries/class/UseQueryFetchReservationsOfUser";
 
 export default function ClassReviewListEl(props: any) {
+  const { data: login } =
+    useQuery<Pick<IQuery, "fetchLoginUser">>(FETCH_LOGIN_USER);
+
   const { onClickDelete, isEdit, setIsEdit } = UseMutationClassReview();
 
   const handleEditClick = (cr_id: any) => {
@@ -19,12 +26,18 @@ export default function ClassReviewListEl(props: any) {
               <S.ReviewWriter>{props.el.name}</S.ReviewWriter>
               <S.Star value={props.el.grade} />
               <S.BtnWrapper>
-                <S.UpdateBtn onClick={() => handleEditClick(props.el.cr_id)}>
-                  수정
-                </S.UpdateBtn>
-                <S.DeleteBtn onClick={() => onClickDelete(props.el.cr_id)}>
-                  삭제
-                </S.DeleteBtn>
+                {login?.fetchLoginUser.name === props.el.name && (
+                  <>
+                    <S.UpdateBtn
+                      onClick={() => handleEditClick(props.el.cr_id)}
+                    >
+                      수정
+                    </S.UpdateBtn>
+                    <S.DeleteBtn onClick={() => onClickDelete(props.el.cr_id)}>
+                      삭제
+                    </S.DeleteBtn>
+                  </>
+                )}
               </S.BtnWrapper>
             </S.Wrapper_header_top>
             <S.Date>{getDate(props.el.createdAt)}</S.Date>

@@ -53,15 +53,21 @@ export default function communityListPage() {
     });
   };
 
+  ///////////////////////////////////////////////////////////////
+  // 대체 이미지
+  //////////////////////////////////////////////////////////////
+  const onErrorImg = (e: any) => {
+    e.target.src = "/images/all-icon.png";
+  };
+
   return (
     <S.Wrapper>
       <S.TitleTie>
-        <S.Title>사랑방</S.Title>
+        <S.Title>커뮤니티</S.Title>
         <S.Service onClick={onClickWrite}>
           <S.ServiceText>글쓰기</S.ServiceText>
         </S.Service>
       </S.TitleTie>
-      <S.InputBox placeholder="검색어를 입력해 주세요" />
       <S.Line />
       <InfiniteScroll
         pageStart={0}
@@ -75,7 +81,7 @@ export default function communityListPage() {
               <S.Posts id={post.board_id} onClick={onClickSubmit}>
                 <S.PostBody>
                   <S.Template>
-                    <S.PostImg src={post.url} />
+                    <S.PostImg src={post.url} onError={onErrorImg} />
                   </S.Template>
                   <S.PostTitle>{post.title}</S.PostTitle>
                   <S.PostContent>

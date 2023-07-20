@@ -1,20 +1,32 @@
 import { UseQueryFetchClassDetail } from "../../../commons/hooks/useQueries/class/useQueryFetchClassDetail";
 import CalendarUI from "./reservationCalendar/reservationCalendar.index";
 import * as S from "./classDetail.styles";
-import DOMPurify from "dompurify";
 import { useMutationDeleteClass } from "../../../commons/hooks/useMutations/class/useMutationDeleteClass";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
 import { UseMutationWishList } from "../../../commons/hooks/useMutations/class/useMutationWishList";
-import ClassReviewWrite from "../../classReviewPage/write/classReviewWrite.index";
 import SlickPage from "./classDetailSlick";
 import { UseQueryFetchWishLists } from "../../../commons/hooks/useQueries/class/UseQueryFetchWishlists";
+import { useQuery } from "@apollo/client";
+import { IQuery } from "../../../../commons/types/generated/types";
+import { FETCH_LOGIN_USER } from "../../../commons/hooks/useQueries/user/UseQueryFetchLoginUser";
+import dynamic from "next/dynamic";
 
 declare const window: typeof globalThis & {
   kakao: any;
 };
 
+const Viewer = dynamic(
+  async () => await import("@toast-ui/react-editor").then((mod) => mod.Viewer),
+  {
+    ssr: false,
+  }
+);
+
 export default function ClassDetail() {
+  const { data: login } =
+    useQuery<Pick<IQuery, "fetchLoginUser">>(FETCH_LOGIN_USER);
+
   const router = useRouter();
 
   const { data } = UseQueryFetchClassDetail();
@@ -30,7 +42,6 @@ export default function ClassDetail() {
     router.push(`/classPage/${router.query.class_id}/edit`);
   };
 
-  // 카카오지도
   useEffect(() => {
     const script = document.createElement("script");
     script.src =
@@ -43,6 +54,7 @@ export default function ClassDetail() {
         const options = {
           center: new window.kakao.maps.LatLng(33.450701, 126.570667),
           level: 3,
+          draggable: false,
         };
 
         const map = new window.kakao.maps.Map(container, options);
@@ -84,10 +96,16 @@ export default function ClassDetail() {
           <S.Wrapper_header_top>
             {data?.fetchClassDetail.title}
           </S.Wrapper_header_top>
+
           <S.Wrapper_header_bottom>
             <S.Wrapper_header_bottom_right>
-              <S.Btn onClick={onClickMoveToClassEdit}>수정</S.Btn>
-              <S.Btn onClick={onClickClassDelete}>삭제</S.Btn>
+              {login?.fetchLoginUser.user_id ===
+                data?.fetchClassDetail.user_.user_id && (
+                <>
+                  <S.Btn onClick={onClickMoveToClassEdit}>수정</S.Btn>
+                  <S.Btn onClick={onClickClassDelete}>삭제</S.Btn>
+                </>
+              )}
             </S.Wrapper_header_bottom_right>
           </S.Wrapper_header_bottom>
         </S.Wrapper_header>
@@ -149,7 +167,7 @@ export default function ClassDetail() {
                 <S.Contents_wrapper>
                   <S.Title>클래스 소개</S.Title>
                   <S.Contents>
-                    {typeof window !== "undefined" && (
+                    {/* {typeof window !== "undefined" && (
                       <div
                         dangerouslySetInnerHTML={{
                           __html: DOMPurify.sanitize(
@@ -157,7 +175,10 @@ export default function ClassDetail() {
                           ),
                         }}
                       />
-                    )}
+                    )} */}
+                    <Viewer
+                      initialValue={data?.fetchClassDetail?.content || ""}
+                    />
                   </S.Contents>
                 </S.Contents_wrapper>
               </S.Wrapper_body_bottom_left>
@@ -165,7 +186,7 @@ export default function ClassDetail() {
           </S.Wrapper_body_left>
 
           <S.Wrapper_body_right>
-            <CalendarUI />
+            <CalendarUI data={data} />
           </S.Wrapper_body_right>
         </S.Wrapper_body>
 

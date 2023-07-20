@@ -1,4 +1,5 @@
 export interface IReservationCreateProps {
+  data?: any;
   date?: string;
   personnel?: string;
 }

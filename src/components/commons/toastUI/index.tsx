@@ -20,7 +20,7 @@ function ToastEditor(props: IEditorPageProps) {
     <Editor
       placeholder="상품을 설명해주세요."
       previewStyle="vertical"
-      height="400px"
+      height="auto"
       initialEditType="wysiwyg"
       useCommandShortcut={true}
       onChange={props.onChangeContents}

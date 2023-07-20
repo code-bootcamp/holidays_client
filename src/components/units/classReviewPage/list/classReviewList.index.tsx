@@ -14,15 +14,7 @@ export default function ClassReviewList(props: IClassReviewListProps) {
   const [divHeight, setDivHeight] = useState("auto");
 
   useEffect(() => {
-    if (props.data && props.data.fetchClassReviews.length == 1) {
-      setDivHeight("120px"); // height 값을 200px로 업데이트합니다.
-    } else if (props.data && props.data.fetchClassReviews.length == 2) {
-      setDivHeight("240px");
-    } else if (props.data && props.data.fetchClassReviews.length == 3) {
-      setDivHeight("360px");
-    } else if (props.data && props.data.fetchClassReviews.length == 4) {
-      setDivHeight("480px");
-    } else if (props.data && props.data.fetchClassReviews.length > 4) {
+    if (props.data && props.data.fetchClassReviews.length > 4) {
       setDivHeight("500px");
     } else {
       setDivHeight("auto");

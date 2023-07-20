@@ -124,7 +124,7 @@ export const Header = styled.div`
 `;
 
 export const Line = styled.div`
-  border: 1px solid #f2f2f2;
+  border: 1px solid #e5e5e5;
   width: 100%;
   text-align: right;
   margin-top: 20px;
@@ -305,7 +305,7 @@ export const BodyWrapper = styled.div`
 
 export const Posts = styled.div`
   width: 725px;
-  border-bottom: 1px solid #e1e1e1;
+  border-bottom: 1px solid #e5e5e5;
   border-radius: 4px;
   cursor: pointer;
   :hover {
@@ -313,6 +313,7 @@ export const Posts = styled.div`
   }
   @media ${mobile} {
     width: 100%;
+    border-radius: 0px;
   }
 `;
 
@@ -355,6 +356,9 @@ export const PostContent = styled.div`
   display: flex;
   flex-direction: column;
   padding: 10px;
+  @media ${mobile} {
+    padding-left: 6vw;
+  }
 `;
 
 export const PostInfo = styled.div`

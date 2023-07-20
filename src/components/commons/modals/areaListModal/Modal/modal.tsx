@@ -43,7 +43,6 @@ const ModalComponent: React.FC<ModalProps> = ({ onClose, children }) => {
       <S.Wrapper>
         <S.TitleWrapper>
           <S.Title>지역</S.Title>
-          <S.Close onClick={onClose} />
         </S.TitleWrapper>
         <S.DivideLine />
         <S.ContentsWrapper>

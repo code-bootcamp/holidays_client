@@ -23,14 +23,31 @@ export const UseMutationCreateClass = () => {
 
   const [selectedDates, setSelectedDates] = useState([]);
 
-  const onClickClassSubmit = async (data: IFormData, address: string) => {
+  const [content, setContent] = useState("");
+  const [remain] = useState([]);
+  const [date] = useState([]);
+  const [cs_id] = useState([]);
+
+  // console.log("*****************");
+  // console.log(selectedDates);
+  // console.log("*****************");
+
+  const onClickClassSubmit = async (
+    data: IFormData,
+    address: string,
+    content: string
+  ) => {
     try {
+      if (fileList.length === 0) {
+        alert("대표 이미지는 필수 입력 사항입니다 이미지를 등록 해 주세요.");
+        return;
+      }
       const results = await Promise.all(
         fileList.map(
           (el) => el && uploadFile({ variables: { files: el.originFileObj } })
         )
       );
-
+      console.log(fileList);
       // 이미지
       const resultUrls = [];
       for (let i = 0; i < results.length; i++) {
@@ -48,7 +65,9 @@ export const UseMutationCreateClass = () => {
           });
         }
       }
-
+      console.log("aaaaa");
+      console.log(selectedDates);
+      console.log("aaaaa");
       // 달력
       const classSchedules = [];
       for (let i = 0; i < selectedDates.length; i++) {
@@ -98,5 +117,8 @@ export const UseMutationCreateClass = () => {
     setFileList,
     selectedDates,
     setSelectedDates,
+    remain,
+    date,
+    cs_id,
   };
 };

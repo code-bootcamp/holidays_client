@@ -75,7 +75,6 @@ const Wrapper = styled.div`
   }
 `;
 
-// 이미지
 const Img = styled.img`
   width: 1113px;
   height: 466px;
@@ -107,6 +106,7 @@ export default function SlickPage(props: any) {
     slidesToScroll: 1,
   };
 
+  console.log(props.src);
   return (
     <Wrapper>
       <SliderComponent {...settings}>

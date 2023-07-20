@@ -1,15 +1,16 @@
 import styled from "@emotion/styled";
 import { Input } from "antd";
-import { mobile, mobileSmall } from "../../../commons/styles/breakPoints";
+import { mobile, mobileSmall } from "../../../../commons/styles/breakPoints";
 
 export const Wrapper = styled.div`
   width: 1113px;
   display: flex;
   flex-direction: column;
   margin: auto;
-  margin-bottom: 150px;
   padding-top: 90px;
   border-top: 1px solid rgba(189, 189, 189, 1);
+  /* background-color: skyblue; */
+  margin-bottom: 50px;
 
   @media ${mobile} {
     width: 95vh;

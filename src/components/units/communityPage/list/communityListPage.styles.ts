@@ -1,5 +1,6 @@
 import styled from "@emotion/styled";
 import { SlideBottom } from "../../../../commons/styles/keyframes";
+import { mobile } from "../../../../commons/styles/breakPoints";
 
 export const Wrapper = styled.div`
   display: flex;
@@ -8,10 +9,20 @@ export const Wrapper = styled.div`
   width: 1100px;
   margin: auto;
   margin-top: 200px;
+  @media ${mobile} {
+    width: 100%;
+    margin-top: 13vh;
+    margin-bottom: 5vh;
+    padding: 0px 8vw;
+  }
 `;
 
 export const TitleTie = styled.div`
   display: flex;
+  @media ${mobile} {
+    width: 100%;
+    flex-direction: column;
+  }
 `;
 
 export const Title = styled.h1`
@@ -20,6 +31,9 @@ export const Title = styled.h1`
   margin-right: 370px;
   cursor: pointer;
   margin-bottom: 30px;
+  @media ${mobile} {
+    margin-right: 0px;
+  }
 `;
 
 export const Service = styled.div`
@@ -33,6 +47,9 @@ export const Service = styled.div`
   justify-content: center;
   margin-right: 10px;
   cursor: pointer;
+  @media ${mobile} {
+    width: 100%;
+  }
 `;
 
 export const ServiceText = styled.div`
@@ -73,12 +90,19 @@ export const BodyWrapper = styled.div`
   margin-top: 30px;
   margin-bottom: 100px;
   animation: ${SlideBottom} 0.7s ease-in-out both;
+  @media ${mobile} {
+    width: 100%;
+    justify-content: center;
+  }
 `;
 
 export const Posts = styled.div`
   width: 265px;
   margin-bottom: 30px;
   cursor: pointer;
+  @media ${mobile} {
+    width: 80vw;
+  }
 `;
 
 export const PostBody = styled.div`
@@ -92,6 +116,9 @@ export const Template = styled.article`
   border-radius: 4px;
   overflow: hidden;
   margin-bottom: 10px;
+  @media ${mobile} {
+    width: 80vw;
+  }
 `;
 
 export const PostImg = styled.img`
@@ -101,6 +128,9 @@ export const PostImg = styled.img`
   transition: all 0.4s ease-in-out;
   :hover {
     transform: scale(1.08);
+  }
+  @media ${mobile} {
+    width: 100%;
   }
 `;
 

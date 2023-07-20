@@ -30,14 +30,14 @@ export default function StaticRoutingPage() {
       page: `/myPage/wishList`,
     },
     {
-      name: "내 사랑방 리스트",
-      detailed: "내가 작성한 사랑방 리스트",
+      name: "내 게시글 목록",
+      detailed: "내가 작성한 커뮤니티 게시글 목록",
       src: "/myPage/options-list.png",
       page: `/myPage/community`,
     },
     {
-      name: "예약 관리",
-      detailed: "클래스 예약 신청을 확인해주세요",
+      name: "클랙스 예약 승인",
+      detailed: "클래스 예약 승인을 해주세요",
       src: "/myPage/user-options.png",
       page: `/myPage/reservation`,
     },

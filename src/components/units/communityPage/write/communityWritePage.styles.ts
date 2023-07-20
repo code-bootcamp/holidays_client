@@ -1,6 +1,7 @@
 import styled from "@emotion/styled";
 import { Modal } from "antd";
 import DaumPostcode from "react-daum-postcode";
+import { mobile } from "../../../../commons/styles/breakPoints";
 
 export const Wrapper = styled.div`
   width: 700px;
@@ -15,6 +16,13 @@ export const Wrapper = styled.div`
   align-items: center;
   border: none;
   box-shadow: 0px 0px 10px gray;
+  @media ${mobile} {
+    width: 100%;
+    box-shadow: 0px 0px 0px;
+    margin-top: 30px;
+    padding: 80px 34px 100px 34px;
+    margin-bottom: 5vh;
+  }
 `;
 
 export const TitleMain = styled.div`
@@ -23,6 +31,9 @@ export const TitleMain = styled.div`
   font-weight: 700;
   font-size: 23px;
   margin-left: 30px;
+  @media ${mobile} {
+    margin-left: 0px;
+  }
 `;
 
 export const TitleTextWrapper = styled.div`
@@ -31,12 +42,18 @@ export const TitleTextWrapper = styled.div`
   display: flex;
   flex-direction: column;
   padding: 20px;
+  @media ${mobile} {
+    padding: 0px;
+  }
 `;
 
 export const Text = styled.li`
   width: 100%;
   font-size: 15px;
   margin-top: 10px;
+  @media ${mobile} {
+    font-size: 10px;
+  }
 `;
 
 export const Box = styled.div`
@@ -45,6 +62,12 @@ export const Box = styled.div`
   box-shadow: rgb(234 235 239 / 80%) 0px 2px 4px 0px;
   border-radius: 4px;
   border: 1px solid rgb(218, 220, 224);
+  @media ${mobile} {
+    width: 100%;
+    box-shadow: 0px 0px 0px 0px;
+    border: none;
+    height: 12vh;
+  }
 `;
 
 export const Title = styled.div`
@@ -53,6 +76,9 @@ export const Title = styled.div`
   font-family: "Jalnan";
   margin-bottom: 10px;
   margin-left: 10px;
+  @media ${mobile} {
+    margin-left: 0px;
+  }
 `;
 
 export const WriterWrapper = styled.div`
@@ -61,6 +87,9 @@ export const WriterWrapper = styled.div`
   flex-direction: row;
   justify-content: space-between;
   padding-top: 40px;
+  @media ${mobile} {
+    width: 100%;
+  }
 `;
 
 export const Writer = styled.input`
@@ -87,10 +116,17 @@ export const Label = styled.div`
 
 export const ToastEditorWrapper = styled.div`
   width: 550px;
+  @media ${mobile} {
+    width: 37vh;
+    margin: auto;
+  }
 `;
 
 export const InputWrapper = styled.div`
   padding-top: 40px;
+  @media ${mobile} {
+    width: 100%;
+  }
 `;
 
 export const Subject = styled.input`
@@ -102,6 +138,9 @@ export const Subject = styled.input`
   box-shadow: rgb(234 235 239 / 80%) 0px 2px 4px 0px;
   border-radius: 4px;
   border: 1px solid rgb(218, 220, 224);
+  @media ${mobile} {
+    width: 100%;
+  }
 `;
 
 export const Contents = styled.textarea`
@@ -114,23 +153,33 @@ export const Contents = styled.textarea`
   box-shadow: rgb(234 235 239 / 80%) 0px 2px 4px 0px;
   border-radius: 4px;
   border: 1px solid rgb(218, 220, 224);
+  @media ${mobile} {
+    width: 100%;
+  }
 `;
 
 export const ImageWrapper = styled.div`
   width: 550px;
   padding-top: 40px;
+  @media ${mobile} {
+    width: 100%;
+  }
 `;
 
 export const UploadButton = styled.div`
   display: flex;
   align-items: center;
-
   width: 100%;
+  @media ${mobile} {
+  }
 `;
 
 export const OptionWrapper = styled.div`
   width: 996px;
   padding-top: 40px;
+  @media ${mobile} {
+    width: 100%;
+  }
 `;
 
 export const RadioButton = styled.input`
@@ -144,6 +193,9 @@ export const RadioLabel = styled.label`
   cursor: pointer;
   font-family: "SCDream4";
   font-size: 16px;
+  @media ${mobile} {
+    margin-right: 0px;
+  }
 `;
 
 export const ButtonWrapper = styled.div`
@@ -151,6 +203,9 @@ export const ButtonWrapper = styled.div`
   flex-direction: row;
   justify-content: center;
   padding-top: 80px;
+  @media ${mobile} {
+    width: 100%;
+  }
 `;
 
 export const CancelButton = styled.button`
@@ -164,20 +219,30 @@ export const CancelButton = styled.button`
   border-radius: 4px;
   cursor: pointer;
   font-family: "SCDream4";
+  @media ${mobile} {
+    margin-left: 0px;
+    margin-right: 0px;
+    width: 100%;
+  }
 `;
 
 export const SubmitButton = styled.button`
   width: 179px;
   height: 52px;
-  background-color: #f5f5f5;
-  border: 1px solid #f5f5f5;
+  background-color: orange;
+  border: 1px solid orange;
   font-size: 16px;
   margin-left: 12px;
   margin-right: 12px;
   cursor: pointer;
   border-radius: 4px;
-  background-color: ${(props: any) => (props.Active ? "gold" : " #f7f8fa")};
+  background-color: ${(props: any) => (props.Active ? "gold" : " orange")};
   font-family: "SCDream4";
+  @media ${mobile} {
+    width: 100%;
+    margin-left: 0px;
+    margin-right: 0px;
+  }
 `;
 
 export const Error = styled.div`

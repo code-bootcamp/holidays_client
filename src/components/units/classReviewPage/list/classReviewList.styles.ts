@@ -6,7 +6,7 @@ export const Wrapper = styled.div`
   width: 1113px;
   display: flex;
   flex-direction: column;
-  margin: auto; // 가운데 정렬
+  margin: auto;
   margin-bottom: 70px;
 
   @media ${mobile} {
@@ -22,6 +22,7 @@ export const Box = styled.div`
   width: 1130px;
   overflow: auto;
   margin: auto;
+  height: auto;
 
   @media ${mobile} {
     width: 95vh;
@@ -37,7 +38,6 @@ export const Wrapper_header = styled.div`
   flex-direction: column;
 `;
 
-// 후기 개수
 export const ReviewCount = styled.div`
   font-size: 15px;
   margin-bottom: 20px;
@@ -46,7 +46,6 @@ export const ReviewCount = styled.div`
 
 export const Row = styled.div`
   margin-bottom: 20px;
-  /* background-color: purple; */
 `;
 
 export const Wrapper_header_top = styled.div`
@@ -67,7 +66,6 @@ export const ReviewWriter = styled.div`
   width: 100px;
 `;
 
-// 별점
 export const Star = styled(Rate)`
   @media ${mobileSmall} {
     width: 20vh;
