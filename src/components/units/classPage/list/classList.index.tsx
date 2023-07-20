@@ -13,8 +13,14 @@ import { Money } from "../../../../commons/libraries/utils";
 import InfiniteScroll from "react-infinite-scroller";
 import { useRouter } from "next/router";
 import { FETCH_CLASSES_AD } from "../../../commons/hooks/useQueries/class/UseQueryFetchClassesAd";
-import { FETCH_CLASSES } from "../../../commons/hooks/useQueries/class/UseQueryFetchClasses";
-import { FETCH_CLASSES_POPULAR } from "../../../commons/hooks/useQueries/class/UseQueryFetchClassesPopular";
+import {
+  FETCH_CLASSES,
+  useQueryFetchClasses,
+} from "../../../commons/hooks/useQueries/class/UseQueryFetchClasses";
+import {
+  FETCH_CLASSES_POPULAR,
+  UseQueryFetchClassesPopular,
+} from "../../../commons/hooks/useQueries/class/UseQueryFetchClassesPopular";
 
 interface PostType {
   class_id: number;
@@ -55,18 +61,6 @@ export default function StaticRoutingPage() {
     }
   };
   const { data, refetch, fetchMore } = useQuery(FETCH_CLASSES, {
-    variables: {
-      category: category,
-      address_category: addressCategory,
-      search: writer,
-    },
-  });
-
-  const {
-    data: dataPopular,
-    refetch: refetchPopular,
-    fetchMore: fetchMorePopular,
-  } = useQuery(FETCH_CLASSES_POPULAR, {
     variables: {
       category: category,
       address_category: addressCategory,
@@ -134,36 +128,13 @@ export default function StaticRoutingPage() {
     });
   };
 
-  ///////////////////////////////////////////////////////////////
-  // 무한 스크롤(인기순)
-  //////////////////////////////////////////////////////////////
+  // < 인기순_무한스크롤 >
 
-  const onLoadMorePopular = (): void => {
-    if (
-      dataPopular === undefined ||
-      dataPopular?.fetchClassesPopular === undefined
-    )
-      return;
-    void fetchMorePopular({
-      variables: {
-        page:
-          Math.ceil((dataPopular?.fetchClassesPopular.length ?? 10) / 10) + 1,
-      },
-      updateQuery: (prev, { fetchMoreResult }) => {
-        if (fetchMoreResult?.fetchClassesPopular === undefined) {
-          return {
-            fetchClassesPopular: [...prev.fetchClassesPopular],
-          };
-        }
-        return {
-          fetchClassesPopular: [
-            ...prev.fetchClassesPopular,
-            ...fetchMoreResult.fetchClassesPopular,
-          ],
-        };
-      },
-    });
-  };
+  const {
+    data: dataPopular,
+    onLoadMore: onLoadMorePopular,
+    refetch: refetchPopular,
+  } = UseQueryFetchClassesPopular(category, addressCategory, writer);
 
   ///////////////////////////////////////////////////////////////
   //  인기순 클릭
