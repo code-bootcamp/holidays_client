@@ -9,7 +9,7 @@ export const FETCH_RESERVATIONS_OF_CLASS = gql`
       date
       personnel
       class_id
-      remain
+
       url
     }
   }
