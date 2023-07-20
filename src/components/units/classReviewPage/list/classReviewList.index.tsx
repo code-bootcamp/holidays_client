@@ -19,20 +19,6 @@ export default function ClassReviewList(props: IClassReviewListProps) {
     } else {
       setDivHeight("auto");
     }
-
-    // if (props.data && props.data.fetchClassReviews.length == 1) {
-    //   setDivHeight("120px"); // height 값을 200px로 업데이트합니다.
-    // } else if (props.data && props.data.fetchClassReviews.length == 2) {
-    //   setDivHeight("240px");
-    // } else if (props.data && props.data.fetchClassReviews.length == 3) {
-    //   setDivHeight("360px");
-    // } else if (props.data && props.data.fetchClassReviews.length == 4) {
-    //   setDivHeight("480px");
-    // } else if (props.data && props.data.fetchClassReviews.length > 4) {
-    //   setDivHeight("500px");
-    // } else {
-    //   setDivHeight("auto");
-    // }
   }, [props.data]);
 
   const { data, fetchMore } = UseQueryFetchClassReview();
@@ -65,7 +51,6 @@ export default function ClassReviewList(props: IClassReviewListProps) {
         <S.Box
           style={{
             height: divHeight,
-            // height: "500px",
           }}
         >
           <InfiniteScroll pageStart={0} loadMore={onLoadMore} hasMore={true}>

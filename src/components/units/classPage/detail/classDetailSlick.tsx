@@ -75,7 +75,6 @@ const Wrapper = styled.div`
   }
 `;
 
-// 이미지
 const Img = styled.img`
   width: 1113px;
   height: 466px;
@@ -106,11 +105,6 @@ export default function SlickPage(props: any) {
     slidesToShow: 1,
     slidesToScroll: 1,
   };
-
-  // let fileList = []
-  // fileList = props.src.slice().sort((a: any, b: any) => {
-  //   if (a.is_main < b.is_main) return -1;
-  // });
 
   console.log(props.src);
   return (

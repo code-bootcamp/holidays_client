@@ -82,7 +82,6 @@ export const Row = styled.div`
   border-bottom: 1px solid rgba(189, 189, 189, 1);
 `;
 
-// 마지막 행
 export const Row2 = styled.div`
   font-size: 16px;
   display: flex;

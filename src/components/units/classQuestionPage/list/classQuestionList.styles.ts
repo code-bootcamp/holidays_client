@@ -1,12 +1,11 @@
 import styled from "@emotion/styled";
-import { Rate } from "antd";
 import { mobile, mobileSmall } from "../../../../commons/styles/breakPoints";
 
 export const Wrapper = styled.div`
   width: 1113px;
   display: flex;
   flex-direction: column;
-  margin: auto; // 가운데 정렬
+  margin: auto;
   margin-bottom: 70px;
 
   @media ${mobile} {
@@ -38,7 +37,6 @@ export const Wrapper_header = styled.div`
   flex-direction: column;
 `;
 
-// 후기 개수
 export const ReviewCount = styled.div`
   font-size: 15px;
   margin-bottom: 20px;

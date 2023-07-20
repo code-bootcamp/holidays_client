@@ -11,7 +11,6 @@ import ClassQuestionWrite from "../write/classQuestionWrite.index";
 import { UseQueryFetchClassDetail } from "../../../commons/hooks/useQueries/class/useQueryFetchClassDetail";
 
 export default function ClassQuestionListEl(props: any) {
-  // 로그인 여부 확인
   const { data: login } =
     useQuery<Pick<IQuery, "fetchLoginUser">>(FETCH_LOGIN_USER);
 
@@ -22,11 +21,6 @@ export default function ClassQuestionListEl(props: any) {
   };
 
   const { data } = UseQueryFetchClassDetail();
-  console.log("정희준바보");
-  console.log(data);
-  console.log("정희준바보");
-
-  // --------------------------------
 
   return (
     <div>

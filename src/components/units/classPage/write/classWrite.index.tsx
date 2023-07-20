@@ -10,7 +10,6 @@ import "react-quill/dist/quill.snow.css";
 import { useMutationUpdateClass } from "../../../commons/hooks/useMutations/class/useMutationUpdateClass";
 import { IClassWriteProps, IFormData } from "./classWrite.types";
 import ClassImage from "./classWriteImage";
-import Calendar from "../../../commons/calendar";
 import { useAuth02 } from "../../../commons/hooks/useAuths/useAuth02";
 import { classWriteSchema } from "./classWrite.validation";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -47,20 +46,16 @@ export default function ClassWrite(props: IClassWriteProps) {
   // ToastEditor
   const contentsRef = useRef<EditorInstance | null>(null);
 
-  // const [content, setContent] = useState("");
   const onChangeContents = (text: any) => {
     const editorInstance: string =
       contentsRef.current?.getInstance()?.getHTML() ?? "";
     setValue("content", editorInstance === "<p><br></p>" ? "" : editorInstance);
-    // setContent(text === "<p><br><p>" ? "" : editorInstance);
   };
 
-  // 우편주소(카카오지도)
   const [fulladdress, setFulladdress] = useState("");
 
   const [isOpen, setIsOpen] = useState(false);
 
-  // 우편번호 모달창
   const onToggleModal = (): void => {
     setIsOpen((prev) => !prev);
   };
@@ -69,8 +64,6 @@ export default function ClassWrite(props: IClassWriteProps) {
     onToggleModal();
     setValue("address", data.address);
     setFulladdress(data.address);
-    // alert("여기오니?");
-    // alert(data.address);
   };
 
   useEffect(() => {
@@ -86,7 +79,7 @@ export default function ClassWrite(props: IClassWriteProps) {
         const options = {
           center: new window.kakao.maps.LatLng(33.450701, 126.570667),
           level: 3,
-          draggable: false, // 드래그 비활성화
+          draggable: false,
         };
 
         const map = new window.kakao.maps.Map(container, options);
@@ -133,16 +126,21 @@ export default function ClassWrite(props: IClassWriteProps) {
     setFileList,
     selectedDates,
     setSelectedDates,
+    date,
+    remain,
+    cs_id,
   } = UseMutationCreateClass();
 
-  const { onClickClassUpdate, fileList2, setFileList2 } =
-    useMutationUpdateClass();
-
-  // const {
-  //   onClickClassUpdate,
-  //   fileList: updateFileList, // fileList 변수의 이름을 변경
-  //   setFileList: setUpdateFileList, // setFileList 변수의 이름을 변경
-  // } = useMutationUpdateClass();
+  const {
+    onClickClassUpdate,
+    fileList2,
+    setFileList2,
+    selectedDates2,
+    setSelectedDates2,
+    date2,
+    remain2,
+    cs_id2,
+  } = useMutationUpdateClass();
 
   const { register, setValue, handleSubmit, formState } = useForm<IFormData>({
     resolver: yupResolver(classWriteSchema),
@@ -150,17 +148,12 @@ export default function ClassWrite(props: IClassWriteProps) {
   });
 
   const onSubmitForm = async (data: IFormData) => {
-    // alert(data.content);
-    // onChangeContents();
-    // const content = props.data?.fetchClassDetail.content;
-    // setContent(props.data?.fetchClassDetail.content ?? "asd");
     let content = props.data?.fetchClassDetail.content ?? "";
     let fulladdress = data.address
       ? data.address
       : props.data?.fetchClassDetail.address ?? "";
 
     const { ...value } = data;
-    // alert(data.address);
 
     if (!props.isEdit) {
       await onClickClassSubmit(value, fulladdress, content);
@@ -274,7 +267,6 @@ export default function ClassWrite(props: IClassWriteProps) {
                         ? fulladdress ?? ""
                         : props.data?.fetchClassDetail.address ?? ""
                     }
-                    // defaultValue={props.data?.fetchClassDetail.address}
                   />
                   <S.AddressBtn type="button" onClick={onToggleModal}>
                     주소 검색
@@ -301,15 +293,29 @@ export default function ClassWrite(props: IClassWriteProps) {
               />
             </S.ToastEditor>
             <S.Label>클래스 일정을 선택해주세요</S.Label>
-            {/* <Calendar
-              selectedDates={selectedDates}
-              setSelectedDates={setSelectedDates}
-            /> */}
-            <CalendarFunction
-              selectedDates={selectedDates}
-              setSelectedDates={setSelectedDates}
-              isEdit={props.isEdit}
-            />
+
+            {props.isEdit ? (
+              <CalendarFunction
+                selectedDates={selectedDates2}
+                setSelectedDates={setSelectedDates2}
+                remain={remain2}
+                date={date2}
+                class_mNum={props.data?.fetchClassDetail.class_mNum}
+                cs_id={cs_id2}
+                isEdit={props.isEdit}
+              />
+            ) : (
+              <CalendarFunction
+                selectedDates={selectedDates}
+                setSelectedDates={setSelectedDates}
+                remain={remain}
+                date={date}
+                class_mNum={props.data?.fetchClassDetail.class_mNum}
+                cs_id={cs_id}
+                isEdit={props.isEdit}
+              />
+            )}
+
             <S.Label>입금 계좌를 작성해주세요</S.Label>
             <S.TextInput
               type="text"
