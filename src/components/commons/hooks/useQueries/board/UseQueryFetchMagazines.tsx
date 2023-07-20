@@ -1,8 +1,8 @@
 import { gql, useQuery } from "@apollo/client";
 
 export const FETCH_MAGAZINES = gql`
-  query fetchMagazines {
-    fetchMagazines {
+  query fetchMagazines($createdAt: Int!) {
+    fetchMagazines(createdAt: $createdAt) {
       board_id
       title
       content
@@ -13,3 +13,11 @@ export const FETCH_MAGAZINES = gql`
     }
   }
 `;
+
+export const UseQueryFetchMagazines = () => {
+  const query = useQuery(FETCH_MAGAZINES, {
+    variables: { createdAt: 202306 },
+  });
+
+  return query;
+};
