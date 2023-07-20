@@ -56,7 +56,8 @@ export default function Reservation() {
   //////////////////////////////////////////////////////////////
 
   const onClickMenu = () => {
-    void router.push("/classPage");
+    // void router.push("/classPage");
+    console.log(data);
   };
 
   return (
@@ -111,9 +112,6 @@ export default function Reservation() {
                           <S.PremiumContent>
                             신청인원 :{" "}
                             <S.TextColor>{post.personnel}</S.TextColor>명
-                          </S.PremiumContent>
-                          <S.PremiumContent>
-                            잔여인원 : {post.remain}명
                           </S.PremiumContent>
                         </S.PremiumAvatarContentTie>
                       </S.PremiumPostInfo>
