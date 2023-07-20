@@ -124,13 +124,8 @@ export default function FindPassword(): JSX.Element {
           method: "update",
         },
       });
-      // console.log(result);
       SetVerify(true);
     } catch (error) {
-      // 에러 처리
-      // console.log("이메일 인증번호 발급 실패");
-      // console.error(error);
-      // alert("이메일을 확인해 주세요");
       Modal.error({ content: "이메일을 확인해 주세요." });
     }
   };
